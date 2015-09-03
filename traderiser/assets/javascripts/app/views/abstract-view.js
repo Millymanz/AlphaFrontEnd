@@ -6,8 +6,11 @@
 define(['jquery',
     'underscore',
     'backbone',
-    '../core/mvc'
+    '../core/mvc',
+    
     ], function($, _, Backbone){
+   
+   //require(['backbone-super']);
    
    'use strict';
    
@@ -115,8 +118,7 @@ define(['jquery',
          */
         getModuleName: function () {
             return this.getClassName().replace(/([A-Z])/g, '-$1').replace(/^-/, '').toLowerCase();
-        },
-       
+        }
     
    });
    

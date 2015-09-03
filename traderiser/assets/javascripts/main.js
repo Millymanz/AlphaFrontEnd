@@ -17,7 +17,8 @@ require.config({
         moment: 'vendor/moment',
         numeral: 'vendor/numeral.min',
         bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
-        'jquery-layout': 'vendor/jquery/jquery.layout-latest'
+        'jquery-layout': 'vendor/jquery/jquery.layout-latest',
+        'backbone-super': 'vendor/backbone/backbone-super'
     },
     shim: {
         underscore: {

@@ -1,4 +1,4 @@
-define(['./abstract-view', 'templates', 'parsley'], function (AbtractView, templates) {
+define(['./abstract-view', 'templates','./search-box-view', 'parsley'], function (AbtractView, templates, SearchBoxView) {
     'use strict';
     var ENTER_KEY = 13;
     var HomepageView = AbtractView.extend('HomepageView', {
@@ -10,14 +10,15 @@ define(['./abstract-view', 'templates', 'parsley'], function (AbtractView, templ
         },
         template: 'homepage-layout',
         initialize: function (options) {
+            this.constructor.__super__.initialize.apply(this, arguments);
             options = options || {};
+            this.searchBoxView = new SearchBoxView();
         },
         render: function () {
             var self = this;
             templates.render(this.template, {}, function (error, output) {
                 $(self.el).html(output);
             });
-
             return this;
         },
         searchQuestion: function (evt) {
