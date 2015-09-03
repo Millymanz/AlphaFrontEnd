@@ -2,21 +2,28 @@
 <html>
     <head>
 
-        <title>Ghanamusic app</title>
+        <title>TradeRiser Trading platform: Ask questions, get answers</title>
         <meta charset="utf-8">
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
         <link href="/stylesheets/style.css" rel="stylesheet">
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="/javascripts/reload-client.js"></script>
     </head>
     <body>
-    <div class="container">
+    
+        <div id="header"></div>
+       
         <div id="app-container">
         <p>...Loading </p>
-        </div>
-    </div>    
+        </div>  
+        <div id="footer"></div>
+      
         <script src="/javascripts/vendor/requirejs/require.js" data-main="/javascripts/main.js"></script>
     </body>
 </html>

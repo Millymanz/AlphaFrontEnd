@@ -16,6 +16,8 @@ require.config({
         parsley: 'vendor/jquery/parsley',
         moment: 'vendor/moment',
         numeral: 'vendor/numeral.min',
+        bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
+        'jquery-layout': 'vendor/jquery/jquery.layout-latest'
     },
     shim: {
         underscore: {
@@ -31,10 +33,15 @@ require.config({
         'log4javascript': {
             exports: 'log4javascript'
         },
+        'jquery-layout': { deps: ['jquery'] },
         'jquery.cookie': ['jquery'],
         parsley: {
             deps: ['jquery']
         },
+        bootstrap: {
+            deps: ['jquery']
+        }
+        
     }
 });
 
@@ -46,7 +53,7 @@ require([
     'app/config/settings',
     'app/models/session-model',
     'jquery.cookie',
-    
+    'bootstrap'
     
 ], function (AppRouter, Core, Settings, SessionModel) {
     'use strict';

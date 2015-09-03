@@ -1,26 +1,36 @@
+@import url("http://fonts.googleapis.com/css?family=Open+Sans:400,300,600");
+
 $blue: #5B83AD;
 $yellow: #FFFFE0;
 
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html,body {height:100%}
 
+body {
+  padding-top: 70px;
+  font: 14px "Open sans", sans-serif;
+   min-height: 2000px;
+  
+  h1,h2,h3{
+      font-weight: 100;
+  }
+  
   .template {
     background-color: $yellow;
   }
-
-  .helper {
-    border:1px solid $blue;
-  }
-
-  .styled {
-    -webkit-transform: rotate(-30deg);
-    -moz-transform: rotate(-30deg);
-    -ms-transform: rotate(-30deg);
-    -o-transform: rotate(-30deg);
-    transform: rotate(-30deg);
-
-    margin-top: 100px;
-    position: absolute;
-  }
+  
+  .navbar-static-top {
+  margin-bottom: 19px;
+    }
+    #app-container, .search-page-view{
+        height: 100%;
+    }
+    
+    .ui-layout-container, .ui-layout-pane {
+  -webkit-box-sizing: content-box;
+     -moz-box-sizing: content-box;
+          box-sizing: content-box;
+}    
 }
+
+@import 'homepage';
+@import "layout-default-latest.css";

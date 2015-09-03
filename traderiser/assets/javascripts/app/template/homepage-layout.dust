@@ -1,4 +1,17 @@
- <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-      </div>
+<div class="container-fluid"> 
+<div class="jumbotron search-container col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+                <h2>Start by asking the right question</h2>        
+                <div class="search-box">
+                    <form method="get" action="#search/">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control" name="q" placeholder="Enter your question" aria-describedby="sizing-addon1" required>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" class="search-question" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+</div>
+
+</div>
+
