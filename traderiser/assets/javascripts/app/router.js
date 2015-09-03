@@ -28,7 +28,7 @@ define(['./views/homepage-view',
             var searchPageView = new SearchPageView({q: query});
             $(this.el).html(searchPageView.render().el);
             var PageLayout = $('.search-page-view').layout();
-            $('body').css({width:'100%',height:'100%'});
+            $(this.el).addClass('fill');
             _.extend(window , { PageLayout: PageLayout} );
             return this;
         },

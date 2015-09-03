@@ -1,7 +1,10 @@
 
     <div class="ui-layout-west">
-        <div>West</div>
+        <div id="west-content">West</div>
     </div>
     <div class="ui-layout-center">
-        <div>Center</div>
+        <div id="center-content">Center</div>
     </div>
+<div class="ui-layout-east">
+ <div id="east-content">East</div>
+</div>
