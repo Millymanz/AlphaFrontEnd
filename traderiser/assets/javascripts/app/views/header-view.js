@@ -6,8 +6,6 @@ define(['./abstract-view', 'templates'], function (AbstractView, templates) {
         initialize: function (options) {
             options = options || {};
            this.constructor.__super__.initialize.apply(this, arguments);
-
-
             this.listenTo(this.model, 'change', this.render);
             this.render();
         },
@@ -17,6 +15,11 @@ define(['./abstract-view', 'templates'], function (AbstractView, templates) {
                 $(self.el).append(output);
             });
             return this;
+        },
+        afterRender: function(){
+            if(this.model.get('showSearch') === true){
+                console.log('show header');
+            }
         }
 
     });
