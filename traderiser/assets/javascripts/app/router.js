@@ -16,8 +16,8 @@ define(['./views/homepage-view',
             var self = this;
             Backbone.history.start();
             //$(this.el).empty();
-            var headerView = new HeaderView();
-            $('#header').html(headerView.render().el);
+            this.headerView = new HeaderView({model: {} });
+            $('#header').html(this.headerView.el);
         },
         homepage: function () {
             var homepage = new HomePageView();
@@ -26,6 +26,7 @@ define(['./views/homepage-view',
         },
         searchPage: function (query) {
             var searchPageView = new SearchPageView({q: query});
+           
             $(this.el).html(searchPageView.render().el);
             var PageLayout = $('.search-page-view').layout();
             $(this.el).addClass('fill');

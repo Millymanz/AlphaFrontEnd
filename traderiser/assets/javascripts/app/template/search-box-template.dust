@@ -2,7 +2,7 @@
                         <div class="input-group input-group-lg">
                             <input type="text" class="form-control" name="q" value='{searchText}' placeholder="Enter your question" aria-describedby="sizing-addon1" required>
                             <span class="input-group-btn">
-                                <button class="btn btn-default" class="search-question" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                <button class="btn btn-default search-question-btn"  type="button"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
                         </div>
                     </form>

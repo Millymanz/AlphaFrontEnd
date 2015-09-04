@@ -13,12 +13,14 @@ exports.config = {
     "dust"
   ],
   "server": {
+	"path": "server.js",
     "views": {
       "compileWith": "html",
       "extension": "html"
     },
+
     "defaultServer": {
-      "enabled": true
+      "enabled": false
     }
   },
   "watch": {

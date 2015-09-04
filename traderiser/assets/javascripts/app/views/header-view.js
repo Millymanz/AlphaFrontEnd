@@ -1,20 +1,24 @@
-define(['backbone','templates'], function(Backbone,templates){
-	'use strict';
+define(['./abstract-view', 'templates'], function (AbstractView, templates) {
+    'use strict';
 
-	var HeaderView = Backbone.View.extend({
-	template: 'header-template',
-	initialize: function(options){
-		options = options || {};
+    var HeaderView = AbstractView.extend('HeaderView',{
+        template: 'header-template',
+        initialize: function (options) {
+            options = options || {};
+           this.constructor.__super__.initialize.apply(this, arguments);
 
-	},
-	render: function(){
-		var self = this;
-		 templates.render(this.template, {}, function(error, output) {
-        	$(self.el).append(output);
-      });
-      return this;
-	}
 
-	});
-	return HeaderView;
+            this.listenTo(this.model, 'change', this.render);
+            this.render();
+        },
+        render: function () {
+            var self = this;
+            templates.render(this.template, {}, function (error, output) {
+                $(self.el).append(output);
+            });
+            return this;
+        }
+
+    });
+    return HeaderView;
 });

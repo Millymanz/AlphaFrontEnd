@@ -10,22 +10,31 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
     
     var SearchBoxView = AbstractView.extend('SearchBoxView', {
         template: 'search-box-template',
-        className: 'search-box-container',
         events: {
-            
+            'click .search-question-btn': 'searchQuestion',
         },
         initialize: function(options){
-            options = options || {};
+            //this._super(options);
             this.constructor.__super__.initialize.apply(this, arguments);
             
             //this.listenTo(this.model,'change', this._render);
+            this.render();
         },
         render: function(){
             var self = this;
-            templates.render(this.template, {searchText: 'something to search'}, function(error, output){
+            templates.render(this.template, {searchText: ''}, function(error, output){
                $(self.el).html(output); 
             });
-        }
+        },
+        searchQuestion: function (evt) {
+            var searchForm = $('form');
+            if (searchForm.parsley().validate()) {
+                //searchForm.submit();
+                var searchText = searchForm.find('input');
+                appRouter.navigate("search/" + searchText.val(), {trigger: true, replace: true});
+            }
+
+        },
         
     });
     

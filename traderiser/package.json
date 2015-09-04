@@ -1,7 +1,19 @@
 {
   "name": "traderiser",
   "version": "0.0.1",
-  "description": "A Mimosa starter skeleton",
+  "description": "Trading platform for answers",
+  "dependencies": {
+    "consolidate": "0.10.0",
+    "ejs": "1.0.0",
+    "express": "4.7.2",
+    "serve-favicon": "2.0.1",
+    "cookie-parser": "1.3.2",
+    "body-parser": "1.5.2",
+    "compression": "1.0.6",
+    "errorhandler": "1.1.1",
+    "connect-assetmanager-handlers": "0.0.18",
+    "connect-assetmanager": "0.0.28"
+  },
   "devDependencies": {
     "mimosa-sass": "*",
     "mimosa-dust": "*"
