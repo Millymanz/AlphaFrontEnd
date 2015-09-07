@@ -4,18 +4,49 @@
  * plc and may be registered in certain jurisdictions.
  */
 
-define([], function(){
-   
-   'use strict';
-   
-   var Settings = {
-       apiBase: 'http://www.ghanaplaylist.com/mobile/',
-       baseUrl: 'http://www.ghanaplaylist.com',
-       imageBaseUrl: 'http://www.ghanaplaylist.com/assets/img',
-       deBugMode: true
-   };
-   
-   return Settings;
-    
-    
+define([
+    "jquery",
+    "underscore",
+    "backbone",
+    '../models/session-model'
+], function ($, _, Backbone, sessionModel) {
+
+    'use strict';
+    var baseUrl = 'http://devapi.traderiser.com/';
+
+    var Settings = {
+        apiBase: baseUrl + 'api',
+        deBugMode: true,
+        // Show alert classes and hide after specified timeout
+        showAlert: function (title, text, klass) {
+            $("#header-alert").removeClass("alert-danger alert-warning alert-success alert-info");
+            $("#header-alert").addClass(klass);
+            $("#header-alert").html('<button class="close" data-dismiss="alert">×</button><strong>' + title + '</strong> ' + text);
+            $("#header-alert").show('fast');
+            setTimeout(function () {
+                $("#header-alert").hide();
+            }, 7000);
+        }
+    };
+
+    // Global event aggregator
+    Settings.eventAggregator = _.extend({}, Backbone.Events);
+
+    // View.close() event for garbage collection
+    Backbone.View.prototype.close = function () {
+        this.remove();
+        this.unbind();
+        if (this.onClose) {
+            this.onClose();
+        }
+    };
+
+
+
+    return {
+        settings: Settings,
+        session: new sessionModel()
+    };
+
+
 });

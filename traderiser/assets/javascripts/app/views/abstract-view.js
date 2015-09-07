@@ -16,14 +16,12 @@ define(['jquery',
 
     var AbstractView = Backbone.View.extend('AbstractView', {
         defaults: {
-            
         },
         initialize: function (options) {
 
             this.options = options || {};
-            	// update view options with any passed in options
-				this.viewOptions.set(_.omit( this.options, 'model'), {silent: true});
-                                
+            // update view options with any passed in options
+            this.viewOptions.set(_.omit(this.options, 'model'), {silent: true});
             _.bindAll(this, 'beforeRender', 'render', 'afterRender');
             var _this = this;
             this.render = _.wrap(this.render, function (render) {
@@ -67,22 +65,6 @@ define(['jquery',
             if (this.className) {
                 this.$el.addClass(this.className);
             }
-//            if (this.getViewOption('cssClass')) {
-//                this.$el.addClass(this.getViewOption('cssClass'));
-//            }
-//            // state classes
-//            _.each(_.keys(this.states), function (stateName) {
-//                this.$el.addClass('pi-state-' + stateName);
-//            }, this);
-
-            // recursively add in the class names for the parents hierarchy of this class - For example it would be advantageous to have the class for an actionMenuItem to include the class for menuItem - no need to go so far as model or view
-//            var parent = this._getParentModule(this.constructor);
-//            var parentName = this._getParentModuleName(parent);
-//            while (parentName && parentName !== 'ps-view') {
-//                this.$el.addClass('pi-component-' + parentName);
-//                parent = this._getParentModule(parent);
-//                parentName = this._getParentModuleName(parent);
-//            }
         },
         /**
          * Gets the parent module.

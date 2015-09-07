@@ -7,11 +7,24 @@ and open the template in the editor.
     Created on : 06-Sep-2015, 22:17:06
     Author     : rockyasante
 */
+.tr-component-login-page-view {
+    height:100%;
+    top:0px!important;
+    bottom:0px;
+    background:aliceblue;
+    clear:both;
+    margin-top:-60px;
+    position: relative;
+}
 
 .form-signin {
   max-width: 330px;
   padding: 15px;
-  margin: 0 auto;
+  margin: 100px auto;
+  
+  img{
+      width:300px;
+  }
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {

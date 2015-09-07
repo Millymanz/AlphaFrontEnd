@@ -1,6 +1,8 @@
 // Require.js allows us to configure shortcut alias
 // Their usage will become more apparent futher along in the tutorial.
 
+if (typeof DEBUG === 'undefined') DEBUG = true;
+
 require.config({
     paths: {
         // Major libraries
@@ -34,7 +36,7 @@ require.config({
         'log4javascript': {
             exports: 'log4javascript'
         },
-        'jquery-layout': { deps: ['jquery'] },
+        'jquery-layout': {deps: ['jquery']},
         'jquery.cookie': ['jquery'],
         parsley: {
             deps: ['jquery']
@@ -42,7 +44,7 @@ require.config({
         bootstrap: {
             deps: ['jquery']
         }
-        
+
     }
 });
 
@@ -54,31 +56,27 @@ require([
     'app/router',
     'app/core',
     'app/config/settings',
-    'app/models/session-model',
     'jquery.cookie',
     'bootstrap'
-    
-], function (Backbone,underscore,AppRouter, Core, Settings, SessionModel) {
+
+], function (Backbone, underscore, AppRouter, Core, settings ) {
     'use strict';
     
     _.extend(window, {
-        Backbone: Backbone,
-        _: underscore,
-        settings: Settings,
-        core: Core,
-        SessionModel: SessionModel
-    });
-        
-    $(document).ready(function() { 
-        
-        var app = new AppRouter();
-       _.extend(window, {
-           appRouter: app,
-            settings: Settings,
+            Backbone: Backbone,
+            _: underscore,
             core: Core,
-            SessionModel: SessionModel
-       });
-   });
+            settings: settings.settings,
+            sessionModel: settings.session
+        });
+    
+    $(document).ready(function () {
+        var appRouter = new AppRouter();
+        _.extend(window, {
+            appRouter: appRouter,
+         
+        });
+    });
 
 });
 
