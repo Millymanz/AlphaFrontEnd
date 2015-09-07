@@ -18,8 +18,12 @@ define(['./views/homepage-view',
             var self = this;
             Backbone.history.start();
             //$(this.el).empty();
-            var headerView = new HeaderView();
-            $('#header').html(headerView.render().el);
+            var headerViewModel = new Backbone.Model({showSearch: false});
+            if(this.showSearchBox && this.showSearchBox === true){
+                headerViewModel.set('showSearch', true);
+            }
+            this.headerView = new HeaderView({model: headerViewModel });
+            $('#header').html(this.headerView.el);
         },
         homepage: function () {
             var homepage = new HomePageView();
@@ -27,6 +31,7 @@ define(['./views/homepage-view',
             return this;
         },
         searchPage: function (query) {
+           this.showSearchBox = true;
             var searchPageView = new SearchPageView({q: query});
             $(this.el).html(searchPageView.render().el);
             var PageLayout = $('.search-page-view').layout();
@@ -44,7 +49,7 @@ define(['./views/homepage-view',
             $(document.body).html("Show route has been called.. with id equals : " + id);
         },
         default: function (actions) {
-            $(document.body).html("This route is not hanled.. you tried to access: " + actions);
+            $(this.el).html("This route is not hanled.. you tried to access: " + actions);
 
         }
 

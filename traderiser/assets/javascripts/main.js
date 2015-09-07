@@ -49,6 +49,8 @@ require.config({
 // Let's kick off the application
 
 require([
+    'backbone',
+    'underscore',
     'app/router',
     'app/core',
     'app/config/settings',
@@ -56,9 +58,17 @@ require([
     'jquery.cookie',
     'bootstrap'
     
-], function (AppRouter, Core, Settings, SessionModel) {
+], function (Backbone,underscore,AppRouter, Core, Settings, SessionModel) {
     'use strict';
     
+    _.extend(window, {
+        Backbone: Backbone,
+        _: underscore,
+        settings: Settings,
+        core: Core,
+        SessionModel: SessionModel
+    });
+        
     $(document).ready(function() { 
         
         var app = new AppRouter();

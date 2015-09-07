@@ -6,20 +6,24 @@
 define(['jquery',
     'underscore',
     'backbone',
-    '../core/mvc',
-    
-    ], function($, _, Backbone){
-   
-   //require(['backbone-super']);
-   
-   'use strict';
-   
-   var AbstractView = Backbone.View.extend('AbstractView',{
-       defaults:  {
+    '../core/mvc'
+], function ($, _, Backbone) {
+
+    //require(['backbone-super']);
+
+    'use strict';
+    var ViewOptions = Backbone.Model.extend('ViewOptions', {});
+
+    var AbstractView = Backbone.View.extend('AbstractView', {
+        defaults: {
+            
         },
         initialize: function (options) {
-            
+
             this.options = options || {};
+            	// update view options with any passed in options
+				this.viewOptions.set(_.omit( this.options, 'model'), {silent: true});
+                                
             _.bindAll(this, 'beforeRender', 'render', 'afterRender');
             var _this = this;
             this.render = _.wrap(this.render, function (render) {
@@ -34,7 +38,7 @@ define(['jquery',
             this._moduleName = this.getModuleName();
             // add view attributes to the view's element
             this._addViewAttributes();
-            
+
         }, beforeRender: function () {
             //console.log('beforeRender');
         },
@@ -44,7 +48,7 @@ define(['jquery',
         afterRender: function () {
             //console.log('afterRender');
         },
-         /**
+        /**
          * Adds attributes to the view element to reflect the view's type, properties and state.
          * @private
          */
@@ -59,7 +63,7 @@ define(['jquery',
             }
 
             // add classes
-            this.$el.addClass('pi-component pi-component-' + this._moduleName);
+            this.$el.addClass('tr-component tr-component-' + this._moduleName);
             if (this.className) {
                 this.$el.addClass(this.className);
             }
@@ -118,10 +122,23 @@ define(['jquery',
          */
         getModuleName: function () {
             return this.getClassName().replace(/([A-Z])/g, '-$1').replace(/^-/, '').toLowerCase();
+        },
+        constructor: function (options) {
+            if (options != null) {
+                options = _.extend({}, _.result(this, 'options'), options);
+                this.options = options;
+            }
+
+            if (this._super != null) {
+                this._super(options);
+            }
+
+            this.viewOptions = new ViewOptions(_.result(this, 'defaults'));
+            Backbone.View.prototype.constructor.apply(this, arguments);
         }
-    
-   });
-   
+
+    });
+
     return AbstractView;
 });
 

@@ -5,14 +5,14 @@ define(['./abstract-view', 'templates','./search-box-view', 'parsley'], function
         defaults: {
         },
         events: {
-            'click .search-question': 'searchQuestion',
             "keydown": "keyAction",
         },
         template: 'homepage-layout',
         initialize: function (options) {
             this.constructor.__super__.initialize.apply(this, arguments);
-            options = options || {};
+            
             this.searchBoxView = new SearchBoxView();
+            
         },
         render: function () {
             var self = this;
@@ -20,6 +20,10 @@ define(['./abstract-view', 'templates','./search-box-view', 'parsley'], function
                 $(self.el).html(output);
             });
             return this;
+        },
+        afterRender:function(){
+            var searchId = $(this.el).find('.search-box');
+            $(searchId).html(this.searchBoxView.el);
         },
         searchQuestion: function (evt) {
             var searchForm = $('form');
