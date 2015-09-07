@@ -59,17 +59,14 @@ require([
 ], function (AppRouter, Core, Settings, SessionModel) {
     'use strict';
     
-    _.extend(window, {
-        settings: Settings,
-        core: Core,
-        SessionModel: SessionModel
-    });
-    
     $(document).ready(function() { 
         
         var app = new AppRouter();
        _.extend(window, {
-           appRouter: app
+           appRouter: app,
+            settings: Settings,
+            core: Core,
+            SessionModel: SessionModel
        });
    });
 

@@ -1,6 +1,7 @@
 define(['./views/homepage-view',
     './views/header-view',
-    './views/searchpage-view'], function (HomePageView, HeaderView, SearchPageView) {
+    './views/searchpage-view',
+    './views/login-view'], function (HomePageView, HeaderView, SearchPageView, LoginPageView) {
 
     'use strict';
 
@@ -10,6 +11,7 @@ define(['./views/homepage-view',
             "": "homepage",
             'show/:id': 'show',
             'search/:query': 'searchPage',
+            'login': 'showLoginPage',
             '*actions': 'default'
         },
         initialize: function () {
@@ -31,6 +33,12 @@ define(['./views/homepage-view',
             $(this.el).addClass('fill');
             _.extend(window , { PageLayout: PageLayout} );
             return this;
+        },
+        showLoginPage: function(){
+            var loginPageView = new LoginPageView();
+            $(this.el).addClass('fill');
+            $(this.el).html(loginPageView.el);
+            
         },
         show: function (id) {
             $(document.body).html("Show route has been called.. with id equals : " + id);

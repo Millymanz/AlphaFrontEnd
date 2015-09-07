@@ -8,6 +8,7 @@ define(['backbone'], function (Backbone) {
     'use strict';
 
     var SessionModel = Backbone.Model.extend({
+        url: settings.apiBase + 'user/authentication',
         defaults: {
             userId: 0,
             userName: null,
