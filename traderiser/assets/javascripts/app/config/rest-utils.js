@@ -43,11 +43,11 @@ define(['../core/logging'], function (logger) {
                 return false;
             }
             // Set any request options which are always the same.
-            $.support.cors = true; // Fix to stop "No transport" error for AJAX requests on IE < 10
-            requestOptions.crossDomain = true;
-            requestOptions.xhrFields = {
-                withCredentials: true // Required to be true for CORS to send cookies.
-            };
+//            $.support.cors = true; // Fix to stop "No transport" error for AJAX requests on IE < 10
+//            requestOptions.crossDomain = true;
+//            requestOptions.xhrFields = {
+//                withCredentials: true // Required to be true for CORS to send cookies.
+//            };
             if (options.contentType != null) {
                 requestOptions.contentType = options.contentType ;
             }

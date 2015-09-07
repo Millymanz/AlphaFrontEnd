@@ -57,17 +57,31 @@ define(['./abstract-view',
             if(evt) evt.preventDefault();
 
             if(this.$("#login-form").parsley('validate')){
+                var userInput = this.$("#login-username-input");
+                var passInput = this.$("#login-password-input");
                 sessionModel.login({
-                    UserName: this.$("#login-username-input").val(),
-                    Password: this.$("#login-password-input").val()
+                    UserName: userInput.val(),
+                    Password: passInput.val()
                 }, {
                     success: function(mod, res){
                         if(DEBUG) console.log("SUCCESS", mod, res);
+                        if(!mod.LoginSuccessful){
+                           $('.login-status').show().html('<p>Wrong credentials entered. Try again</p>'); 
+                           passInput.val('');
+                           userInput.focus();
+                           return;
+                        }else{
+                            appRouter.navigate('/main', {trigger: true, replace: true});
+                        }
 
                     },
                     error: function(err){
                         if(DEBUG) console.log("ERROR", err);
-                        settings.showAlert('Bummer dude!', err.error, 'alert-danger'); 
+                        $('.login-status').show().html('<p>Wrong credentials entered. Try again</p>'); 
+                           passInput.val('');
+                           userInput.focus();
+                           
+                     //   settings.showAlert('Bummer dude!', err.error, 'alert-danger'); 
                     }
                 });
             } else {

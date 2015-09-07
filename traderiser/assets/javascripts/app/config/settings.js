@@ -12,7 +12,7 @@ define([
 ], function ($, _, Backbone, sessionModel) {
 
     'use strict';
-    var baseUrl = 'http://devapi.traderiser.com/';
+    var baseUrl = '//devapi.traderiser.com/';
 
     var Settings = {
         apiBase: baseUrl + 'api',

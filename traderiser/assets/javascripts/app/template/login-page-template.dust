@@ -3,10 +3,10 @@
       <form class="form-signin" id="login-form">
       <img src="/imgs/Trade-Riser.png" class="company-logo">
 
-      
-<div class="alert alert-error" style="display:none;">
+              <h4 class="form-signin-heading text-center">Please Login</h4>
+
+<div class="alert alert-danger login-status" style="display:none;">
 </div>
-        <h4 class="form-signin-heading text-center">Please Login</h4>
         <label for="inputEmail" class="sr-only">Username</label>
         <input type="text" name="login-username-input" id="login-username-input" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>

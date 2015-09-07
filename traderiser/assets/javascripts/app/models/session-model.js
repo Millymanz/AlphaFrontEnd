@@ -111,21 +111,27 @@ define([
             var self = this;
             var options = {
                 url: 'UserAuth/Authenticate',
-                dataType: 'jsonp',
+                dataType: 'json',
                 method: 'POST',
-                processData: false,
                 requestData: opts,
-                contentType: 'application/x-www-form-urlencoded'
+                contentType: 'application/x-www-form-urlencoded',
+
             };
             return restUtils.makeServerRequest(options)
                     .then(function(res){
                         if(res && callback !== null){
-                            self.updateSessionUser( res.user || {} );
-                            self.set({ user_id: res.user.id, logged_in: true });
+                            if(res.LoginSuccessful || res.UserId > 0){
+                            self.updateSessionUser( res || {} );
+                            self.set({ user_id: res.UserId, logged_in: true });
                             
                             if(callback && 'success' in callback) callback.success(res);
+                            }else{
+                                //if(callback && 'success' in callback) callback.success(res);
+                                self.set({ logged_in : false });
+                                if('error' in callback) callback.error(res);
+                            }
                         }
-                    })
+                    });
         },
 
         logout: function(opts, callback, args){

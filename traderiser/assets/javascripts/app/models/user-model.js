@@ -19,10 +19,11 @@ define([
         },
 
         defaults: {
-            id: 0,
-            username: '',
-            name: '',
-            email: ''
+            UserId: 0,
+            Username: '',
+            FirstName: '',
+            LastName: '',
+            Email: ''
         },
 
         url: function(){

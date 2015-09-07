@@ -5,21 +5,7 @@ define([
     './views/login-view'], function (HomePageView, HeaderView, SearchPageView, LoginPageView) {
 
     'use strict';
-    var loggedIn = function () {
-        sessionModel.checkAuth({
-            success: function (res) {
-                // If auth successful, render inside the page wrapper
-                $('#content').html(self.currentView.render().$el);
-            }, error: function (res) {
-                self.navigate("/", {trigger: true, replace: true});
-            }
-        });
-        return false;
-    }
-
-    var goToLogin = function () {
-        console.log('ok');
-    }
+   
 
     var AppRouter = Backbone.Router.extend({
         el: $('#app-container'),
@@ -30,6 +16,10 @@ define([
                if(sessionModel.get('logged_in') == true){
                    if (callback) callback.apply(this, args);
                }else{
+                   if(sessionModel.get('logged_in') === true){
+                       this.navigate("/main", {trigger: true, replace: true});
+                       return;
+                   }
                    this.showSearchBox = false;
                    this.navigate("/", {trigger: true, replace: true});
                }
@@ -50,6 +40,7 @@ define([
             Backbone.history.start();
             //$(this.el).empty();
             this.options = {requiresAuth: true};
+            
         },
         homepage: function () {
             var homepage = new HomePageView();
@@ -99,14 +90,20 @@ define([
             // For cases like a user's settings page where we need to double check against the server.
             if (typeof options !== 'undefined' && options.requiresAuth) {
                 var self = this;
-                settings.session.checkAuth({
-                    success: function (res) {
-                        // If auth successful, render inside the page wrapper
-                        $(self.el).html(self.currentView.render().$el);
-                    }, error: function (res) {
-                        self.navigate("/", {trigger: true, replace: true});
-                    }
-                });
+//                sessionModel.checkAuth({
+//                    success: function (res) {
+//                        // If auth successful, render inside the page wrapper
+//                        $(self.el).html(self.currentView.render().$el);
+//                    }, error: function (res) {
+//                        self.navigate("/", {trigger: true, replace: true});
+//                    }
+//                });
+             
+                if(sessionModel.get('logged_in') === true){
+                    $(this.el).html(this.currentView.render().$el);
+                }else{
+                    this.navigate("/", {trigger: true, replace: true});
+                }
 
             } else {
                 // Render inside the page wrapper
