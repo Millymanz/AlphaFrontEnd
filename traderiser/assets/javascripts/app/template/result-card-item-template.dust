@@ -1,0 +1,28 @@
+<div class="table">
+<table class="table table-condensed">
+<tr>
+
+SymbolID
+
+StartDateTime
+
+
+EndDateTime
+
+
+Source
+
+TimeFrame
+MoreStandardData
+MoreKeyFields
+QueryID
+ImageCollection
+KeyResultField
+
+
+
+</tr>
+
+</table>
+
+</div>

@@ -12,7 +12,9 @@
     "compression": "1.0.6",
     "errorhandler": "1.1.1",
     "connect-assetmanager-handlers": "0.0.18",
-    "connect-assetmanager": "0.0.28"
+    "connect-assetmanager": "0.0.28",
+    "dustjs-linkedin": "~2.7.2",
+    "dustjs-helpers": "~1.7.3"
   },
   "devDependencies": {
     "mimosa-sass": "*",

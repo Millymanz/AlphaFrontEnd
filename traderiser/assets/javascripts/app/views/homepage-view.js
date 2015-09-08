@@ -9,6 +9,7 @@ define(['./abstract-view', 'templates','./search-box-view', 'parsley'], function
         },
         template: 'homepage-layout',
         initialize: function (options) {
+            options = options || {};
             this.constructor.__super__.initialize.apply(this, arguments);
             
             this.searchBoxView = new SearchBoxView();

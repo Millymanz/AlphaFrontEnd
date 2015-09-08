@@ -79,9 +79,7 @@ define(['./abstract-view',
                         if(DEBUG) console.log("ERROR", err);
                         $('.login-status').show().html('<p>Wrong credentials entered. Try again</p>'); 
                            passInput.val('');
-                           userInput.focus();
-                           
-                     //   settings.showAlert('Bummer dude!', err.error, 'alert-danger'); 
+                           userInput.focus();                           
                     }
                 });
             } else {

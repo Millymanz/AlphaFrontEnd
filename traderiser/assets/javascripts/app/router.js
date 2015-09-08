@@ -59,6 +59,11 @@ define([
             return this;
         },
         showLoginPage: function () {
+             if(sessionModel.get('logged_in') == true){
+                    this.navigate("/main", {trigger: true, replace: true});
+                    return false;
+                }
+                
             var loginPageView = new LoginPageView();
             $(this.el).addClass('fill');
              $(this.el).html(loginPageView.el);
@@ -122,7 +127,7 @@ define([
             if (!hasPushState)
                 this.navigate(window.location.pathname.substring(1), {trigger: true, replace: true});
             else
-                if(sessionModel.get('logged_in') === true){
+                if(sessionModel.get('logged_in') == true){
                     this.navigate("/main", {trigger: true, replace: true});
                     return false;
                 }

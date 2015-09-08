@@ -115,7 +115,6 @@ define([
                 method: 'POST',
                 requestData: opts,
                 contentType: 'application/x-www-form-urlencoded',
-
             };
             return restUtils.makeServerRequest(options)
                     .then(function(res){
