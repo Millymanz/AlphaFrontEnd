@@ -2,31 +2,26 @@ define([
     './views/homepage-view',
     './views/header-view',
     './views/searchpage-view',
-    './views/login-view'], function (HomePageView, HeaderView, SearchPageView, LoginPageView) {
+    './views/login-view',
+    ], function (HomePageView, HeaderView, SearchPageView, LoginPageView) {
 
     'use strict';
-   
-
+  
     var AppRouter = Backbone.Router.extend({
         el: $('#app-container'),
         execute: function(callback, args, name) {
-            console.log('checking');
            if(name != 'showLoginPage'){
                //check loggion
-               if(sessionModel.get('logged_in') == true){
+               if(sessionModel.get('logged_in') == true || $.cookie('logged_in') == "true"){
+                   this.showSearchBox = true;
                    if (callback) callback.apply(this, args);
                }else{
-                   if(sessionModel.get('logged_in') === true){
-                       this.navigate("/main", {trigger: true, replace: true});
-                       return;
-                   }
                    this.showSearchBox = false;
                    this.navigate("/", {trigger: true, replace: true});
                }
            }else{
                if (callback) callback.apply(this, args);
            } 
-           //if (callback) callback.apply(this, args);
         },
         routes: {
             '': "showLoginPage",
@@ -36,22 +31,22 @@ define([
             '*actions': 'default'
         },
         initialize: function () {
-            var self = this;
             Backbone.history.start();
-            //$(this.el).empty();
             this.options = {requiresAuth: true};
             
         },
         homepage: function () {
-            var homepage = new HomePageView();
-            this.show(homepage, this.options);
-            //$(this.el).html(homepage.render().el);
+            var homepage = new HomePageView({model: new Backbone.Model});
+            var options = {requiresAuth: true};
+            this.show(homepage, options);
             return this;
         },
         searchPage: function (query) {
             this.showSearchBox = true;
             var searchPageView = new SearchPageView({q: query});
-            this.show(searchPageView, this.options);
+            var options = {requiresAuth: true};
+            
+            this.show(searchPageView,options);
             //$(this.el).html(searchPageView.render().el);
             var PageLayout = $('.search-page-view').layout();
             $(this.el).addClass('fill');
@@ -59,7 +54,7 @@ define([
             return this;
         },
         showLoginPage: function () {
-             if(sessionModel.get('logged_in') == true){
+             if(sessionModel.get('logged_in') == true || $.cookie('logged_in') == "true"){
                     this.navigate("/main", {trigger: true, replace: true});
                     return false;
                 }
@@ -77,12 +72,12 @@ define([
             if (!this.headerView) {
                 if(view)
                 var headerViewModel = new Backbone.Model({showSearch: false});
-                if (this.showSearchBox && this.showSearchBox === true) {
-                    headerViewModel.set('showSearch', true);
-                }
                 this.headerView = new HeaderView({model: headerViewModel});
                 $('#header').html(this.headerView.el);
             }
+            if (this.showSearchBox && this.showSearchBox === true) {
+                    this.headerView.model.set('showSearch', true);
+             }
 
             // Close and unbind any existing page view
             if (this.currentView && _.isFunction(this.currentView.close))
@@ -90,26 +85,16 @@ define([
 
             // Establish the requested view into scope
             this.currentView = view;
-
             // Need to be authenticated before rendering view.
             // For cases like a user's settings page where we need to double check against the server.
             if (typeof options !== 'undefined' && options.requiresAuth) {
                 var self = this;
-//                sessionModel.checkAuth({
-//                    success: function (res) {
-//                        // If auth successful, render inside the page wrapper
-//                        $(self.el).html(self.currentView.render().$el);
-//                    }, error: function (res) {
-//                        self.navigate("/", {trigger: true, replace: true});
-//                    }
-//                });
-             
-                if(sessionModel.get('logged_in') === true){
-                    $(this.el).html(this.currentView.render().$el);
-                }else{
-                    this.navigate("/", {trigger: true, replace: true});
-                }
-
+                var userProfilePromise = sessionModel.getUser().getUserProfile();
+                userProfilePromise.then(function(data){
+                  //send the user data to the view to be used.
+                  self.currentView.model.set('userProfileData' , data);
+                });
+              $(this.el).html(this.currentView.render().$el);
             } else {
                 // Render inside the page wrapper
                 $(this.el).html(this.currentView.render().$el);

@@ -3,18 +3,15 @@
  * GYEDI, HASHTAGCAMPAIGN.org are trademarks of GYEDI PLC, LONDON
  * plc and may be registered in certain jurisdictions.
  */
-
 define([], function(){
-    'use strict';
-    
-    var SearchResultsCardModel = Backbone.Model.extend({
+   'use strict';
+   
+   var UserController = {
+       
         
-        initialize: function(attrs){
-            attrs = attrs || {};
-            
-        }
-    });
     
-    return SearchResultsCardModel;
+   }
+   
+   return UserController;
 });
 

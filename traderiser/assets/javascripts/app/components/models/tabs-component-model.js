@@ -4,17 +4,18 @@
  * plc and may be registered in certain jurisdictions.
  */
 
-define([], function(){
+define(['backbone'], function(Backbone){
     'use strict';
     
-    var SearchResultsCardModel = Backbone.Model.extend({
-        
+    var TabsComponentModel = Backbone.Model.extend({
+        defaults: {
+            title : '',
+            style: '' //tabs-left tabs-right
+        },
         initialize: function(attrs){
             attrs = attrs || {};
-            
         }
     });
     
-    return SearchResultsCardModel;
+    return TabsComponentModel;
 });
-

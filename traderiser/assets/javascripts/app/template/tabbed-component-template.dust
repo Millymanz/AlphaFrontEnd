@@ -1,0 +1,13 @@
+
+{?label}<h4>{label}</h4> {/label}
+<ul class="nav nav-tabs" role="tablist">
+    {#tabs}
+    <li role="presentation" class="{?active}active{/active}"><a href="#{cid}" aria-controls="{cid}" role="tab" data-toggle="tab">{label}</a></li>
+    {/tabs}
+</ul>
+<!-- Tab panes -->
+  <div class="tab-content">
+{#tabcontent}
+    <div role="tabpanel" class="tab-pane {?active}active{/active}" id={cid}>{content}</div>
+{/tabcontent}
+  </div>

@@ -32,6 +32,10 @@ define([
         updateSessionUser: function( userData ){
             this.user.set(_.pick(userData, _.keys(this.user.defaults)));
         },
+        
+        getUser: function(){
+            return this.user;
+        },
 
 
         /*
@@ -122,11 +126,12 @@ define([
                             if(res.LoginSuccessful || res.UserId > 0){
                             self.updateSessionUser( res || {} );
                             self.set({ user_id: res.UserId, logged_in: true });
-                            
+                            $.cookie('logged_in', true);
                             if(callback && 'success' in callback) callback.success(res);
                             }else{
                                 //if(callback && 'success' in callback) callback.success(res);
                                 self.set({ logged_in : false });
+                                $.cookie('logged_in', false);
                                 if('error' in callback) callback.error(res);
                             }
                         }

@@ -11,9 +11,10 @@
 define([
     "../config/settings"
 ], function(app){
-
+    
+    
     var UserModel = Backbone.Model.extend({
-
+        
         initialize: function(){
            _.bindAll.apply(_, [this].concat(_.functions(this)));
         },
@@ -25,10 +26,35 @@ define([
             LastName: '',
             Email: ''
         },
-
-        url: function(){
-            return app.apiBase + '/user';
+        getUserProfile:function (callback) {
+        {
+           return $.ajax({
+                url: "data/GetUserProfile.json",
+                type: "GET",
+                dataType: "text",
+                success: function (returnedData) {
+                    if(callback)
+                            callback(returnedData);
+                        else
+                            return returnedData;
+                }
+                });
+            }
+        },
+        followQuery: function (query, callback) {
+        {
+            return $.ajax({
+                url: "/data/FollowQuery.json",
+                type: "POST",
+                dataType: "text",
+                data: { query: query },
+                success: function (returnedData) {
+                    callback(returnedData);
+                }
+            });
         }
+        }
+        
 
     });
     
