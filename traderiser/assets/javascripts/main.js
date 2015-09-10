@@ -20,7 +20,8 @@ require.config({
         numeral: 'vendor/numeral.min',
         bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
         'jquery-layout': 'vendor/jquery/jquery.layout-latest',
-        'backbone-super': 'vendor/backbone/backbone-super'
+        'backbone-super': 'vendor/backbone/backbone-super',
+        hightchart: 'http://code.highcharts.com/highcharts.js'
     },
     shim: {
         underscore: {

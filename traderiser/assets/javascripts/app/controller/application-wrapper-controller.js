@@ -52,7 +52,7 @@ define(['backbone'], function (Backbone) {
                 };
         },
         getAllContinousResultsCards: function (rawData) {
-            var json = rawData || this.get('rawUserProfileData');
+            var json = rawData;
             var continuousResults = [];
             var obj = JSON && JSON.parse(json) || $.parseJSON(json);
             if (obj != null || obj != 'undefined') {

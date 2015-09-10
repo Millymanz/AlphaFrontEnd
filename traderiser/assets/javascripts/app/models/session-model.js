@@ -3,8 +3,9 @@
  */
 define([
     "./user-model",
-    '../config/rest-utils'
-], function( UserModel, restUtils){
+    '../config/rest-utils',
+		'../controller/application-wrapper-controller'
+], function( UserModel, restUtils, ApplicationWrapperModel){
 
     var SessionModel = Backbone.Model.extend({
 
@@ -21,6 +22,7 @@ define([
             // Singleton user object
             // Access or listen on this throughout any module with app.session.user
             this.user = new UserModel({});
+						this.applicationWrapperModel = new ApplicationWrapperModel({});
         },
 
 
@@ -37,6 +39,9 @@ define([
             return this.user;
         },
 
+			getApplicationWrapperModel: function(){
+				return this.applicationWrapperModel;
+			},
 
         /*
          * Check for session from API 

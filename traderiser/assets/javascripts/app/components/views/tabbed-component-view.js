@@ -36,9 +36,15 @@ define(['../../views/abstract-view', 'templates' ], function(AbstractView, templ
                 });
                 
                 var tabContents = _.map(this.collection.models, function(model){
+                    
                      return {
                         cid: model.cid,
-                        content: model.get('content'),
+                        view: model.get('content'),
+                        content: function(chunk, context, bodies, params){
+                            var $viewEl = context.current().el.innerHTML;
+                             context.current().delegateEvents();
+                            return chunk.write($viewEl);
+                        },
                         active: model.get('active')
                     }
                 });

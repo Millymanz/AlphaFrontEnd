@@ -1,1 +1,1 @@
-<p data-id={QueryID} >{Query}</p>
+<a data-id={QueryID} href="#" >{Query}</a>

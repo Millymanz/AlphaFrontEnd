@@ -67,10 +67,9 @@ define([
            var historicQueryListView = new QueriesListView({collection: historicQueriesCollection});
            var queriesSubscriptionListView = new QueriesListView({collection: queriesSubscriptionCollection});
            
-           console.log(historicQueryListView.el);
            var options = {
-               tab1: historicQueryListView.el,
-               tab2: queriesSubscriptionListView.el
+               tab1: historicQueryListView,
+               tab2: queriesSubscriptionListView
            }
            this.showUserQueriesTab(options);
         },

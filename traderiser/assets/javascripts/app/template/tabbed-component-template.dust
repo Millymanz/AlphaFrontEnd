@@ -8,6 +8,6 @@
 <!-- Tab panes -->
   <div class="tab-content">
 {#tabcontent}
-    <div role="tabpanel" class="tab-pane {?active}active{/active}" id={cid}>{content}</div>
+    <div role="tabpanel" class="tab-pane {?active}active{/active}" id={cid}>{#content:view  /}</div>
 {/tabcontent}
   </div>

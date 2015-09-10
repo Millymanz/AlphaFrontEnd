@@ -11,11 +11,15 @@ define(['./abstract-view',
     var QueryItemView = AbstractView.extend('QueryItemView', {
         model: new Backbone.Model(),
         template: 'query-item-template',
+        events: {
+            'click a': '_clickedLink'
+        },
         tagName: 'li',
         initialize: function(options){
             options = options || {};
             this.constructor.__super__.initialize.apply(this, arguments);
             this.render();
+            
         },
         
         render: function(){
@@ -25,6 +29,9 @@ define(['./abstract-view',
             });
             return this;
         },
+        _clickedLink: function(){
+           alert('clicked');
+        }
         
     });
     

@@ -18,10 +18,6 @@ define(['./abstract-view',
         },
         render: function(){
              var self = this;
-//            templates.render(this.template, {}, function (error, output) {
-//                $(self.el).html(output);
-//            });
-                
             return this;
         },
         afterRender: function(){

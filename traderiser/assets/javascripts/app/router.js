@@ -48,7 +48,7 @@ define([
             
             this.show(searchPageView,options);
             //$(this.el).html(searchPageView.render().el);
-            var PageLayout = $('.search-page-view').layout();
+            var PageLayout = $(searchPageView.el).layout();
             $(this.el).addClass('fill');
             _.extend(window, {PageLayout: PageLayout});
             return this;
