@@ -13,7 +13,8 @@ define([
         // These will be overriden after the initial checkAuth
         defaults: {
             logged_in: false,
-            user_id: ''
+            user_id: '',
+            session_token: null
         },
 
         initialize: function(){
@@ -114,34 +115,73 @@ define([
             });
         },
 
-
-        login: function(opts, callback, args){
-            //this.postAuth(_.extend(opts, { method: 'UserAuth/Authenticate' }), callback);
-            var self = this;
+        requestLoginToken: function(opts){
             var options = {
-                url: 'UserAuth/Authenticate',
-                dataType: 'json',
-                method: 'POST',
-                requestData: opts,
-                contentType: 'application/x-www-form-urlencoded',
-            };
-            return restUtils.makeServerRequest(options)
-                    .then(function(res){
-                        if(res && callback !== null){
-                            if(res.LoginSuccessful || res.UserId > 0){
-                            self.updateSessionUser( res || {} );
-                            self.set({ user_id: res.UserId, logged_in: true });
-                            $.cookie('logged_in', true);
-                            if(callback && 'success' in callback) callback.success(res);
-                            }else{
-                                //if(callback && 'success' in callback) callback.success(res);
-                                self.set({ logged_in : false });
-                                $.cookie('logged_in', false);
-                                if('error' in callback) callback.error(res);
-                            }
-                        }
-                    });
+                            url: 'UserAuth/RequestToken',//http://devapi.traderiser.com/api/UserAuth/RequestToken
+                            dataType: 'json',
+                            method: 'POST',
+                            requestData: opts,
+                            contentType: 'application/x-www-form-urlencoded',
+                        };
+
+                return restUtils.makeServerRequest(options);
+
         },
+
+        getSessionToken: function(){
+            return this.get('session_token');
+        },
+
+         /*
+         Login process
+         */
+        login: function(opts, callback, args){
+
+            var self = this;
+            var userName = opts.UserName;
+
+            this.requestLoginToken(opts).then(function(token){
+                if(token){
+                var options = {
+                    UserName: userName,
+                    AccessToken: token
+                }
+                self.doLogin(options,callback, args);
+                }
+
+            });
+
+        },
+
+        doLogin: function(opts, callback, args){
+        var self = this;
+
+        var options = {
+                        url: 'UserAuth/Register',//http://devapi.traderiser.com/api/UserAuth/RequestToken
+                        dataType: 'json',
+                        method: 'POST',
+                        requestData: opts,
+                        contentType: 'application/x-www-form-urlencoded',
+                    };
+                    return restUtils.makeServerRequest(options)
+                            .then(function(res){
+                                if(res && callback !== null){
+                                    if(res.LoginSuccessful || res.UserId > 0){
+                                    self.updateSessionUser( res || {} );
+                                    self.set({ user_id: res.UserId, logged_in: true, session_token: opts.AccessToken });
+                                    $.cookie('logged_in', true);
+                                    if(callback && 'success' in callback) callback.success(res);
+                                    }else{
+                                        //if(callback && 'success' in callback) callback.success(res);
+                                        self.set({ logged_in : false , session_token: null});
+                                        $.cookie('logged_in', false);
+                                        if('error' in callback) callback.error(res);
+                                    }
+                                }
+                            });
+        },
+
+
 
         logout: function(opts, callback, args){
             this.postAuth(_.extend(opts, { method: 'logout' }), callback);
