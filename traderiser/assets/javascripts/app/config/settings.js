@@ -12,10 +12,11 @@ define([
 ], function ($, _, Backbone, sessionModel) {
 
     'use strict';
-    var baseUrl = '//devapi.traderiser.com/';
+    var baseUrl = '//devapi.traderiser.com';
 
     var Settings = {
-        apiBase: baseUrl + 'api',
+				serverUrl: baseUrl,
+        apiBase: baseUrl + '/api',
         deBugMode: true,
         // Show alert classes and hide after specified timeout
         showAlert: function (title, text, klass) {

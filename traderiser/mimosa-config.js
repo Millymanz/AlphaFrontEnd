@@ -21,7 +21,8 @@ exports.config = {
 
     "defaultServer": {
       "enabled": false
-    }
+    },
+		"port": 3999
   },
   "watch": {
   "exclude": [/[/\\](\.|~)[^/\\]+$/],

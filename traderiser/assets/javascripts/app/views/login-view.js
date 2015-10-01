@@ -60,8 +60,8 @@ define(['./abstract-view',
                 var userInput = this.$("#login-username-input");
                 var passInput = this.$("#login-password-input");
                 sessionModel.login({
-                    UserName: userInput.val(),
-                    Password: passInput.val()
+                    username: userInput.val(),
+                    password: passInput.val()
                 }, {
                     success: function(mod, res){
                         if(DEBUG) console.log("SUCCESS", mod, res);
@@ -94,8 +94,8 @@ define(['./abstract-view',
             if(evt) evt.preventDefault();
             if(this.$("#signup-form").parsley('validate')){
                 sessionModel.signup({
-                    username: this.$("#signup-username-input").val(),
-                    password: this.$("#signup-password-input").val(),
+                    Username: this.$("#signup-username-input").val(),
+                    Password: this.$("#signup-password-input").val(),
                     name: this.$("#signup-name-input").val()
                 }, {
                     success: function(mod, res){
@@ -123,4 +123,4 @@ define(['./abstract-view',
     });
     
     return LoginPageView;
-})
+});

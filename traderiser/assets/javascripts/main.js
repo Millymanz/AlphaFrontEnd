@@ -8,7 +8,8 @@ require.config({
         // Major libraries
         underscore: 'vendor/underscore/underscore', // https://github.com/amdjs
         jquery: 'vendor/jquery/jquery',
-        backbone: 'vendor/backbone/backbone.1.1',
+        backbone: 'vendor/backbone/backbone',
+				lodash:	'vendor/lodash/lodash-min',
         localstorage: 'vendor/backbone/backbone.localStorage-min',
         'backbone.fetch-cache': 'vendor/backbone/backbone.fetch.cache.min',
         log4javascript: 'vendor/log4javascript',
@@ -21,7 +22,9 @@ require.config({
         bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
         'jquery-layout': 'vendor/jquery/jquery.layout-latest',
         'backbone-super': 'vendor/backbone/backbone-super',
-        hightchart: 'http://code.highcharts.com/highcharts.js'
+				highcharts: 'http://code.highcharts.com/highcharts.js',
+				jgrowl: 'vendor/jquery/jquery.jgrowl'
+
     },
     shim: {
         underscore: {
@@ -39,6 +42,7 @@ require.config({
         },
         'jquery-layout': {deps: ['jquery']},
         'jquery.cookie': ['jquery'],
+				jgrowl: { deps: ['jquery']},
         parsley: {
             deps: ['jquery']
         },
@@ -58,7 +62,8 @@ require([
     'app/core',
     'app/config/settings',
     'jquery.cookie',
-    'bootstrap'
+    'bootstrap',
+		'jgrowl'
 
 ], function (Backbone, underscore, AppRouter, Core, settings ) {
     'use strict';

@@ -33,7 +33,7 @@ define([
         initialize: function () {
             Backbone.history.start();
             this.options = {requiresAuth: true};
-            
+            //check token available to user
         },
         homepage: function () {
             var homepage = new HomePageView({model: new Backbone.Model});
@@ -47,7 +47,6 @@ define([
             var options = {requiresAuth: true};
             
             this.show(searchPageView,options);
-            //$(this.el).html(searchPageView.render().el);
             var PageLayout = $(searchPageView.el).layout();
             $(this.el).addClass('fill');
             _.extend(window, {PageLayout: PageLayout});

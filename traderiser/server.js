@@ -66,7 +66,7 @@ exports.startServer = function(config, callback) {
   app.set('views', config.server.views.path);
   app.engine(config.server.views.extension, engines[config.server.views.compileWith]);
   app.set('view engine', config.server.views.extension);
-  app.set('port', process.env.PORT || config.server.port || 3000);
+  app.set('port', process.env.PORT || config.server.port || 3100);
 
   // middleware
   app.use(compression());

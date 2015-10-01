@@ -58,4 +58,4 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 	});
 
 	return AccordionComponentView;
-})
+});

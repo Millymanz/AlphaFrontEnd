@@ -14,7 +14,9 @@
     "connect-assetmanager-handlers": "0.0.18",
     "connect-assetmanager": "0.0.28",
     "dustjs-linkedin": "~2.7.2",
-    "dustjs-helpers": "~1.7.3"
+    "dustjs-helpers": "~1.7.3",
+    "lodash-amd": "~3.10.1",
+    "mimosa": "~2.3.32"
   },
   "devDependencies": {
     "mimosa-sass": "*",
