@@ -13,7 +13,10 @@ define([
 		// These will be overriden after the initial checkAuth
 		defaults: {
 			logged_in: false,
-			user_id: '',
+			username: '',
+			firstName: null,
+			lastName: null,
+			loginSuccessful: false,
 			session_token: null
 		},
 
@@ -115,18 +118,28 @@ define([
 				});
 		},
 
-		requestLoginToken: function(opts) {
+		requestLoginToken: function(opts, callback) {
 
+			var self = this;
 			var options = {
-				url: 'UserAuth/RequestToken',//http://devapi.traderiser.com/api/UserAuth/RequestToken
-				dataType: 'text',
+				url: this.url() + '/UserAuth/RequestToken',//http://devapi.traderiser.com/api/UserAuth/RequestToken
+				dataType: 'json',
 				method: 'POST',
-				requestData: opts,
+				data: opts,
 				contentType: 'application/x-www-form-urlencoded',
+				success: function(data){
+					self.set('session_token', data);
+				},
+				error: function(res){
+					if (callback && 'error' in callback) callback.error(res);
+				},
+				complete: function(data){
+				},
+				xhrFields: {
+					withCredentials: false// Required to be true for CORS to send cookies.
+				}
 			};
-
-			return restUtils.makeServerRequest(options);
-
+			return $.ajax(options);
 		},
 
 		getCurrentAccessToken: function() {
@@ -139,18 +152,16 @@ define([
 		login: function(opts, callback, args) {
 
 			var self = this;
-			var userName = opts.username;
+			var userName = opts.Username;
 
-			this.requestLoginToken(opts).then(function(token) {
+			this.requestLoginToken(opts,callback).then(function(token) {
 				if (token) {
 					var options = {
 						UserName: userName,
 						AccessToken: token
 					};
-
-					self.doLogin(options, callback, args);
+				return	self.doLogin(options, callback, args);
 				}
-
 			});
 
 		},
@@ -159,28 +170,44 @@ define([
 			var self = this;
 
 			var options = {
-				url: 'UserAuth/Register',
+				url: this.url() +  '/UserAuth/Register',
 				dataType: 'json',
 				method: 'POST',
-				requestData: opts,
-				contentType: 'application/x-www-form-urlencoded'
-			};
-			return restUtils.makeServerRequest(options)
-				.then(function(res) {
-					if (res && callback !== null) {
-						if (res.LoginSuccessful || res.UserId > 0) {
-							self.updateSessionUser(res || {});
-							self.set({ user_id: res.UserId, logged_in: true, session_token: opts.AccessToken });
-							$.cookie('logged_in', true);
-							if (callback && 'success' in callback) callback.success(res);
-						} else {
-							//if(callback && 'success' in callback) callback.success(res);
-							self.set({ logged_in: false, session_token: null});
-							$.cookie('logged_in', false);
-							if ('error' in callback) callback.error(res);
-						}
+				data: opts,
+				contentType: 'application/x-www-form-urlencoded',
+				success: function(res){
+					if (res.LoginSuccessful) {
+						self.updateSessionUser(res || {});
+					self.set({ userName: res.Username, userFirstName: res.FirstName, userLastName: res.LastName,userEmail: res.Email , logged_in: true });
+						if (callback && 'success' in callback) callback.success(res);
+					}else{
+						self.set({ user_id: 0, logged_in: false, session_token: null });
+						if (callback && 'error' in callback) callback.error(res);
 					}
-				});
+					return res;
+				},
+				error: function(e){
+					console.log(e);
+				}
+			};
+		return $.ajax(options);
+//
+//			return restUtils.makeServerRequest(options)
+//				.then(function(res) {
+//					if (res && callback !== null) {
+//						if (res.LoginSuccessful || res.UserId > 0) {
+//							self.updateSessionUser(res || {});
+//							self.set({ user_id: res.UserId, logged_in: true, session_token: opts.AccessToken });
+//							//$.cookie('logged_in', true);
+//							if (callback && 'success' in callback) callback.success(res);
+//						} else {
+//							//if(callback && 'success' in callback) callback.success(res);
+//							self.set({ logged_in: false, session_token: null});
+//							//$.cookie('logged_in', false);
+//							if ('error' in callback) callback.error(res);
+//						}
+//					}
+//				});
 		},
 
 

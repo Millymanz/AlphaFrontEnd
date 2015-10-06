@@ -60,13 +60,13 @@ define(['./abstract-view',
                 var userInput = this.$("#login-username-input");
                 var passInput = this.$("#login-password-input");
                 sessionModel.login({
-                    username: userInput.val(),
-                    password: passInput.val()
+                    Username: userInput.val(),
+                    Password: passInput.val()
                 }, {
                     success: function(mod, res){
                         if(DEBUG) console.log("SUCCESS", mod, res);
                         if(!mod.LoginSuccessful){
-                           $('.login-status').show().html('<p>Wrong credentials entered. Try again</p>'); 
+                           $('.login-status').show().html('<p>Wrong credentials entered. Try again</p>');
                            passInput.val('');
                            userInput.focus();
                            return;
@@ -77,9 +77,9 @@ define(['./abstract-view',
                     },
                     error: function(err){
                         if(DEBUG) console.log("ERROR", err);
-                        $('.login-status').show().html('<p>Wrong credentials entered. Try again</p>'); 
+                        $('.login-status').show().html('<p>Wrong credentials entered. Try again</p>');
                            passInput.val('');
-                           userInput.focus();                           
+                           userInput.focus();
                     }
                 });
             } else {

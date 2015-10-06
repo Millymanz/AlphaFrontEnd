@@ -5,8 +5,18 @@
     <ignored path="traderiser.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
-    <file path="/session-model.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1443712841599" ignored="false" />
-    <file path="/login-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1443444438456" ignored="false" />
+    <file path="/session-model.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1444151850406" ignored="false" />
+    <file path="/login-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1444151484104" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/search/se-search-presentation-webapp/src/main/webapp/resources/css/query-editor/query_editor.css" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1443790962240" ignored="false" />
+    <file path="/query_editor.css" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1443790930251" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/web/nw-base-webapp/src/main/webapp/templates/page.jsp" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1443795232078" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/components/dossier-visualisations/controllers/visualisation-data-controller.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1443796173929" ignored="false" />
+    <file path="/visualisation-data-controller.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1443796161097" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/components/dossier-visualisations/network/network-visualisation-model.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1443799393382" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/pom.xml" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1444037529711" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/analyzer/an-webservices-assets/src/main/mimosa/assets/js/analyzer/components/tdq/dossierBar.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1444144668606" ignored="false" />
+    <file path="/rest-utils.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1444147727546" ignored="false" />
+    <file path="$PROJECT_DIR$/public/javascripts/app/views/login-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1444151525959" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +80,19 @@
       <file leaf-file-name="rest-utils.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/javascripts/app/config/rest-utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="16" selection-start="1603" selection-end="1737" vertical-scroll-proportion="0.0">
+            <state line="54" column="38" selection-start="1668" selection-end="1668" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/javascripts/app/config/settings.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,7 +127,7 @@
       <file leaf-file-name="session-model.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assets/javascripts/app/models/session-model.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="152" column="0" selection-start="4071" selection-end="4071" vertical-scroll-proportion="0.16597077">
+            <state line="132" column="27" selection-start="3801" selection-end="3801" vertical-scroll-proportion="0.26645768">
               <folding />
             </state>
           </provider>
@@ -115,7 +136,7 @@
       <file leaf-file-name="login-view.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/login-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="10" selection-start="3582" selection-end="3582" vertical-scroll-proportion="0.0">
+            <state line="61" column="34" selection-start="2340" selection-end="2340" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -184,7 +205,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -451,6 +471,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -461,8 +482,8 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -477,19 +498,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -518,6 +526,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -661,13 +682,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/config/rest-utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/javascripts/app/router.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -742,23 +756,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/config/settings.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/assets/javascripts/app/config/rest-utils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="16" selection-start="1603" selection-end="1737" vertical-scroll-proportion="0.0">
+        <state line="54" column="38" selection-start="1668" selection-end="1668" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/login-view.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="10" selection-start="3582" selection-end="3582" vertical-scroll-proportion="0.0">
+        <state line="61" column="34" selection-start="2340" selection-end="2340" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/javascripts/app/models/session-model.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="0" selection-start="4071" selection-end="4071" vertical-scroll-proportion="0.16597077">
+        <state line="132" column="27" selection-start="3801" selection-end="3801" vertical-scroll-proportion="0.26645768">
           <folding />
         </state>
       </provider>

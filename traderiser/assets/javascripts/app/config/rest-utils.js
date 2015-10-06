@@ -51,9 +51,9 @@ define(['../core/logging'], function (logger) {
             // Set any request options which are always the same.
 //           $.support.cors = true; // Fix to stop "No transport" error for AJAX requests on IE < 10
             requestOptions.crossDomain = true;
-//            requestOptions.xhrFields = {
-//                withCredentials: true // Required to be true for CORS to send cookies.
-//            };
+            requestOptions.xhrFields = {
+                withCredentials: false // Required to be true for CORS to send cookies.
+            };
 
 						var accessSessionToken = sessionModel.getCurrentAccessToken();
 					 if(accessSessionToken != undefined){
