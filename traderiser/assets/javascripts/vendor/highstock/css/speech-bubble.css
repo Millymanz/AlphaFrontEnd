@@ -1,0 +1,91 @@
+/*
+#speech-bubble {
+    z-index:10;
+    border:1px solid red;
+    position:absolute;
+}
+*/
+
+div.pin {
+   background-image: url(pin.png);
+   width: 20px;
+   height: 30px;
+   position: absolute;
+   z-index: 1;
+}
+
+#speech-bubble .bubblecontent{
+	position: relative;	
+	padding:5px 5px 5px 5px;
+}
+
+#speech-bubble {
+    position: absolute;
+    max-width:300px;
+    min-width:200px; 
+    min-height:100px;
+    z-index: 5;
+}
+
+#speech-bubble .container {
+	position: relative;	
+
+    max-width:300px;
+    min-width:200px; 
+    min-height:100px;
+    padding: 0px;
+    background: #FFFFFF;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: #000000 solid 1px;
+    z-index: 5;
+}
+#speech-bubble .arrow {
+    position: absolute;
+    border-style: solid;
+    border-width: 20px 8px 0;
+    border-color: #000000 transparent;
+    display: block;
+    z-index: 1;
+    bottom: -19px;
+    left: 50%;
+}
+/*
+#speech-bubble:after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 25px 10px 0;
+    border-color: #FFFFFF transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    bottom: -25px;
+    left: 50%;
+}
+#speech-bubble:before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 25px 10px 0;
+    border-color: #000000 transparent;
+    display: block;
+    width: 0;
+    z-index: 0;
+    bottom: -26px;
+    left: 50%;
+}
+*/
+#speech-bubble .container .close-bar {
+    padding: 3px 5px;
+    cursor: pointer;
+}
+#speech-bubble .container .close-bar .close {
+    float: right;
+}
+
+#speech-bubble .container .content {
+    clear: both;
+    padding: 0px 5px 5px 5px;
+}

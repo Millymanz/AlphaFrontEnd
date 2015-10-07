@@ -4,8 +4,9 @@
 define([
 	"./user-model",
 	'../config/rest-utils',
-	'../controller/application-wrapper-controller'
-], function(UserModel, restUtils, ApplicationWrapperModel) {
+	'../controller/application-wrapper-controller',
+	'./heart-beat'
+], function(UserModel, restUtils, ApplicationWrapperModel, HeartBeat) {
 
 	var SessionModel = Backbone.Model.extend({
 
@@ -27,8 +28,20 @@ define([
 			// Access or listen on this throughout any module with app.session.user
 			this.user = new UserModel({});
 			this.applicationWrapperModel = new ApplicationWrapperModel({});
+			this.on('change:logged_in', this._toggleHeartBeat, this);
+			this.heartBeat = new HeartBeat();
+			this.heartBeat.set('callbackFunction', function(tokenState){
+				console.log('token state ' + tokenState);
+			});
 		},
 
+		_toggleHeartBeat: function(model, state){
+				if(state === true){
+					this.heartBeat.start();
+				}else{
+					this.heartBeat.stop();
+				}
+		},
 
 		url: function() {
 			return settings.apiBase;
@@ -73,51 +86,6 @@ define([
 				});
 		},
 
-
-		/*
-		 * Abstracted fxn to make a POST request to the auth endpoint
-		 * This takes care of the CSRF header for security, as well as
-		 * updating the user and session after receiving an API response
-		 */
-		postAuth: function(opts, callback, args) {
-			var self = this;
-			var postData = _.omit(opts, 'method');
-			if (DEBUG) console.log(postData);
-			$.ajax({
-				url: this.url() + '/' + opts.method,
-				contentType: 'application/json',
-				dataType: 'jsonp',
-				type: 'POST',
-				beforeSend: function(xhr) {
-					// Set the CSRF Token in the header for security
-					var token = $('meta[name="csrf-token"]').attr('content');
-					if (token) xhr.setRequestHeader('X-CSRF-Token', token);
-				},
-				data: JSON.stringify(_.omit(opts, 'method')),
-				success: function(res) {
-
-					if (!res.error) {
-						if (_.indexOf(['login', 'signup'], opts.method) !== -1) {
-
-							self.updateSessionUser(res.user || {});
-							self.set({ user_id: res.user.id, logged_in: true });
-						} else {
-							self.set({ logged_in: false });
-						}
-
-						if (callback && 'success' in callback) callback.success(res);
-					} else {
-						if (callback && 'error' in callback) callback.error(res);
-					}
-				},
-				error: function(mod, res) {
-					if (callback && 'error' in callback) callback.error(res);
-				}
-			}).complete(function() {
-					if (callback && 'complete' in callback) callback.complete(res);
-				});
-		},
-
 		requestLoginToken: function(opts, callback) {
 
 			var self = this;
@@ -153,7 +121,6 @@ define([
 
 			var self = this;
 			var userName = opts.Username;
-
 			this.requestLoginToken(opts,callback).then(function(token) {
 				if (token) {
 					var options = {
@@ -178,7 +145,7 @@ define([
 				success: function(res){
 					if (res.LoginSuccessful) {
 						self.updateSessionUser(res || {});
-					self.set({ userName: res.Username, userFirstName: res.FirstName, userLastName: res.LastName,userEmail: res.Email , logged_in: true });
+						self.set({ userName: res.Username, userFirstName: res.FirstName, userLastName: res.LastName,userEmail: res.Email , logged_in: true });
 						if (callback && 'success' in callback) callback.success(res);
 					}else{
 						self.set({ user_id: 0, logged_in: false, session_token: null });
@@ -191,37 +158,13 @@ define([
 				}
 			};
 		return $.ajax(options);
-//
-//			return restUtils.makeServerRequest(options)
-//				.then(function(res) {
-//					if (res && callback !== null) {
-//						if (res.LoginSuccessful || res.UserId > 0) {
-//							self.updateSessionUser(res || {});
-//							self.set({ user_id: res.UserId, logged_in: true, session_token: opts.AccessToken });
-//							//$.cookie('logged_in', true);
-//							if (callback && 'success' in callback) callback.success(res);
-//						} else {
-//							//if(callback && 'success' in callback) callback.success(res);
-//							self.set({ logged_in: false, session_token: null});
-//							//$.cookie('logged_in', false);
-//							if ('error' in callback) callback.error(res);
-//						}
-//					}
-//				});
 		},
 
 
 		logout: function(opts, callback, args) {
-			this.postAuth(_.extend(opts, { method: 'logout' }), callback);
-		},
-
-		signup: function(opts, callback, args) {
-			this.postAuth(_.extend(opts, { method: 'signup' }), callback);
-		},
-
-		removeAccount: function(opts, callback, args) {
-			this.postAuth(_.extend(opts, { method: 'remove_account' }), callback);
+//			this.postAuth(_.extend(opts, { method: 'logout' }), callback);
 		}
+
 
 	});
 
