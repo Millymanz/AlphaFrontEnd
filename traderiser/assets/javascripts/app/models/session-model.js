@@ -30,14 +30,21 @@ define([
 			this.applicationWrapperModel = new ApplicationWrapperModel({});
 			this.on('change:logged_in', this._toggleHeartBeat, this);
 			this.heartBeat = new HeartBeat();
-			this.heartBeat.set('callbackFunction', function(tokenState){
+			this.heartBeat.set('callbackFunction', _.bind(function(tokenState){
 				console.log('token state ' + tokenState);
-			});
+			}));
+		},
+
+		_heartBeatCallBackFunction: function(tokenState){
+			if(!tokenState){
+				this.heartBeat.stop();
+				this.logout();
+			}
 		},
 
 		_toggleHeartBeat: function(model, state){
 				if(state === true){
-					this.heartBeat.start();
+					this.heartBeat.start(this._heartBeatCallBackFunction);
 				}else{
 					this.heartBeat.stop();
 				}

@@ -28,7 +28,7 @@ define(['../config/rest-utils','backbone'], function(restUtils, Backbone){
 		 * @private
 		 */
 		_makeHeartProcess: function(){
-			var self;
+			var self = this;
 			var options = {
 				url: 'UserAuth/SessionTokenActive',
 				method: 'GET',
@@ -36,15 +36,15 @@ define(['../config/rest-utils','backbone'], function(restUtils, Backbone){
 			}
 
 			restUtils.makeServerRequest(options).then(function(data){
-					if(this.get('callbackFunction')){
-						if (DEBUG) console.log('Token key is active =>' + data);
-						this.get('callbackFunction')(data);
+					if(self.get('callbackFunction')){
+						if (DEBUG) console.log('Token key is active => ' + data);
+						self.get('callbackFunction')(data);
 					}
 
 			}).done(function(){
 					self._setTimeOutFunction = setTimeout(function(){
 						self._makeHeartProcess();
-					}, 1000);
+					}, 5000);
 				});
 		},
 		/**
