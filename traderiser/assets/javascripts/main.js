@@ -22,7 +22,7 @@ require.config({
         bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
         'jquery-layout': 'vendor/jquery/jquery.layout-latest',
         'backbone-super': 'vendor/backbone/backbone-super',
-				highcharts: 'http://code.highcharts.com/highcharts.js',
+				highstock: 'vendor/highcharts/js/highstock',
 				jgrowl: 'vendor/jquery/jquery.jgrowl'
 
     },

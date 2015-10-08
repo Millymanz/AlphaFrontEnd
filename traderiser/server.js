@@ -111,5 +111,54 @@ exports.startServer = function(config, callback) {
     console.log('Express server listening on port ' + app.get('port'));
   });
 
-  callback(server);
+	// serve a given server-side template
+	var serveTemplate = function(viewName, config) {
+		var cachebust = '';
+		if (process.env.NODE_ENV !== "production") {
+			cachebust = "?b=" + (new Date()).getTime();
+		}
+
+		var options = {
+			reload: config.liveReload.enabled,
+			optimize: config.isOptimize != null ? config.isOptimize : false,
+			cachebust: cachebust
+		};
+
+		return function(req, res) {
+			res.render(viewName, options);
+		};
+	};
+
+	var serveJSON = function(json, config) {
+		return function(req, res) {
+			json = (typeof json === 'string') ? json : JSON.stringify(json);
+			res.setHeader('Content-Type', 'application/json');
+			res.setHeader('Content-Length', json.length);
+			res.end(json);
+			//console.log(json);
+		};
+	};
+
+	var servePlainText = function(text, config) {
+		return function(req, res) {
+			text = text || '';
+			res.setHeader('Content-Type', 'text/plain');
+			res.setHeader('Content-Length', text.length);
+			res.end(text);
+		};
+	};
+
+	var serveView = function(viewName, config) {
+		return serveTemplate(viewName, config);
+	};
+
+
+
+	//components page testing
+	app.get('/component-high-charts', serveView('components/component-high-charts', config));
+
+
+
+
+	callback(server);
 };

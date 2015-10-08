@@ -12,8 +12,8 @@ define(['backbone'], function(Backbone){
 
 	var SearchPageModel = Backbone.Model.extend({
 		defaults: {
-			searchQuery: '',
-			showSearchBar: true,
+			searchQuery: null,
+			showSearchBar: true
 		},
 		initialize: function(attrs){
 			attrs = attrs || {};

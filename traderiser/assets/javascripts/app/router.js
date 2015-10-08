@@ -2,7 +2,7 @@ define([
     './views/homepage-view',
     './views/header-view',
     './views/searchpage-view',
-    './views/login-view',
+    './views/login-view'
     ], function (HomePageView, HeaderView, SearchPageView, LoginPageView) {
 
     'use strict';
