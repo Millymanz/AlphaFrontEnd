@@ -102,6 +102,9 @@ define(['backbone'], function (Backbone) {
                 }
             }
             return continuousResults;
+        },
+        getAnswer: function(){
+            
         }
 
 

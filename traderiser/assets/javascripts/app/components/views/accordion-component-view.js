@@ -30,19 +30,20 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 			accordionList = 	_.map(accordionModels, function(model){
 				var content  = model.get('view');
 				if(content instanceof Backbone.View){
-					content = content.$el.innerHTML;
+					content = content.render().$el;
+                                        content = content[0];
 				}
 					return {
 						cid: model.get('cid'),
 						label: model.get('label'),
 						view: content
 					}
-				})
+				});
 			}
 
 			templates.render(this.template, {
 				style: this.model.get('style'),
-				label: this.model.get('title'),
+				label: '', //this.model.get('title'),
 				panels: accordionList
 			}, function (error, output) {
 				$(self.el).html(output);
@@ -51,8 +52,12 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 			return this;
 		},
 		afterRender: function(){
-			$(this.el).collapse();
-		}
+                        this.accordianEl = this.$el.find('#accordion');
+			$(this.accordianEl).accordion();
+		},
+                refresh: function(){
+                    $(this.accordianEl).accordion("refresh");
+                }
 
 
 	});

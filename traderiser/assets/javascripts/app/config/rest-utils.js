@@ -5,8 +5,8 @@
  */
 define(['../core/logging'], function (logger) {
     'use strict';
-    
-     $.ajaxSetup({
+
+    $.ajaxSetup({
         cache: false,
         statusCode: {
             401: function () {
@@ -20,17 +20,17 @@ define(['../core/logging'], function (logger) {
             }
         }
     });
-    
+
     var accept = ' application/*+json';
-    
+
     var restUtils = {
         baseUrl: function (serverOnly) {
-					 var url = '';
-						if(serverOnly){
-							url = settings.serverUrl;
-						}else{
-							url = settings.apiBase;
-						}
+            var url = '';
+            if (serverOnly) {
+                url = settings.serverUrl;
+            } else {
+                url = settings.apiBase;
+            }
             return url;
         },
         /**
@@ -55,30 +55,30 @@ define(['../core/logging'], function (logger) {
                 withCredentials: false // Required to be true for CORS to send cookies.
             };
 
-						var accessSessionToken = sessionModel.getCurrentAccessToken();
-					 if(accessSessionToken != undefined){
-						requestOptions.beforeSend = function (request) {
-							request.setRequestHeader('Authorization', 'Bearer ' +accessSessionToken+' ');
-						};
+            var accessSessionToken = sessionModel.getCurrentAccessToken();
+            if (accessSessionToken != undefined) {
+                requestOptions.beforeSend = function (request) {
+                    request.setRequestHeader('Authorization', 'Bearer ' + hgv + ' ');
+                };
 
-					}
+            }
 
             if (options.contentType != null) {
-                requestOptions.contentType = options.contentType ;
+                requestOptions.contentType = options.contentType;
             }
 
             if (options.requestData != null) {
                 requestOptions.data = options.requestData;
             }
-            
-            if(options.processData != null){
+
+            if (options.processData != null) {
                 requestOptions.processData = JSON.stringify(options.processData);
             }
 
-					var urlBase = this.baseUrl();
-						if(options.serverOnly != null){
-							urlBase = this.baseUrl(options.serverOnly);
-						}
+            var urlBase = this.baseUrl();
+            if (options.serverOnly != null) {
+                urlBase = this.baseUrl(options.serverOnly);
+            }
 
             // Set any configurable request options.
             requestOptions.method = options.method || 'GET';
@@ -86,7 +86,7 @@ define(['../core/logging'], function (logger) {
             requestOptions.url = urlBase + '/' + options.url; // Make combined URL.
 
 
-            if(options.dataType !== null){
+            if (options.dataType !== null) {
                 requestOptions.dataType = options.dataType;
             }
             //requestOptions.dataType = options.dataType !== null ? options.dataType : 'json'; // dataType tells jQuery the type of data we expect.

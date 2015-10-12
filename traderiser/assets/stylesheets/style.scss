@@ -40,10 +40,15 @@ body {
   -webkit-box-sizing: content-box;
      -moz-box-sizing: content-box;
           box-sizing: content-box;
-}    
+    } 
+    
+    
+    .tr-component-high-chart-component-view{
+      
+    }
 }
 
 @import 'homepage';
 @import "layout-default-latest.css";
 @import 'login-style';
-@import 'vendor/jquery.jgrowl.css';
+@import '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css';
