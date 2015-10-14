@@ -33,6 +33,10 @@ define([
 			this.heartBeat.set('callbackFunction', _.bind(function(tokenState){
 				console.log('token state ' + tokenState);
 			}));
+
+			if($.cookie('logged_in') === true){
+				this.heartBeat.start(this._heartBeatCallBackFunction);
+			}
 		},
 
 		_heartBeatCallBackFunction: function(tokenState){
@@ -75,17 +79,21 @@ define([
 		checkAuth: function(callback, args) {
 			var self = this;
 			this.fetch({
+				url: '',
 				success: function(mod, res) {
 					if (!res.error && res.user) {
 						self.updateSessionUser(res.user);
 						self.set({ logged_in: true });
+						$.cookie('logged_in', true);
 						if ('success' in callback) callback.success(mod, res);
 					} else {
 						self.set({ logged_in: false });
+						$.cookie('logged_in', false);
 						if ('error' in callback) callback.error(mod, res);
 					}
 				}, error: function(mod, res) {
 					self.set({ logged_in: false });
+					$.cookie('logged_in', false);
 					if ('error' in callback) callback.error(mod, res);
 				}
 			}).complete(function() {
@@ -104,8 +112,11 @@ define([
 				contentType: 'application/x-www-form-urlencoded',
 				success: function(data){
 					self.set('session_token', data);
+					$.cookie('session_token', data);
 				},
 				error: function(res){
+					$.cookie('logged_in', false);
+					$.cookie('session_token', '');
 					if (callback && 'error' in callback) callback.error(res);
 				},
 				complete: function(data){
@@ -153,15 +164,19 @@ define([
 					if (res.LoginSuccessful) {
 						self.updateSessionUser(res || {});
 						self.set({ userName: res.Username, userFirstName: res.FirstName, userLastName: res.LastName,userEmail: res.Email , logged_in: true });
+						$.cookie('logged_in', true);
+						$.cookie('username', res.Email);
 						if (callback && 'success' in callback) callback.success(res);
 					}else{
 						self.set({ user_id: 0, logged_in: false, session_token: null });
+						$.cookie('logged_in', false);
 						if (callback && 'error' in callback) callback.error(res);
 					}
 					return res;
 				},
 				error: function(e){
 					console.log(e);
+					$.cookie('logged_in', false);
 				}
 			};
 		return $.ajax(options);

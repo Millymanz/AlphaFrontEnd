@@ -11,13 +11,12 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
     var SearchBoxView = AbstractView.extend('SearchBoxView', {
         template: 'search-box-template',
         events: {
-            'click .search-question-btn': 'searchQuestion',
+            'click .search-question-btn': 'searchQuestion'
         },
         initialize: function(options){
             //this._super(options);
             this.constructor.__super__.initialize.apply(this, arguments);
             
-            //this.listenTo(this.model,'change', this._render);
             this.render();
         },
         render: function(){
@@ -27,7 +26,7 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
             });
         },
         searchQuestion: function (evt) {
-            var searchForm = $('form');
+            var searchForm = this.$el.find('form');
             if (searchForm.parsley().validate()) {
                 //searchForm.submit();
                 var searchText = searchForm.find('input');

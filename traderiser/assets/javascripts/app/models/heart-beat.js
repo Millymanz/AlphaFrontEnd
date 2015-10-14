@@ -31,8 +31,7 @@ define(['../config/rest-utils','backbone'], function(restUtils, Backbone){
 			var self = this;
 			var options = {
 				url: 'UserAuth/SessionTokenActive',
-				method: 'GET',
-				dataType: 'json'
+				method: 'GET'
 			}
 
 			restUtils.makeServerRequest(options).then(function(data){

@@ -33,8 +33,9 @@ define(['./abstract-view',
                 this.question = options.q;
             }
             this.render();
-
             this.showGraph();
+					this._makeNewSearch(this.question);
+					this.listenTo(sessionModel.getApplicationWrapperModel(), 'change:searchTermText', this._makeNewSearch);
         },
         render: function () {
             var self = this;
@@ -42,7 +43,7 @@ define(['./abstract-view',
                 $(self.el).html(output);
             });
 
-            return this;
+          return this;
         },
         afterRender: function () {
 
@@ -78,13 +79,26 @@ define(['./abstract-view',
                 //console.log(rawData);
             }).done(function (data) {
                 var highChartOptions = new HighChartsModel({
+
+										colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', '#492970',
+											'#f28f43', '#77a1e5', '#c42525', '#a6c96a'],
+										chart: {
+											backgroundColor: '#fff',
+											borderWidth: 0,
+											plotBackgroundColor: '#fff',
+											plotShadow: false,
+											plotBorderWidth: 0,
+											position: 'absolute'
+										},
                     title: {
                         text: 'Monthly Average Temperature',
-                        x: -20 //center
+                        x: -20, //center,
+												font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
                     },
                     subtitle: {
                         text: 'Source: WorldClimate.com',
-                        x: -20
+                        x: -20,
+												font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
                     },
                     xAxis: {
                         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -107,8 +121,15 @@ define(['./abstract-view',
                         layout: 'vertical',
                         align: 'right',
                         verticalAlign: 'middle',
-                        borderWidth: 0
-                    }
+                        borderWidth: 0,
+											itemStyle: {
+												font: '9pt Trebuchet MS, Verdana, sans-serif',
+												color: 'black'
+											},
+											itemHoverStyle:{
+												color: 'gray'
+											}
+										}
 
                 });
 
@@ -135,7 +156,19 @@ define(['./abstract-view',
                 });
                 self.centerPane.html(hightchartcomponentview.el)
             });
-        }
+        },
+			/**
+			 * make a new search for
+			 * @param value
+			 * @private
+			 */
+				_makeNewSearch: function(value){
+				var self = this;
+				return this.model.getAnswer(value).then(function(data){
+					console.log(data);
+				});
+
+			}
     });
 
     return SearchPageView;

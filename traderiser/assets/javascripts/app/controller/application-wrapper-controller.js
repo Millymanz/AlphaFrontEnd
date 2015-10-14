@@ -5,19 +5,22 @@
  */
 
 
-define(['backbone'], function (Backbone) {
+define(['backbone', '../config/rest-utils'], function (Backbone, restUtils) {
     'use strict';
 
     var ApplicationWrapperController = Backbone.Model.extend({
         defaults: {
             profileConfigcards: '',
-            AllContinousResultsCards: ''
+            AllContinousResultsCards: '',
+						searchTerm: null
         },
         initialize: function (attrs) {
             attrs  = attrs || {};
             if(attrs.rawUserProfileData && attrs.rawUserProfileData != null){
                 this.set('rawUserProfileData', attrs.rawUserProfileData);
             }
+
+					this.listenTo(this, 'change:searchTerm', this.getAnswer);
         },
         getUserProfileConfigCards: function (rawData) {
             var json = rawData || this.get('rawUserProfileData');
@@ -103,12 +106,17 @@ define(['backbone'], function (Backbone) {
             }
             return continuousResults;
         },
-        getAnswer: function(){
-            
-        }
-
+			/**
+			 * Takes
+			 * @param query
+			 */
+				makeNewSearch: function(query){
+					return this.getAnswer(query).then(function(results){
+						console.log(results);
+					});
+				}
 
     });
 
     return ApplicationWrapperController;
-})
+});

@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(['backbone'], function(Backbone){
+define(['backbone', '../config/rest-utils'], function(Backbone, restUtils) {
 	'use strict';
 
 
@@ -15,40 +15,68 @@ define(['backbone'], function(Backbone){
 			searchQuery: null,
 			showSearchBar: true
 		},
-		initialize: function(attrs){
+		initialize: function(attrs) {
 			attrs = attrs || {};
 		},
 
-		getAllContinousResults: function (callback) {
-		{
-			return $.ajax({
-				url: "data/GetAllCompletedPatternDefaults.json",
-				type: "GET",
-				dataType: "text",
-				success: function (returnedData) {
-					if(callback)
-						callback(returnedData);
-					else
-					return returnedData;
-				}
-			});
-		}
-	},
-
-
-		getAllCompletedPatternDefaults: function(callback){
-
-				return  $.ajax({
-					url: "/data/GetAllCompletedPatternDefaultsTest.json",
-					type: "POST",
+		getAllContinousResults: function(callback) {
+			{
+				return $.ajax({
+					url: "data/GetAllCompletedPatternDefaults.json",
+					type: "GET",
 					dataType: "text",
-					success: function (data) {
-						if(!callback)
-							return data
+					success: function(returnedData) {
+						if (callback)
+							callback(returnedData);
 						else
-							callback();
+							return returnedData;
 					}
 				});
+			}
+		},
+
+		unfollowQuery: function(query, callback) {
+			{
+				$.ajax({
+					url: "/App/UnfollowQuery",
+					type: "POST",
+					dataType: "text",
+					data: { query: query },
+					success: function(returnedData) {
+						callback(returnedData);
+					}
+				});
+			}
+		},
+
+		followQuery: function(query, callback) {
+			{
+				$.ajax({
+					url: "/App/FollowQuery",
+					type: "POST",
+					dataType: "text",
+					data: { query: query },
+					success: function(returnedData) {
+						callback(returnedData);
+					}
+				});
+			}
+		},
+
+
+		getAllCompletedPatternDefaults: function(callback) {
+
+			return  $.ajax({
+				url: "/data/GetAllCompletedPatternDefaultsTest.json",
+				type: "POST",
+				dataType: "text",
+				success: function(data) {
+					if (!callback)
+						return data
+					else
+						callback();
+				}
+			});
 
 		},
 		/**
@@ -58,26 +86,16 @@ define(['backbone'], function(Backbone){
 		 * @param callbackError
 		 * @returns {Promise|callback}
 		 */
-		getAnswer : function (query, callback, callbackError) {
-			if(this.get('searchQuery') !== ""){
-				query = this.get('searchQuery');
+		getAnswer: function(query, callback, callbackError) {
+
+			var options = {
+				url: 'Query/GetAnswer',
+				method: "POST",
+				dataType: "text",
+				contentType: 'application/x-www-form-urlencoded',
+				data: { 'Query': query, 'Username': sessionModel.get('Email') }
 			}
-			return 	$.ajax({
-					url: "/data/GetAnswer.json",
-					type: "POST",
-					dataType: "text",
-					data: { searchQuery: query },
-					success: function (returnedData) {
-						if(callback && callback instanceof  Function)
-							callback(returnedData);
-						else
-							return returnedData
-					},
-					error: function (data) {
-						// Failure here is valid if the there are no groups in the database, e.g. soon after the database has been cleared.
-						alert('ajax call  failed');
-					}
-				});
+			return restUtils.makeServerRequest(options);
 		},
 		/**
 		 * Fetches currency symbol data
@@ -87,32 +105,32 @@ define(['backbone'], function(Backbone){
 		 * @param callbackError
 		 * @returns {*}
 		 */
-		fetchSymbolData: function (symbolID, timeFrame, callback, callbackError) {
+		fetchSymbolData: function(symbolID, timeFrame, callback, callbackError) {
 
-		return $.ajax({
-			url: "/App/GetSymbolData.json",
-			type: "POST",
-			dataType: "text",
-			data: { symbolID: symbolID, timeFrame: timeFrame },
-			success: function (returnedData) {
-				if(callback){
-					callback(returnedData);
-				}else{
-					return returnedData;
+			return $.ajax({
+				url: "/App/GetSymbolData.json",
+				method: "POST",
+				dataType: "text",
+				data: { symbolID: symbolID, timeFrame: timeFrame },
+				success: function(returnedData) {
+					if (callback) {
+						callback(returnedData);
+					} else {
+						return returnedData;
+					}
+
+				},
+				error: function(data) {
+					// Failure here is valid if the there are no groups in the database, e.g. soon after the database has been cleared.
+					alert('ajax call  failed');
 				}
+			})
 
-			},
-			error: function (data) {
-				// Failure here is valid if the there are no groups in the database, e.g. soon after the database has been cleared.
-				alert('ajax call  failed');
-			}
-		})
-
-	}
+		}
 
 
 
 
-});
-return SearchPageModel;
+	});
+	return SearchPageModel;
 });

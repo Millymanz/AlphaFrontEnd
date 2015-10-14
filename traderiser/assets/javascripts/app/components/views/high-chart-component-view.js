@@ -32,16 +32,16 @@ define(['../../views/abstract-view',
             
             PageLayout.options.center.onresize = _.bind(this._resizeChart, this);
             
-            //$(this.el).attr({'width': '100%', 'height': '100%', 'position' : 'absolute'});
+            $(this.el).attr({'width': '100%', 'height': '100%', 'margin': '0 auto'});
         },
         _resizeChart: function(pane, paneEL){
            var self = this;
-           if (this.resizeTO) clearTimeout(this.resizeTO);
-        this.resizeTO = setTimeout(function () {
+
+        setTimeout(function () {
             // resizeEnd call function with pass context body
-                self.adjustChart(self.$el);
+					$(window).resize();
             //    self.$el.highcharts().resize();
-        }, 500);
+        }, 1000);
         },
         initializeHighCharts: function () {
             var highChartsOptions = $.extend(true, {
@@ -61,6 +61,13 @@ define(['../../views/abstract-view',
             this.$el.highcharts().redraw();
             return this;
         },
+				afterRender: function(){
+					setTimeout(function () {
+						// resizeEnd call function with pass context body
+						$(window).resize();
+						//    self.$el.highcharts().resize();
+					}, 1000);
+				},
         bindHighChartsEvents: function () {
             this.listenTo(this.collection, 'add', this.onAddSerie);
             this.listenTo(this.collection, 'remove', this.onRemoveSerie);
@@ -111,25 +118,6 @@ define(['../../views/abstract-view',
         },
         onBeforeDestroy: function () {
             this.$el.highcharts().destroy();
-        },
-        adjustChart: function(chart){
-            try {
-            if (typeof (chart === 'undefined' || chart === null) && this instanceof jQuery) { // if no obj chart and the context is set
-               
-                this.find('.highcharts-container:visible').each(function () { // for only visible charts container in the curent context
-                    $container = $(this); // context container
-                    $container.find('div[id^="chart-"]').each(function () { // for only chart
-                        $chart = $(this).highcharts(); // cast from JQuery to highcharts obj
-                        $chart.setSize($container.width(), $chart.chartHeight, doAnimation = true); // adjust chart size with animation transition
-                    });
-                });
-            } else {
-                chart.setSize($('.highcharts:visible').width(), chart.chartHeight, doAnimation = true); // if chart is set, adjust
-            }
-        } catch (err) {
-            // do nothing
-        }
-            
         }
     });
 

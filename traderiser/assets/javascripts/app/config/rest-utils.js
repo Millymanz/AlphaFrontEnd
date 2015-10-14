@@ -3,21 +3,28 @@
  * GYEDI, HASHTAGCAMPAIGN.org are trademarks of GYEDI PLC, LONDON
  * plc and may be registered in certain jurisdictions.
  */
-define(['../core/logging'], function (logger) {
+define(['../core/logging', 'toastr'], function (logger, toastr) {
     'use strict';
 
     $.ajaxSetup({
         cache: false,
         statusCode: {
             401: function () {
-                // Redirec the to the login page.
-                window.location.replace('/#login');
+                // Redirect the to the login page. Authorised user
+								toastr.error('Opps! Not Authorised');
+								$.cookie('logged_in', 'false');
+								setTimeout(function(){
+									window.location.replace('/#login');
+								}, 2000)
 
             },
             403: function () {
                 // 403 -- Access denied
                 window.location.replace('/#denied');
-            }
+            },
+					error: function(error){
+						toastr.error(error);
+					}
         }
     });
 
@@ -58,7 +65,7 @@ define(['../core/logging'], function (logger) {
             var accessSessionToken = sessionModel.getCurrentAccessToken();
             if (accessSessionToken != undefined) {
                 requestOptions.beforeSend = function (request) {
-                    request.setRequestHeader('Authorization', 'Bearer ' + hgv + ' ');
+                    request.setRequestHeader('Authorization', 'Bearer ' + accessSessionToken + ' ');
                 };
 
             }
