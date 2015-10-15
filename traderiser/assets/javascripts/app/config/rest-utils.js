@@ -12,10 +12,10 @@ define(['../core/logging', 'toastr'], function (logger, toastr) {
             401: function () {
                 // Redirect the to the login page. Authorised user
 								toastr.error('Opps! Not Authorised');
-								$.cookie('logged_in', 'false');
-								setTimeout(function(){
-									window.location.replace('/#login');
-								}, 2000)
+//								$.cookie('logged_in', 'false');
+//								setTimeout(function(){
+//									window.location.replace('/#login');
+//								}, 2000)
 
             },
             403: function () {
@@ -63,7 +63,7 @@ define(['../core/logging', 'toastr'], function (logger, toastr) {
             };
 
             var accessSessionToken = sessionModel.getCurrentAccessToken();
-            if (accessSessionToken != undefined) {
+            if (accessSessionToken !== undefined || accessSessionToken !== null) {
                 requestOptions.beforeSend = function (request) {
                     request.setRequestHeader('Authorization', 'Bearer ' + accessSessionToken + ' ');
                 };
@@ -96,10 +96,13 @@ define(['../core/logging', 'toastr'], function (logger, toastr) {
             if (options.dataType !== null) {
                 requestOptions.dataType = options.dataType;
             }
-            //requestOptions.dataType = options.dataType !== null ? options.dataType : 'json'; // dataType tells jQuery the type of data we expect.
-            requestOptions.accepts = {// accepts configures the Accept header content based on the dataType.
-                json: accept
-            };
+            requestOptions.dataType = options.dataType !== null ? options.dataType : 'json'; // dataType tells jQuery the type of data we expect.
+
+            if(options.accepts	!== null){
+							requestOptions.accepts = {// accepts configures the Accept header content based on the dataType.
+								json: accept
+							};
+						}
 
             return  $.ajax(requestOptions);
         }

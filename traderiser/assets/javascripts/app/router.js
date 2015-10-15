@@ -34,6 +34,7 @@ define([
 		initialize: function() {
 			Backbone.history.start();
 			this.options = {requiresAuth: true};
+			sessionModel.checkAccessCredentials();
 		},
 		homepage: function() {
 			this.showSearchBox = false;

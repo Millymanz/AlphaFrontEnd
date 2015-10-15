@@ -33,9 +33,15 @@ define([
 			this.heartBeat.set('callbackFunction', _.bind(function(tokenState){
 				console.log('token state ' + tokenState);
 			}));
-
-			if($.cookie('logged_in') === true){
-				this.heartBeat.start(this._heartBeatCallBackFunction);
+		},
+		/**
+		 * Call this function first to make sure username and token are already active
+		 */
+		checkAccessCredentials: function(){
+			if(this.get('logged_in') == true || $.cookie('logged_in') == "true" ){
+				this.startHeartBeat();
+				this.set('session_token', $.cookie('session_token'));
+				this.checkAuth();
 			}
 		},
 
@@ -63,6 +69,10 @@ define([
 			this.user.set(_.pick(userData, _.keys(this.user.defaults)));
 		},
 
+		startHeartBeat: function(){
+			this.heartBeat.start(this._heartBeatCallBackFunction);
+		},
+
 		getUser: function() {
 			return this.user;
 		},
@@ -79,25 +89,20 @@ define([
 		checkAuth: function(callback, args) {
 			var self = this;
 			this.fetch({
-				url: '',
+				url: this.url() + '/UserAuth/GetUserInfoUsername?username=' + this.getUser().getUserName(),
+				method: 'POST',
 				success: function(mod, res) {
-					if (!res.error && res.user) {
-						self.updateSessionUser(res.user);
-						self.set({ logged_in: true });
-						$.cookie('logged_in', true);
-						if ('success' in callback) callback.success(mod, res);
+					if (res.Email && res.Email !== "") {
+						self.updateSessionUser(res);
+						//if ('success' in callback) callback.success(mod, res);
 					} else {
-						self.set({ logged_in: false });
-						$.cookie('logged_in', false);
-						if ('error' in callback) callback.error(mod, res);
+					//	if ('error' in callback) callback.error(mod, res);
 					}
 				}, error: function(mod, res) {
-					self.set({ logged_in: false });
-					$.cookie('logged_in', false);
-					if ('error' in callback) callback.error(mod, res);
+					//if ('error' in callback) callback.error(mod, res);
 				}
 			}).complete(function() {
-					if ('complete' in callback) callback.complete();
+					//if ('complete' in callback) callback.complete();
 				});
 		},
 
@@ -129,7 +134,7 @@ define([
 		},
 
 		getCurrentAccessToken: function() {
-			return this.get('session_token');
+			return this.get('session_token') || $.cookie('session_token');
 		},
 
 		/*

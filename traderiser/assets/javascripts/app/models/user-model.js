@@ -41,6 +41,9 @@ define([
                 });
             }
         },
+				getUserName: function(){
+					return this.get('Email') || $.cookie('username')
+				},
         followQuery: function (query, callback) {
         {
             return $.ajax({
@@ -53,6 +56,8 @@ define([
                 }
             });
         }
+
+
         }
         
 

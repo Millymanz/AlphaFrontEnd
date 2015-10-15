@@ -91,9 +91,8 @@ define(['backbone', '../config/rest-utils'], function(Backbone, restUtils) {
 			var options = {
 				url: 'Query/GetAnswer',
 				method: "POST",
-				dataType: "text",
-				contentType: 'application/x-www-form-urlencoded',
-				data: { 'Query': query, 'Username': sessionModel.get('Email') }
+				dataType: "json",
+				requestData: { 'Query': query, 'Username': sessionModel.getUser().getUserName() }
 			}
 			return restUtils.makeServerRequest(options);
 		},
