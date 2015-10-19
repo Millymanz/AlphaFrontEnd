@@ -10,6 +10,7 @@ define(['./abstract-view',
     '../components/views/high-chart-component-view',
     '../models/search-page-model',
     '../components/models/highcharts-model',
+		'../controller/traderiser-chart-controller',
     'jquery-layout',
     'jquery-ui'], function (
         AbstractView,
@@ -18,12 +19,14 @@ define(['./abstract-view',
         templates,
         HighChartComponentView,
         SearchPageModel,
-        HighChartsModel) {
+        HighChartsModel,
+				TradeRiserComponent) {
     'use strict';
 
     var SearchPageView = AbstractView.extend('SearchPageView', {
         model: new SearchPageModel(),
         template: 'search-page-template',
+				controller: new TradeRiserComponent(),
         events: {
         },
         initialize: function (options) {
@@ -165,7 +168,8 @@ define(['./abstract-view',
 				_makeNewSearch: function(value){
 				var self = this;
 				return this.model.getAnswer(value).then(function(data){
-					console.log(data);
+					//console.log(data);
+					 self.controller.displayResults(data);
 				});
 
 			}
