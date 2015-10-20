@@ -40,7 +40,6 @@ define(['../../views/abstract-view',
         setTimeout(function () {
             // resizeEnd call function with pass context body
 					$(window).resize();
-            //    self.$el.highcharts().resize();
         }, 1000);
         },
         initializeHighCharts: function () {

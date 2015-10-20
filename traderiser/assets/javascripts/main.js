@@ -10,7 +10,6 @@ require.config({
         underscore: 'vendor/underscore/underscore', // https://github.com/amdjs
         jquery: 'vendor/jquery/jquery',
         backbone: 'vendor/backbone/backbone',
-        lodash: 'vendor/lodash/lodash-min',
         localstorage: 'vendor/backbone/backbone.localStorage-min',
         'backbone.fetch-cache': 'vendor/backbone/backbone.fetch.cache.min',
         log4javascript: 'vendor/log4javascript',
@@ -23,7 +22,7 @@ require.config({
         'jquery-layout': 'vendor/jquery/jquery.layout-latest',
         'backbone-super': 'vendor/backbone/backbone-super',
         highstock: 'vendor/highcharts/js/highstock',
-        toastr: '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr',
+        toastr: '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr'
     },
     shim: {
         underscore: {
@@ -81,27 +80,25 @@ require([
         _.extend(window, {
             appRouter: appRouter
         });
-			$('body').append('<div id="h_v"></div>').hide();
-
-			var pusher = new Pusher('0c52bffe086a83952d16');
-			var hvnme = $('#h_v').val();
-			var channel = pusher.subscribe(hvnme);
-
-			channel.bind('my_event', function (data) {
-				alert(data.message);
-				//UpdateContinousQueryResultCard(data);
-
-			});
-
-
 		});
 
-	// Enable pusher logging - don't include this in production
+	$('body').append($('<div id="h_v"></div>').hide());
+// Enable pusher logging - don't include this in production
 	Pusher.log = function (message) {
 		if (window.console && window.console.log) {
 			window.console.log(message);
 		}
 	};
+	var pusher = new Pusher('0c52bffe086a83952d16');
+	var hvnme = $('#h_v').val();
+	var channel = pusher.subscribe(hvnme);
+
+	channel.bind('my_event', function (data) {
+		alert(data.message);
+		//UpdateContinousQueryResultCard(data);
+	});
+
+
 });
 
 
