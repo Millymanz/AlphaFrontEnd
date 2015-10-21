@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highstock'], function(AbstractView, Backbone, chartHelper, highcharts){
+define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'highstock'], function(AbstractView, Backbone, chartHelper, highcharts) {
 
 
 	//Class
@@ -25,15 +25,15 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 	}
 
 
-	var TradeRiserComponent =  AbstractView.extend('TradeRiserComponent',{
-		initialize: function(){
+	var TradeRiserComponent = AbstractView.extend('TradeRiserComponent', {
+		initialize: function() {
 
 			this.constructor.__super__.initialize.apply(this, arguments);
 
 			this.render();
 
 		},
-		render:function(){
+		render: function() {
 
 			return this;
 		},
@@ -42,107 +42,106 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 		 * RenderResults
 		 * @param returnedData
 		 */
-		renderQueryResults: function (returnedData) {
-		var self  = this;
-		try
-		{
-			var loadchart = document.getElementById("loadchartDia");
-			if (loadchart != null || loadchart != 'defined') {
-				loadchart.style.display = 'none';
-			}
+		renderQueryResults: function(returnedData) {
+			var self = this;
+			try {
+				var loadchart = document.getElementById("loadchartDia");
+				if (loadchart != null || loadchart != 'defined') {
+					loadchart.style.display = 'none';
+				}
 
-			var json = returnedData;
-			var obj = JSON && JSON.parse(json) || $.parseJSON(json);
+				var json = returnedData;
+				var obj = JSON && JSON.parse(json) || $.parseJSON(json);
 
-			if (obj != "") {
-				if (obj != null || obj != 'undefined') {
+				if (obj != "") {
+					if (obj != null || obj != 'undefined') {
 
-					var assetClassName = obj.ResultSummaries[0].SymbolID;
+						var assetClassName = obj.ResultSummaries[0].SymbolID;
 
-					for (var i = 0; i < obj.ResultSummaries.length; i++) {
+						for (var i = 0; i < obj.ResultSummaries.length; i++) {
 
-						var extraFieldsArray = new Array();
+							var extraFieldsArray = new Array();
 
-						var tings = "";
-						var limit = 2;
-						if (obj.ResultSummaries[i].KeyResultField.length <= 2) { limit = obj.ResultSummaries[i].KeyResultField.length; }
+							var tings = "";
+							var limit = 2;
+							if (obj.ResultSummaries[i].KeyResultField.length <= 2) {
+								limit = obj.ResultSummaries[i].KeyResultField.length;
+							}
 
-						//for (var n = 0; n < obj.ResultSummaries[i].KeyResultField.length; n++) {
-						for (var n = 0; n < limit; n++) {
+							//for (var n = 0; n < obj.ResultSummaries[i].KeyResultField.length; n++) {
+							for (var n = 0; n < limit; n++) {
 
-							var str = JSON.stringify(obj.ResultSummaries[i].KeyResultField[n]);
-							var str = str.replace('"', ' ');
-							var resn = str.replace('"', ' ');
-							var resv = resn.replace('}', ' ');
-							var resf = resv.replace('{', ' ');
-							var ress = resf.replace(',', ' ');
+								var str = JSON.stringify(obj.ResultSummaries[i].KeyResultField[n]);
+								var str = str.replace('"', ' ');
+								var resn = str.replace('"', ' ');
+								var resv = resn.replace('}', ' ');
+								var resf = resv.replace('{', ' ');
+								var ress = resf.replace(',', ' ');
 
-							var tempArray = obj.ResultSummaries[i].KeyResultField[n];
+								var tempArray = obj.ResultSummaries[i].KeyResultField[n];
 
-							var extraFields = [{
-								keyfield: tempArray[0] + ' : ', keydata: tempArray[1]
-							}];
+								var extraFields = [
+									{
+										keyfield: tempArray[0] + ' : ', keydata: tempArray[1]
+									}
+								];
 
-							tings = extraFields;
+								tings = extraFields;
 
-							extraFieldsArray.push(extraFields);
+								extraFieldsArray.push(extraFields);
+							}
+
+							var resultItem = {
+								SymbolID: obj.ResultSummaries[i].SymbolID,
+								StartDateTime: obj.ResultSummaries[i].StartDateTime,
+								EndDateTime: obj.ResultSummaries[i].EndDateTime,
+								Source: obj.ResultSummaries[i].Source,
+								TimeFrame: obj.ResultSummaries[i].TimeFrame,
+								MoreStandardData: obj.ResultSummaries[i].MoreStandardData,
+								MoreKeyFields: obj.ResultSummaries[i].MoreKeyFields,
+								QueryID: obj.ResultSummaries[i].QueryID,
+								SymbolImages: obj.ResultSummaries[i].ImageCollection,
+								ExtraFields: extraFieldsArray
+							};
+
+							self.onDemandResults.push(resultItem);
+
+							if (i == 0) {
+								self.selectHighlightItem(resultItem.QueryID);
+							}
 						}
-
-						var resultItem = {
-							SymbolID: obj.ResultSummaries[i].SymbolID,
-							StartDateTime: obj.ResultSummaries[i].StartDateTime,
-							EndDateTime: obj.ResultSummaries[i].EndDateTime,
-							Source: obj.ResultSummaries[i].Source,
-							TimeFrame: obj.ResultSummaries[i].TimeFrame,
-							MoreStandardData: obj.ResultSummaries[i].MoreStandardData,
-							MoreKeyFields: obj.ResultSummaries[i].MoreKeyFields,
-							QueryID: obj.ResultSummaries[i].QueryID,
-							SymbolImages: obj.ResultSummaries[i].ImageCollection,
-							ExtraFields: extraFieldsArray
-						};
-
-						self.onDemandResults.push(resultItem);
-
-						if (i == 0) {
-							self.selectHighlightItem(resultItem.QueryID);
-						}
+						self.displayResult(obj);
 					}
-					self.displayResult(obj);
+				}
+				else {
+
+					//var displayError = $("#noresults");
+
+					var displayError = document.getElementById("noresults");
+					displayError.style.display = 'block';
+					//$(this.el).append($('<div style='width: 200px;'">TradeRiser does not understand your input. Tip-Check your spelling, and use English</div>'));
+
+
+					//$(this.el).append($('<div id="noresults">TradeRiser does not understand your input. Tip-Check your spelling, and use English</div>'));
+					// alert('No Results');
 				}
 			}
-			else {
-
-				//var displayError = $("#noresults");
-
-				var displayError = document.getElementById("noresults");
-				displayError.style.display = 'block';
-				//$(this.el).append($('<div style='width: 200px;'">TradeRiser does not understand your input. Tip-Check your spelling, and use English</div>'));
-
-
-				//$(this.el).append($('<div id="noresults">TradeRiser does not understand your input. Tip-Check your spelling, and use English</div>'));
-				// alert('No Results');
+			catch (ex) {
+				console.log(ex);
 			}
-		}
-		catch (ex)
-		{
-			alert(ex);
-		}
 
 		},
 
-		displayResults: function(obj){
-			var self  = this;
-			$(this.el).empty();
-
-			$(".pane").width(self.paneFixWidth);
-
+		displayResults: function(obj) {
+			var self = this;
 			var resultsData = new ResultsData();
 
 			var arraySeries = [];
 			var overlayArray = [];
+			var trendsOverlayArray = [];
 			var highlighterArray = [];
 			var yAxisArray = []; //has to be double quotes
-
+			var groupingUnits = [];
 
 			var presentationTypeCount = obj.CurrentResult.PresentationTypes.length;
 
@@ -159,19 +158,213 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 			var iterRow = 0;
 			var iter = 0;
 
+			var mainWidget = {
+				charts: []
+			};
 			//Main widget
 			try {
 				for (var pp = 0; pp < presentationTypeCount; pp++, iterRow++) {
 
 					var json = rawDataResults[pp].ChartReadyDataResults;
 					var dataLookUp = self.createLookUp(json);
+					var mulitipleWidgetLookUp = self.createMulitipleWidgetsLookUp(json);
+					var extIndicatorLookUp = self.createExternalIndicatorLookUp(json);
 
 
 					switch (obj.CurrentResult.PresentationTypes[pp].MainWidget) {
 						case 'Table':
 						{
 
-						} break;
+						}
+							break;
+						case 'SideBarChart':
+						{
+							self.widgetPlacerT(pp, presentationTypeCount, 'Statistical Analysis', '500px', 'sideBarChart', iter);
+
+
+							var lengthCount = obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults.length;
+
+							var lineSeriesOptions = [],
+								symbolNames = [],
+								chartData = [];
+							var tempSeries = [];
+
+							var xAxis = "";
+							var yAxis = "";
+							var title = "";
+
+							for (var bb = 0; bb < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults.length; bb++) {
+								for (var ss = 0; ss < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].GenericStr.length; ss++) {
+
+									for (var cc = 0; cc < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].GenericStr[ss].length; cc++) {
+
+										if (ss == 0) {
+											symbolNames.push(obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].GenericStr[0][cc]);
+
+											xAxis = obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Xaxis;
+											yAxis = obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Yaxis;
+											title = obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Title;
+
+										}
+										else {
+											var timeFrameGroupedData = {
+												name: obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].GenericStr[ss][cc],
+												data: []
+											};
+											tempSeries.push(timeFrameGroupedData);
+
+										}
+									}
+								}
+							}
+
+
+							for (var bb = 0; bb < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults.length; bb++) {
+								chartData = [];
+
+								for (var ss = 0; ss < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Value.length; ss++) {
+									chartData = []
+									for (var vv = 0; vv < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Value[ss].length; vv++) {
+
+										chartData.push(obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Value[ss][vv]);
+									}
+									tempSeries[ss].data = chartData;
+								}
+							}
+							var chartInfo = {
+								chartID: _.uniqueId(),
+								chartData:{
+									chart: {
+										type: 'bar'
+									},
+									title: {
+										text: title
+									},
+									xAxis: {
+										categories: symbolNames,
+										title: {
+											text: null
+										}
+									},
+									yAxis: {
+										min: 0,
+										title: {
+											text: yAxis,
+											align: 'high'
+										},
+										labels: {
+											overflow: 'justify'
+										}
+									},
+									tooltip: {
+										valueSuffix: ' ' + yAxis
+									},
+									plotOptions: {
+										bar: {
+											dataLabels: {
+												enabled: true
+											}
+										}
+									},
+									legend: {
+										layout: 'vertical',
+										align: 'right',
+										verticalAlign: 'top',
+										x: -40,
+										y: 80,
+										floating: true,
+										borderWidth: 1,
+										backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+										shadow: true
+									},
+									credits: {
+										enabled: false
+									},
+
+									series: tempSeries
+								}};
+
+									mainWidget.charts.push(chartInfo);
+							//$('.sideBarChart').highcharts();
+
+							self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray);
+
+						}
+							break;
+						case 'ColumnChart':
+						{
+							self.widgetPlacerT(pp, presentationTypeCount, 'Statistical Analysis', '500px', 'columnChart', iter);
+
+							var lengthCount = obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults.length;
+
+							var lineSeriesOptions = [],
+								symbolNames = [],
+								chartData = [];
+
+							var xAxis = "";
+							var yAxis = "";
+							var title = "";
+
+
+							for (var bb = 0; bb < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults.length; bb++) {
+								//symbolNames.push(obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[0][bb]);
+
+								for (var ss = 0; ss < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].GenericStr[0].length; ss++) {
+									symbolNames.push(obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].GenericStr[0][ss]);
+
+									xAxis = obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Xaxis;
+									yAxis = obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Yaxis;
+									title = obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Title;
+
+								}
+
+
+							}
+
+
+							for (var bb = 0; bb < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults.length; bb++) {
+								for (var ss = 0; ss < obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Value[0].length; ss++) {
+									chartData.push(obj.CurrentResult.RawDataResults[pp].ChartReadyDataResults[bb].Value[0][ss]);
+								}
+							}
+
+
+							//$('.columnChart').highcharts();
+							self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray);
+							var chartInfo = {
+								chartID: _.uniqueId(),
+								chartData: {
+									chart: {
+										type: 'column'
+									},
+									title: {
+										text: title
+									},
+									yAxis: {
+										title: {
+											text: yAxis
+										}
+
+									},
+									xAxis: {
+										categories: symbolNames
+										//categories: ['EURUSD', 'NZDUSD', 'USDCAD', 'GBPUSD', 'AUDUSD', 'USDJPY', 'USDCHF']
+									},
+									credits: {
+										enabled: false
+									},
+									series: [
+										{
+											colorByPoint: true,
+											data: chartData,
+											name: 'Currency'
+										}
+									]
+								}
+							}
+							mainWidget.charts.push(chartInfo);
+						}
+							break;
 
 						case 'LineSeriesChart':
 						{
@@ -233,11 +426,12 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 								var buttonSetup = { selected: 4 };
 
 								if (bIntradayChart) {
-									var buttonsArray = [{
-										type: 'hour',
-										count: 1,
-										text: '1h'
-									},
+									var buttonsArray = [
+										{
+											type: 'hour',
+											count: 1,
+											text: '1h'
+										},
 										{
 											type: 'hour',
 											count: 2,
@@ -252,11 +446,13 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 											type: 'day',
 											count: 1,
 											text: '1D'
-										}, {
+										},
+										{
 											type: 'all',
 											count: 1,
 											text: 'All'
-										}];
+										}
+									];
 
 									buttonSetup = {
 										buttons: buttonsArray,
@@ -272,15 +468,17 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 									rangeSelector: buttonSetup,
 									yAxis: {
 										labels: {
-											formatter: function () {
+											formatter: function() {
 												return (this.value > 0 ? '+' : '') + this.value + '%';
 											}
 										},
-										plotLines: [{
-											value: 0,
-											width: 2,
-											color: 'silver'
-										}]
+										plotLines: [
+											{
+												value: 0,
+												width: 2,
+												color: 'silver'
+											}
+										]
 									},
 									plotOptions: {
 										series: {
@@ -300,7 +498,8 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 
 							self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, resultsData, iter);
 
-						} break;
+						}
+							break;
 
 						case 'CandleStickChart':
 						{
@@ -312,6 +511,26 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 
 							var chartClassName = 'chartspace dialogchart' + pp;
 							//var markup = "<div class='widgetTitle'>15 Timeframe</div><br/><div class='" + chartClassName + "'style='height: 610px; width:50%'></div>";
+							//function to confirm number of indicators involved
+							var candlestickHeight = '610px';
+
+							switch (extIndicatorLookUp.length) {
+								case 2:
+								{
+									candlestickHeight = '740px'
+								}
+									break;
+								case 3:
+								{
+									candlestickHeight = '920px'
+								}
+									break;
+								case 4:
+								{
+									candlestickHeight = '1040px'
+								}
+									break;
+							}
 
 
 							self.widgetPlacerT(pp, presentationTypeCount, 'Technical Analysis', '610px', chartClassName, iter);
@@ -360,13 +579,16 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 
 
 								//// set the allowed units for data grouping
-								var groupingUnits = [[
-									'week',                         // unit name
-									[1]                             // allowed multiples
-								], [
-									'month',
-									[1, 2, 3, 4, 6]
-								]];
+								var groupingUnits = [
+									[
+										'week',                         // unit name
+										[1]                             // allowed multiples
+									],
+									[
+										'month',
+										[1, 2, 3, 4, 6]
+									]
+								];
 
 
 								var mainChartItem = {
@@ -389,7 +611,8 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 
 								for (var hl = 0; hl < rawDataResults[pp].HighLightRegion.length; hl++) {
 
-									rawDataResults[pp].HighLightRegion[hl].Comment.split("**");;
+									rawDataResults[pp].HighLightRegion[hl].Comment.split("**");
+									;
 
 
 									var highlighterItem = {
@@ -420,10 +643,49 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 								self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter);
 
 
-								self.selectMiniChart(presentationTypeIndex, obj, highlighterArray, dataLookUp, arraySeries, overlayArray, yAxisArray);
+								var chartSelectInfo = self.selectMiniChart(presentationTypeIndex, obj, highlighterArray, dataLookUp, arraySeries, overlayArray, yAxisArray);
+								//Insert into Title area
+								if (highlighterArray.length > 0) {
+
+									var highId = Highcharts.charts[Highcharts.charts.length - 1].container.id;
+
+									$("#highlightControl" + pp).append($("<label>HighLighters : </label><input type='checkbox' checked id='highlightControlCheckBoxSplit" + highId + "'>"));
+
+									$("#highlightControlCheckBoxSplit" + highId).bind("change", function(e) {
+
+										var splitArrayTxt = e.target.id.split('Split');
+										var clikedItemId = splitArrayTxt[1];
+
+										for (var g = 0; g < Highcharts.charts.length; g++) {
+
+											if (typeof Highcharts.charts[g] !== 'undefined') {
+												if (Highcharts.charts[g].container.id == clikedItemId) {
+
+													Highcharts.charts[g].pointFormat = '<span style="color:{series.color};white-space:nowrap"> \u25CF{series.name}: <b>{point.y}</b></span>';
+
+													Highcharts.charts[g].tooltip.positioner = function() {
+														return {
+															x: 20,
+															y: 80
+														};
+													}
+
+
+													Highcharts.charts[g].highlighted = $("#highlightControlCheckBoxSplit" + clikedItemId).prop('checked');
+													Highcharts.charts[g].redraw();
+
+
+												}
+											}
+										}
+									})
+
+								}
+								mainWidget.charts.push(chartSelectInfo);
 							}
 
-						} break;
+						}
+							break;
 					}
 
 					if (iterRow == 2) {
@@ -433,12 +695,12 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 				}
 
 				//performance stats
-				self.LoadPerformanceStatistics(obj);
+				var performanceStats = self.LoadPerformanceStatistics(obj);
 
 
 				//disclaimer
-				$(this.el).append($('<br/><br/><div id="riskDisclaimer"><h2>Risk Disclaimer</h2><a class="naviPos" href="#performStatsButton">Top</a><p>Please acknowledge the following: <br/>The Charts are provided'
-					+  '" as is", without warranty or guarantee of any kind, including but not limited to the warranties of merchantability and fitness for a particular purpose.'
+				var copyRightStatement = $('<div class="copyright"></div>').append($('<br/><br/><div id="riskDisclaimer"><h2>Risk Disclaimer</h2><a class="naviPos" href="#performStatsButton">Top</a><p>Please acknowledge the following: <br/>The Charts are provided'
+					+ '" as is", without warranty or guarantee of any kind, including but not limited to the warranties of merchantability and fitness for a particular purpose.'
 					+ 'In no event shall TradeRiser Limited and its affiliates or any third party contributor be liable for any claim, damages or other liability, whether in an '
 					+ 'action of contract, tort or otherwise, arising from, out of or in connection with the use of or other dealings in the Charts. The Charts run on pricing '
 					+ 'data provided by us to a third party charting administrator. You accept that the price data displayed in the Charts may be delayed and that we do not '
@@ -453,6 +715,10 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 					+ 'TradeRiser service and its content.</p></div>'));
 
 
+				mainWidget.copyrightStatement = copyRightStatement.get(0);
+				mainWidget.perfomanceloadStats = performanceStats.get(0)
+
+				return mainWidget;
 
 			}
 			catch (err) {
@@ -460,95 +726,110 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 			}
 		},
 
-		LoadPerformanceStatistics: function (obj) {
+		LoadPerformanceStatistics: function(obj) {
 
-		var presentationTypeCount = obj.CurrentResult.PresentationTypes.length;
+			var presentationTypeCount = obj.CurrentResult.PresentationTypes.length;
+			var statsDomObject = $('<div class="performance-stats"></div>');
 
-		for (var pp = 0; pp < presentationTypeCount; pp++) {
-
-			if (obj.CurrentResult.RawDataResults[pp].PerformanceStatistics.length > 0) {
-				$(this.el).append($("<div id='performanceStats'><h2>Performance Statistics</h2><a class='naviPos' href='#performStatsButton'>Top</a>"));
-
-				//$(this.el).append($("<div class ='performanceStatsNote'>*Below are listed table(s) of performance statistics which predominantly shows the pattern recoginition rate and this tells you how reliable the recognition is for the symbol."
-				//    + "<br/>The percentage value gains more significance and value over time as the number of patterns found increases.</div>"));
-
-
-				$(this.el).append($("<div class ='performanceStatsNote'>" + obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[0].Description + "</div>"));
-
-
-
-				break;
-			}
-		}
-
-
-		for (var pp = 0; pp < presentationTypeCount; pp++) {
-
-			//header management
-			for (var mm = 0; mm < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics.length; mm++) {
-
-				var tableId = "performanceStatsTable" + mm;
-
-				$(this.el).append($("<table class= 'performanceStatsTable' id = " + tableId + " border='1'><tr></tr></table>"));
-
-				for (var tt = 0; tt < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].Headers.length; tt++) {
-
-					$('#' + tableId + ' > tbody > tr').append("<td class='performanceStatsHeaderCells' id=pshcelln" + tt + " valign='top'>"
-						+ obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].Headers[tt] + "</td>");
-
+			for (var pp = 0; pp < presentationTypeCount; pp++) {
+				if (obj.CurrentResult.RawDataResults[pp].PerformanceStatistics.length > 0) {
+					statsDomObject.append($("<div id='performanceStats'><h2>Performance Statistics</h2><a class='naviPos' href='#performStatsButton'>Top</a>"));
+					//$(this.el).append($("<div class ='performanceStatsNote'>*Below are listed table(s) of performance statistics which predominantly shows the pattern recoginition rate and this tells you how reliable the recognition is for the symbol."
+					//    + "<br/>The percentage value gains more significance and value over time as the number of patterns found increases.</div>"));
+					statsDomObject.append($("<div class ='performanceStatsNote'>" + obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[0].Description + "</div>"));
+					break;
 				}
+			}
 
 
-				//Stats body
-				for (var tt = 0; tt < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].StatsLog.length; tt++) {
+			for (var pp = 0; pp < presentationTypeCount; pp++) {
 
-					var createdTemp = "rown" + tt;
-					var createdId = "id=" + createdTemp;
+				//header management
+				for (var mm = 0; mm < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics.length; mm++) {
 
-					$('#' + tableId).append("<tr " + createdId + "></tr>");
+					var tableId = "performanceStatsTable" + mm;
 
+					statsDomObject.append($("<table class= 'performanceStatsTable' id = " + tableId + " border='1'><tr></tr></table>"));
 
-					for (var rr = 0; rr < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].StatsLog[tt].length; rr++) {
+					for (var tt = 0; tt < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].Headers.length; tt++) {
 
-						$('#' + tableId + ' > tbody > #' + createdTemp).append("<td class='performanceStatsCells' id=pscelln" + tt + " valign='top'>"
-							+ obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].StatsLog[tt][rr] + "</td>");
+						statsDomObject.get(0).find('#' + tableId + ' > tbody > tr').append("<td class='performanceStatsHeaderCells' id=pshcelln" + tt + " valign='top'>"
+							+ obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].Headers[tt] + "</td>");
+
 					}
+
+
+					//Stats body
+					for (var tt = 0; tt < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].StatsLog.length; tt++) {
+
+						var createdTemp = "rown" + tt;
+						var createdId = "id=" + createdTemp;
+
+						statsDomObject.get(0).find('#' + tableId).append("<tr " + createdId + "></tr>");
+
+
+						for (var rr = 0; rr < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].StatsLog[tt].length; rr++) {
+							//$('#' + tableId + ' > tbody > #' + createdTemp)
+							statsDomObject.get(0).find('#' + tableId + ' > tbody > #' + createdTemp).append("<td class='performanceStatsCells' id=pscelln" + tt + " valign='top'>"
+								+ obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].StatsLog[tt][rr] + "</td>");
+						}
+					}
+
+
 				}
-
-
 			}
-		}
-	},
-		widgetPlacer: function (index, total, markup) {
+			return statsDomObject;
+		},
 
-		var remaining = total - index;
-		var remainder = index % 2;
+		createMulitipleWidgetsLookUp: function(json) {
+			var tempLookUp = {};
 
-		var nthPos = index;
+			json.forEach(function(el, i, arr) {
+				json.forEach(function(nu, j, arrd) {
+					if (el.Key == nu.Key && i != j) {
+						var currentCount = tempLookUp[el.Key];
+						if (typeof currentCount !== 'undefined') {
+							tempLookUp[el.Key] = currentCount + 1;
+						}
+						else {
+							tempLookUp[el.Key] = 1;
+						}
+					}
+				});
+			});
+			return tempLookUp;
+		},
 
-		var width = '50%';
-		if (remaining == 1) {
-			width = '100%';
-		}
+		widgetPlacer: function(index, total, markup) {
+
+			var remaining = total - index;
+			var remainder = index % 2;
+
+			var nthPos = index;
+
+			var width = '50%';
+			if (remaining == 1) {
+				width = '100%';
+			}
 
 
-		if (index == 0) {
-			if (remaining > 1) {
-				$("#tableCanvas").append($("<tr><td style='top:0px' width='50%' id=celln" + index + " >" + markup + "</td></tr>"));
+			if (index == 0) {
+				if (remaining > 1) {
+					$("#tableCanvas").append($("<tr><td style='top:0px' width='50%' id=celln" + index + " >" + markup + "</td></tr>"));
+				}
+				else {
+					$("#tableCanvas").append($("<tr><td style='top:0px' width='100%' id=celln" + index + " >" + markup + "</td></tr>"));
+				}
 			}
 			else {
-				$("#tableCanvas").append($("<tr><td style='top:0px' width='100%' id=celln" + index + " >" + markup + "</td></tr>"));
+				if (remaining > 1) {
+					$("<td style='top:0px' id=celln" + index + " width='100%'>" + markup + "</td>").appendTo($("#tableCanvas tr:nth-child(" + nthPos + ")"));
+				}
+				else {
+					$("<td style='top:0px' id=celln" + index + " width='50%'>" + markup + "</td>").appendTo($("#tableCanvas tr:nth-child(" + nthPos + ")"));
+				}
 			}
-		}
-		else {
-			if (remaining > 1) {
-				$("<td style='top:0px' id=celln" + index + " width='100%'>" + markup + "</td>").appendTo($("#tableCanvas tr:nth-child(" + nthPos + ")"));
-			}
-			else {
-				$("<td style='top:0px' id=celln" + index + " width='50%'>" + markup + "</td>").appendTo($("#tableCanvas tr:nth-child(" + nthPos + ")"));
-			}
-		}
-	},
+		},
 		/**
 		 * Comments needed
 		 * @param index
@@ -558,756 +839,832 @@ define(['../views/abstract-view','backbone', '../config/tr-chart-helper', 'highs
 		 * @param chartClassName
 		 * @param iter
 		 */
-		widgetPlacerT: function (index, total, title, height, chartClassName, iter) {
+		widgetPlacerT: function(index, total, title, height, chartClassName, iter) {
 
-		var remaining = total - index;
-		var remainder = index % 2;
+			var remaining = total - index;
+			var remainder = index % 2;
 
-		// var nthPos = index;
-		//var nthPos = iter;
+			// var nthPos = index;
+			//var nthPos = iter;
 
-		var nthPos = 0;
+			var nthPos = 0;
 
-		//var width = '50%';
-		//if (remaining == 1) {
-		//    width = '100%';
-		//}
+			//var width = '50%';
+			//if (remaining == 1) {
+			//    width = '100%';
+			//}
 
-		var width = '100%';
-		if (remainder == 0 && remaining > 1) {
-			//width = '50%';
-			width = '700px';
-		}
+			var width = '100%';
+			if (remainder == 0 && remaining > 1) {
+				//width = '50%';
+				width = '700px';
+			}
 
-		//var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/><div class='" + chartClassName + "' style='height: " + height + "'></div>";
+			//var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/><div class='" + chartClassName + "' style='height: " + height + "'></div>";
 
-		var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/><div class='" + chartClassName + "' style='height: " + height + "; width:" + width + "'></div>"; //*
-		// var markup = "<div class='widgetTitle'>" + title + "</div><br/><div class='" + chartClassName + "' style='height: " + height + "; width= 50% '></div>";
+			var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/><div class='" + chartClassName + "' style='height: " + height + "; width:" + width + "'></div>"; //*
+			// var markup = "<div class='widgetTitle'>" + title + "</div><br/><div class='" + chartClassName + "' style='height: " + height + "; width= 50% '></div>";
 
 
+			if (remainder == 0) {
+				if (remaining > 1) {
+					$("#tableCanvas").append($("<tr><td style='top:0px' width='50%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
 
-		if (remainder == 0) {
-			if (remaining > 1) {
-				$("#tableCanvas").append($("<tr><td style='top:0px' width='50%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
-
+				}
+				else {
+					$("#tableCanvas").append($("<tr><td colspan='2' style='top:0px' width='100%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
+				}
 			}
 			else {
-				$("#tableCanvas").append($("<tr><td colspan='2' style='top:0px' width='100%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
+				// $("#tableCanvas  > tbody > tr > td").eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
+
+				var indset = index - 1;
+				var newId = "#celln" + indset;
+
+				$("#tableCanvas  > tbody > tr > " + newId).eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
+
+				//$("#tableCanvas  > tbody > tr > td").eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
 			}
+		},
+		/**
+		 * @TODO come comments
+		 * @param indicatorItem
+		 * @returns {boolean}
+		 */
+		isExternalIndicator: function (indicatorItem) {
+		switch (indicatorItem) {
+			case 'ATR':
+			case 'STDDEV':
+			case 'RSI':
+			case 'Aroon Oscillator':
+			case 'Aroon Up':
+			case 'Aroon Down':
+			case 'MACD':
+			{
+				return true;
+			}
+				break;
 		}
-		else {
-			// $("#tableCanvas  > tbody > tr > td").eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
+		return false;
+		},
+		/**
+		 *
+		 * @param json
+		 * @returns {{length: number, indicatorLookUp: {}}}
+		 */
+		createExternalIndicatorLookUp: function(json) {
+			var self = this;
+			var extIndicatorLookUp = {};
 
-			var indset = index - 1;
-			var newId = "#celln" + indset;
+			var tempIndicatorParentLookUp =
+			{
+				length: 0,
+				indicatorLookUp: {}
+			};
 
-			$("#tableCanvas  > tbody > tr > " + newId).eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
+			var j = 1;
 
-			//$("#tableCanvas  > tbody > tr > td").eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
-		}
-	},
+			json.forEach(function(el, i, arr) {
+				if (self.isExternalIndicator(el.Key) == true) {
+					extIndicatorLookUp[el.Key] = j;
+					j++;
+				}
+			});
+			tempIndicatorParentLookUp.indicatorLookUp = extIndicatorLookUp;
+			tempIndicatorParentLookUp.length = j - 1;
+
+			return tempIndicatorParentLookUp;
+		},
+
+
 		/**
 		 * Create a Lookup
 		 * @param json
 		 * @returns {{}}
 		 */
-		createLookUp: function (json) {
-		var dataLookUp = {};
-		// generate the lookup table for reuse
-		json.forEach(function (el, i, arr) {
-			dataLookUp[el.Key] = el.Value;
-		});
+		createLookUp: function(json) {
+			var dataLookUp = {};
+			// generate the lookup table for reuse
+			json.forEach(function(el, i, arr) {
+				dataLookUp[el.Key] = el.Value;
+			});
 
-		return dataLookUp;
-	},
-		initalizeSubWidgets: function (presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter) {
+			return dataLookUp;
+		},
+		initalizeSubWidgets: function(presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter) {
 
-		this.prepareChartData(presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter);
-	},
+			this.prepareChartData(presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter);
+		},
 		/**
 		 * convert numeric key
 		 * @param selectChartKey
 		 * @returns {number}
 		 */
-		convertToNumericKeyID:function (selectChartKey){
-		var accumulated = "";
-		var total = 0;
-		for (var i = 0; i < selectChartKey.length; i++)
-		{
-			var n = selectChartKey.charCodeAt(i);
-			accumulated = accumulated + n;
-			total = total + n;
-		}
-		return total;
-	},
-
-
-		displaySummary: function (presentationTypes, presentationTypeIndex, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray) {
-
-	},
-
-	prepareChartData:function(presentationTypes, presentationTypeIndex, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter) {
-		var self = this;
-
-		//create selectChartKey from loop
-		var allCount = 8;
-		var allCountIter = 0;
-		var selectChartKey = '';
-
-		var bSubWidgetSet = false;
-
-		for (var ss = 0; ss < presentationTypes.SubWidgets.length; ss++) {
-
-			switch (presentationTypes.SubWidgets[ss]) {
-				case 'CorrelationTable':
-				{
-					var indOne = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0];
-					var indTwo = obj.CurrentResult.ProcessedResults.KeyFieldIndex[1];
-
-
-					var resultValue = dataLookUp["CorrelationRatio"];
-
-					var lineSeriesOptions = [],
-						symbolNames = [];
-
-					for (var bb = 0; bb < obj.CurrentResult.ResultSymbols[presentationTypeIndex].length; bb++) {
-						symbolNames.push(obj.CurrentResult.ResultSymbols[presentationTypeIndex][bb]);
-					}
-
-					var correlTabStr = '<table cellpadding="12" cellspacing="12" border="1" style="border-color:#E0E0E0;"><tr style="border-color:#E0E0E0;"><td></td><td>' + symbolNames[0] + '</td></tr>';
-					var tempStr = '<tr style="border-color:#E0E0E0;"><td>' + symbolNames[1] + '</td><td>' + resultValue + '</td></tr></table>';
-
-					var final = correlTabStr + tempStr;
-
-					$('<br/>' + final).appendTo($("#celln"+ presentationTypeIndex));
-
-
-					dataResults = obj.CurrentResult.RawDataResults[0].ChartReadyDataResults;
-
-					bSubWidgetSet = true;
-
-					allCountIter++;
-				}
-					break;
-
-				case 'SMA':
-				{
-					var dataResults = dataLookUp["SMA"];
-
-					if (dataResults != null || dataResults !== undefined) {
-						var dataLength = dataResults.length;
-						var smaData = [];
-
-						for (var ri = 0; ri < dataLength; ri++) {
-							smaData.push([
-								dataResults[ri][0], // the date
-								dataResults[ri][1] // the close
-							])
-						}
-
-						var smaChartItem = {
-							code: 'sma',
-							name: 'SMA',
-							color: 'red',
-							data: [smaData],
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						overlayArray.push(smaChartItem);
-
-						allCountIter++;
-					}
-				}
-					break;
-
-				case 'BollingerBands':
-				{
-					var dataUpperBand = dataLookUp["UpperBand"];
-					var dataLowerBand = dataLookUp["LowerBand"];
-					var dataMiddleBand = dataLookUp["MiddleBand"];
-
-					if (dataMiddleBand != null || dataMiddleBand !== undefined) {
-						var smaOverlayArray = [];
-						var upperBollingerBandArray = [];
-						var lowerBollingerBandArray = [];
-
-						var dataLength = dataMiddleBand.length;
-
-						for (var ri = 0; ri < dataLength; ri++) {
-							smaOverlayArray.push([
-								dataMiddleBand[ri][0], // the date
-								dataMiddleBand[ri][1] // the close
-							])
-
-							upperBollingerBandArray.push([
-								dataUpperBand[ri][0], // the date
-								dataUpperBand[ri][1] // the close
-							])
-
-							lowerBollingerBandArray.push([
-								dataLowerBand[ri][0], // the date
-								dataLowerBand[ri][1] // the close
-							])
-						}
-
-						var smaChartItem = {
-							code: 'sma',
-							name: 'SMA',
-							color: 'red',
-							data: [smaOverlayArray],
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						overlayArray.push(smaChartItem);
-
-						var bollingerBandsChartItem = {
-							code: 'bbands',
-							name: 'Bollinger Bands',
-							color: 'blue',
-							data: [lowerBollingerBandArray, upperBollingerBandArray],
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						overlayArray.push(bollingerBandsChartItem);
-
-						allCountIter++;
-					}
-
-					self.generateSummary(obj, presentationTypeIndex);
-				}
-					break;
-
-				case 'Aroon Oscillator':
-				{
-					selectChartKey = selectChartKey + "Aroon Oscillator";
-
-					var dataResults = dataLookUp["Aroon Oscillator"];
-
-					if (dataResults != null || dataResults !== undefined) {
-						var dataLength = dataResults.length;
-						var aroonOscArray = [];
-
-						for (var ri = 0; ri < dataLength; ri++) {
-							aroonOscArray.push([
-								dataResults[ri][0], // the date
-								dataResults[ri][1] // the close
-							])
-						}
-
-						var aroonOscChart = {
-							type: 'area',
-							name: 'Aroon Oscillator',
-							data: aroonOscArray,
-							yAxis: 1,
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						arraySeries.push(aroonOscChart);
-
-
-						var chartItemDef = {
-							title: {
-								text: 'Aroon Osc'
-							},
-							top: yAxisArray[0].height + 90,
-							height: 100,
-							offset: 0,
-							lineWidth: 2
-						};
-						yAxisArray.push(chartItemDef);
-
-						allCountIter++;
-					}
-
-					self.generateSummary(obj, presentationTypeIndex);
-				}
-					break;
-
-				case 'Aroon Up':
-				{
-					var indicatorName = "Aroon Up";
-
-					selectChartKey = selectChartKey + "Aroon Up";
-
-					var dataResults = dataLookUp["Aroon Up"];
-
-					if (dataResults != null || dataResults !== undefined) {
-						var dataLength = dataResults.length;
-						var aroonUpArray = [];
-
-						for (var ri = 0; ri < dataLength; ri++) {
-							aroonUpArray.push([
-								dataResults[ri][0], // the date
-								dataResults[ri][1] // the close
-							])
-						}
-
-						var aroonUpChart = {
-							type: 'line',
-							name: indicatorName,
-							data: aroonUpArray,
-							yAxis: 1,
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						arraySeries.push(aroonUpChart);
-
-						var chartItemDef = {
-							title: {
-								text: indicatorName
-							},
-							top: yAxisArray[0].height + 90,
-							height: 100,
-							offset: 0,
-							lineWidth: 2
-						};
-						yAxisArray.push(chartItemDef);
-
-						allCountIter++;
-					}
-				}
-					break;
-
-				case 'Aroon Down':
-				{
-					var indicatorName = "Aroon Down";
-
-					selectChartKey = selectChartKey + indicatorName;
-
-					var dataResults = dataLookUp["Aroon Down"];
-
-					if (dataResults != null || dataResults !== undefined) {
-						var dataLength = dataResults.length;
-						var aroonDownArray = [];
-
-						for (var ri = 0; ri < dataLength; ri++) {
-							aroonDownArray.push([
-								dataResults[ri][0], // the date
-								dataResults[ri][1] // the close
-							])
-						}
-
-						var aroonDownChart = {
-							type: 'line',
-							name: indicatorName,
-							data: aroonDownArray,
-							yAxis: 1,
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						arraySeries.push(aroonDownChart);
-
-						var chartItemDef = {
-							title: {
-								text: indicatorName
-							},
-							top: yAxisArray[0].height + 90,
-							height: 100,
-							offset: 0,
-							lineWidth: 2
-						};
-						yAxisArray.push(chartItemDef);
-
-						allCountIter++;
-					}
-				}
-					break;
-
-				case 'RSI':
-				{
-					var indicatorName = "RSI";
-
-					selectChartKey = selectChartKey + "RSI";
-
-					var dataResults = dataLookUp["RSI"];
-
-					if (dataResults != null || dataResults !== undefined) {
-						var dataLength = dataResults.length;
-						var rsiArray = [];
-
-						for (var ri = 0; ri < dataLength; ri++) {
-							rsiArray.push([
-								dataResults[ri][0], // the date
-								dataResults[ri][1] // the close
-							])
-						}
-
-						var rsiChart = {
-							type: 'line',
-							name: 'RSI',
-							data: rsiArray,
-							yAxis: 1,
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						arraySeries.push(rsiChart);
-
-						var chartItemDef = {
-							title: {
-								text: indicatorName
-							},
-							top: yAxisArray[0].height + 90,
-							height: 100,
-							offset: 0,
-							lineWidth: 2
-						};
-						yAxisArray.push(chartItemDef);
-
-						allCountIter++;
-					}
-
-					self.generateSummary(obj, presentationTypeIndex);
-
-				}
-					break;
-
-				case 'MACD':
-				{
-					var indicatorName = "MACD";
-
-					selectChartKey = selectChartKey + "MACD";
-
-					var dataMACD = dataLookUp["MACDLine"];
-					var dataSignal = dataLookUp["SignalLine"];
-					var dataMACDHistogram = dataLookUp["MACDHistogram"];
-
-					if (dataMACD != null || dataMACD !== undefined) {
-						var dataLength = dataMACD.length;
-						var macdArray = [];
-						var macdSignalArray = [];
-						var macdHistogramArray = [];
-
-						for (var ri = 0; ri < dataLength; ri++) {
-
-							macdArray.push([
-								dataMACD[ri][0], // the date
-								dataMACD[ri][1] // the close
-							])
-
-							macdSignalArray.push([
-								dataSignal[ri][0], // the date
-								dataSignal[ri][1] // the close
-							])
-
-							macdHistogramArray.push([
-								dataMACDHistogram[ri][0], // the date
-								dataMACDHistogram[ri][1] // the close
-							])
-						}
-						var axis = 1;
-
-						var macdChartItem = {
-							type: 'line',
-							name: 'MACDline',
-							data: macdArray,
-							yAxis: axis,
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						arraySeries.push(macdChartItem);
-
-
-						var signalChartItem = {
-							type: 'line',
-							name: 'signalLine',
-							data: macdSignalArray,
-							yAxis: axis,
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						arraySeries.push(signalChartItem);
-
-
-						var macdHistogramChartItem = {
-							type: 'column',
-							name: 'MACDHistogram',
-							data: macdHistogramArray,
-							yAxis: axis,
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						arraySeries.push(macdHistogramChartItem);
-
-
-						var chartItemDef = {
-							title: {
-								text: 'MACD'
-							},
-							top: yAxisArray[0].height + 90,
-							height: 100,
-							offset: 0,
-							lineWidth: 2
-						};
-						yAxisArray.push(chartItemDef);
-
-						allCountIter++;
-					}
-
-					self.generateSummary(obj, presentationTypeIndex);
-
-				}
-					break;
-
-				case 'ATR':
-				{
-					var indicatorName = "ATR";
-
-					selectChartKey = selectChartKey + "ATR";
-
-					var dataResults = dataLookUp["ATR"];
-
-					if (dataResults != null || dataResults !== undefined) {
-						var dataLength = dataResults.length;
-						var atrArray = [];
-
-						for (var ri = 0; ri < dataLength; ri++) {
-							atrArray.push([
-								dataResults[ri][0], // the date
-								dataResults[ri][1] // the close
-							])
-						}
-						var atrChart = {
-							type: 'line',
-							name: 'ATR',
-							data: atrArray,
-							yAxis: 1,
-							dataGrouping: {
-								units: groupingUnits
-							}
-						}
-						arraySeries.push(atrChart);
-
-						var chartItemDef = {
-							title: {
-								text: indicatorName
-							},
-							top: yAxisArray[0].height + 90,
-							height: 100,
-							offset: 0,
-							lineWidth: 2
-						};
-						yAxisArray.push(chartItemDef);
-
-						allCountIter++;
-					}
-
-					self.generateSummary(obj, presentationTypeIndex);
-				}
-					break;
-
-				//case "General Table":
-				//    {
-				//        var indOne = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0];
-				//        var indTwo = obj.CurrentResult.ProcessedResults.KeyFieldIndex[1];
-
-				//        var resultValue = dataLookUp["CorrelationRatio"];
-
-				//        var lineSeriesOptions = [],
-				//            symbolNames = [];
-
-
-
-				//        var genTabStr = '<span  style="color:#3a89ff;">Latest: </span><br/> <br/><table cellpadding="12" cellspacing="12" border="1" style="border-color:#E0E0E0;">';
-
-
-				//        for (var bb = 0; bb < obj.CurrentResult.ProcessedResults.KeyFieldIndex[0].length; bb++) {
-
-				//            var selectingIndex = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0][bb];
-
-				//            genTabStr += '<tr style="border-color:#E0E0E0;"><td>' + obj.CurrentResult.ProcessedResults.Headers[selectingIndex] + '</td><td>' + obj.CurrentResult.ProcessedResults.ComputedResults[0][selectingIndex] + '</td></tr>';
-				//        }
-
-				//        genTabStr += '</table>';
-
-				//        var final = genTabStr;
-
-				//        $('<br/>' + final).appendTo($("#celln0"));
-
-				//        bSubWidgetSet = true;
-
-				//        allCountIter++;
-
-				//    } break;
-
-				default:
-				{
-					var indOne = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0];
-					var indTwo = obj.CurrentResult.ProcessedResults.KeyFieldIndex[1];
-
-					var resultValue = dataLookUp["CorrelationRatio"];
-
-					var lineSeriesOptions = [],
-						symbolNames = [];
-
-
-					self.generateSummary(obj, presentationTypeIndex);
-
-
-					bSubWidgetSet = true;
-
-					allCountIter++;
-				}
-					break;
+		convertToNumericKeyID: function(selectChartKey) {
+			var accumulated = "";
+			var total = 0;
+			for (var i = 0; i < selectChartKey.length; i++) {
+				var n = selectChartKey.charCodeAt(i);
+				accumulated = accumulated + n;
+				total = total + n;
 			}
-		}
-
-		//if (bSubWidgetSet === true) {
-		//    $("#resultCanvas").append($('<br/><hr style="border: 0; color: #9E9E9E; background-color: #9E9E9E; height: 1px; width: 100%; text-align: left;" />'));
-		//}
-	},
-
-	generateSummary:function(obj, presentationTypeIndex) {
-
-		var genTabStr = "<table cellpadding='8' cellspacing='20'><tr><td style='border-left: 1px solid grey;'>";
-		genTabStr += "<span style='color:#3a89ff;'><strong>Price Movement Facts: </strong></span><br/> <br/>"
-		genTabStr += "<table cellpadding='8' cellspacing='8' border='1' style='border-color:#E0E0E0;'>";
-
-		/*var genTabStr = "<div style='width: 300px;'>";
-		 genTabStr += "<div style='float: left; width: 200px;'>";
-		 genTabStr += '<span style="color:#3a89ff;">Price Movement Facts: </span><br/> <br/><table cellpadding="12" cellspacing="12" border="1" style="border-color:#E0E0E0;">';*/
+			return total;
+		},
 
 
-		for (var bb = 0; bb < obj.CurrentResult.ProcessedResults.KeyFieldIndex[presentationTypeIndex].length; bb++) {
+		displaySummary: function(presentationTypes, presentationTypeIndex, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray) {
 
-			var selectingIndex = obj.CurrentResult.ProcessedResults.KeyFieldIndex[presentationTypeIndex][bb];
+		},
 
-			genTabStr += '<tr style="border-color:#E0E0E0;"><td>' + obj.CurrentResult.ProcessedResults.Headers[selectingIndex] + '</td><td>'
-				+ obj.CurrentResult.ProcessedResults.ComputedResults[0][selectingIndex] + '</td></tr>';
-			//+ obj.CurrentResult.ProcessedResults.ComputedResults[presentationTypeIndex][selectingIndex] + '</td></tr>';
-		}
+		prepareChartData: function(presentationTypes, presentationTypeIndex, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter) {
+			var self = this;
 
+			//create selectChartKey from loop
+			var allCount = 8;
+			var allCountIter = 0;
+			var selectChartKey = '';
 
-		genTabStr += "</table></td>";
-		genTabStr += "<td valign='top' style='border-left: 1px solid grey; border-right: 1px solid grey;'><div style='margin-left:10px;margin-right:10px;'><span style='color:#3a89ff;'><strong>Summary:</strong> </span><br/> <br/>";
-		genTabStr += obj.CurrentResult.RawDataResults[presentationTypeIndex].Summaries[0];
-		genTabStr += "</div></td></tr></table>";
-		//genTabStr += "This contains the text that explains or summaries the clients data.</div></td></tr></table>";
+			var bSubWidgetSet = false;
 
-		var final = genTabStr;
+			for (var ss = 0; ss < presentationTypes.SubWidgets.length; ss++) {
 
-
-		$('<br/>' + final).appendTo($("#celln" + presentationTypeIndex));
-	},
-
-
-	selectMiniChart:function (presentationTypeIndex, obj, highlighterArray, dataLookUp, arraySeries, overlayArray, yAxisArray) {
-
-		var chartClassName = 'chartspace dialogchart' + presentationTypeIndex;
-
-		var classOnly = '.dialogchart' + presentationTypeIndex;
-
-		var dataPrep = [];
-		var d, datePoint;
+				switch (presentationTypes.SubWidgets[ss]) {
+					case 'CorrelationTable':
+					{
+						var indOne = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0];
+						var indTwo = obj.CurrentResult.ProcessedResults.KeyFieldIndex[1];
 
 
-		var dataResultsT = dataLookUp["RAW"];
+						var resultValue = dataLookUp["CorrelationRatio"];
 
-		if (dataResultsT != null || dataResultsT !== undefined) {
+						var lineSeriesOptions = [],
+							symbolNames = [];
 
-			var lineSeriesOptions = [],
-				symbolNames = [];
+						for (var bb = 0; bb < obj.CurrentResult.ResultSymbols[presentationTypeIndex].length; bb++) {
+							symbolNames.push(obj.CurrentResult.ResultSymbols[presentationTypeIndex][bb]);
+						}
 
-			var volume_CandleStick = [];
+						var correlTabStr = '<table cellpadding="12" cellspacing="12" border="1" style="border-color:#E0E0E0;"><tr style="border-color:#E0E0E0;"><td></td><td>' + symbolNames[0] + '</td></tr>';
+						var tempStr = '<tr style="border-color:#E0E0E0;"><td>' + symbolNames[1] + '</td><td>' + resultValue + '</td></tr></table>';
 
-			for (var bb = 0; bb < obj.CurrentResult.ResultSymbols[presentationTypeIndex].length; bb++) {
-				symbolNames.push(obj.CurrentResult.ResultSymbols[presentationTypeIndex][bb]);
+						var final = correlTabStr + tempStr;
+
+						$('<br/>' + final).appendTo($("#celln" + presentationTypeIndex));
+
+
+						dataResults = obj.CurrentResult.RawDataResults[0].ChartReadyDataResults;
+
+						bSubWidgetSet = true;
+
+						allCountIter++;
+					}
+						break;
+
+					case 'SMA':
+					{
+						var dataResults = dataLookUp["SMA"];
+
+						if (dataResults != null || dataResults !== undefined) {
+							var dataLength = dataResults.length;
+							var smaData = [];
+
+							for (var ri = 0; ri < dataLength; ri++) {
+								smaData.push([
+									dataResults[ri][0], // the date
+									dataResults[ri][1] // the close
+								])
+							}
+
+							var smaChartItem = {
+								code: 'sma',
+								name: 'SMA',
+								color: 'red',
+								data: [smaData],
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							overlayArray.push(smaChartItem);
+
+							allCountIter++;
+						}
+					}
+						break;
+
+					case 'BollingerBands':
+					{
+						var dataUpperBand = dataLookUp["UpperBand"];
+						var dataLowerBand = dataLookUp["LowerBand"];
+						var dataMiddleBand = dataLookUp["MiddleBand"];
+
+						if (dataMiddleBand != null || dataMiddleBand !== undefined) {
+							var smaOverlayArray = [];
+							var upperBollingerBandArray = [];
+							var lowerBollingerBandArray = [];
+
+							var dataLength = dataMiddleBand.length;
+
+							for (var ri = 0; ri < dataLength; ri++) {
+								smaOverlayArray.push([
+									dataMiddleBand[ri][0], // the date
+									dataMiddleBand[ri][1] // the close
+								])
+
+								upperBollingerBandArray.push([
+									dataUpperBand[ri][0], // the date
+									dataUpperBand[ri][1] // the close
+								])
+
+								lowerBollingerBandArray.push([
+									dataLowerBand[ri][0], // the date
+									dataLowerBand[ri][1] // the close
+								])
+							}
+
+							var smaChartItem = {
+								code: 'sma',
+								name: 'SMA',
+								color: 'red',
+								data: [smaOverlayArray],
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							overlayArray.push(smaChartItem);
+
+							var bollingerBandsChartItem = {
+								code: 'bbands',
+								name: 'Bollinger Bands',
+								color: 'blue',
+								data: [lowerBollingerBandArray, upperBollingerBandArray],
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							overlayArray.push(bollingerBandsChartItem);
+
+							allCountIter++;
+						}
+
+						self.generateSummary(obj, presentationTypeIndex);
+					}
+						break;
+
+					case 'Aroon Oscillator':
+					{
+						selectChartKey = selectChartKey + "Aroon Oscillator";
+
+						var dataResults = dataLookUp["Aroon Oscillator"];
+
+						if (dataResults != null || dataResults !== undefined) {
+							var dataLength = dataResults.length;
+							var aroonOscArray = [];
+
+							for (var ri = 0; ri < dataLength; ri++) {
+								aroonOscArray.push([
+									dataResults[ri][0], // the date
+									dataResults[ri][1] // the close
+								])
+							}
+
+							var aroonOscChart = {
+								type: 'area',
+								name: 'Aroon Oscillator',
+								data: aroonOscArray,
+								yAxis: 1,
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							arraySeries.push(aroonOscChart);
+
+
+							var chartItemDef = {
+								title: {
+									text: 'Aroon Osc'
+								},
+								top: yAxisArray[0].height + 90,
+								height: 100,
+								offset: 0,
+								lineWidth: 2
+							};
+							yAxisArray.push(chartItemDef);
+
+							allCountIter++;
+						}
+
+						self.generateSummary(obj, presentationTypeIndex);
+					}
+						break;
+
+					case 'Aroon Up':
+					{
+						var indicatorName = "Aroon Up";
+
+						selectChartKey = selectChartKey + "Aroon Up";
+
+						var dataResults = dataLookUp["Aroon Up"];
+
+						if (dataResults != null || dataResults !== undefined) {
+							var dataLength = dataResults.length;
+							var aroonUpArray = [];
+
+							for (var ri = 0; ri < dataLength; ri++) {
+								aroonUpArray.push([
+									dataResults[ri][0], // the date
+									dataResults[ri][1] // the close
+								])
+							}
+
+							var aroonUpChart = {
+								type: 'line',
+								name: indicatorName,
+								data: aroonUpArray,
+								yAxis: 1,
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							arraySeries.push(aroonUpChart);
+
+							var chartItemDef = {
+								title: {
+									text: indicatorName
+								},
+								top: yAxisArray[0].height + 90,
+								height: 100,
+								offset: 0,
+								lineWidth: 2
+							};
+							yAxisArray.push(chartItemDef);
+
+							allCountIter++;
+						}
+					}
+						break;
+
+					case 'Aroon Down':
+					{
+						var indicatorName = "Aroon Down";
+
+						selectChartKey = selectChartKey + indicatorName;
+
+						var dataResults = dataLookUp["Aroon Down"];
+
+						if (dataResults != null || dataResults !== undefined) {
+							var dataLength = dataResults.length;
+							var aroonDownArray = [];
+
+							for (var ri = 0; ri < dataLength; ri++) {
+								aroonDownArray.push([
+									dataResults[ri][0], // the date
+									dataResults[ri][1] // the close
+								])
+							}
+
+							var aroonDownChart = {
+								type: 'line',
+								name: indicatorName,
+								data: aroonDownArray,
+								yAxis: 1,
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							arraySeries.push(aroonDownChart);
+
+							var chartItemDef = {
+								title: {
+									text: indicatorName
+								},
+								top: yAxisArray[0].height + 90,
+								height: 100,
+								offset: 0,
+								lineWidth: 2
+							};
+							yAxisArray.push(chartItemDef);
+
+							allCountIter++;
+						}
+					}
+						break;
+
+					case 'RSI':
+					{
+						var indicatorName = "RSI";
+
+						selectChartKey = selectChartKey + "RSI";
+
+						var dataResults = dataLookUp["RSI"];
+
+						if (dataResults != null || dataResults !== undefined) {
+							var dataLength = dataResults.length;
+							var rsiArray = [];
+
+							for (var ri = 0; ri < dataLength; ri++) {
+								rsiArray.push([
+									dataResults[ri][0], // the date
+									dataResults[ri][1] // the close
+								])
+							}
+
+							var rsiChart = {
+								type: 'line',
+								name: 'RSI',
+								data: rsiArray,
+								yAxis: 1,
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							arraySeries.push(rsiChart);
+
+							var chartItemDef = {
+								title: {
+									text: indicatorName
+								},
+								top: yAxisArray[0].height + 90,
+								height: 100,
+								offset: 0,
+								lineWidth: 2
+							};
+							yAxisArray.push(chartItemDef);
+
+							allCountIter++;
+						}
+
+						self.generateSummary(obj, presentationTypeIndex);
+
+					}
+						break;
+
+					case 'MACD':
+					{
+						var indicatorName = "MACD";
+
+						selectChartKey = selectChartKey + "MACD";
+
+						var dataMACD = dataLookUp["MACDLine"];
+						var dataSignal = dataLookUp["SignalLine"];
+						var dataMACDHistogram = dataLookUp["MACDHistogram"];
+
+						if (dataMACD != null || dataMACD !== undefined) {
+							var dataLength = dataMACD.length;
+							var macdArray = [];
+							var macdSignalArray = [];
+							var macdHistogramArray = [];
+
+							for (var ri = 0; ri < dataLength; ri++) {
+
+								macdArray.push([
+									dataMACD[ri][0], // the date
+									dataMACD[ri][1] // the close
+								])
+
+								macdSignalArray.push([
+									dataSignal[ri][0], // the date
+									dataSignal[ri][1] // the close
+								])
+
+								macdHistogramArray.push([
+									dataMACDHistogram[ri][0], // the date
+									dataMACDHistogram[ri][1] // the close
+								])
+							}
+							var axis = 1;
+
+							var macdChartItem = {
+								type: 'line',
+								name: 'MACDline',
+								data: macdArray,
+								yAxis: axis,
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							arraySeries.push(macdChartItem);
+
+
+							var signalChartItem = {
+								type: 'line',
+								name: 'signalLine',
+								data: macdSignalArray,
+								yAxis: axis,
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							arraySeries.push(signalChartItem);
+
+
+							var macdHistogramChartItem = {
+								type: 'column',
+								name: 'MACDHistogram',
+								data: macdHistogramArray,
+								yAxis: axis,
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							arraySeries.push(macdHistogramChartItem);
+
+
+							var chartItemDef = {
+								title: {
+									text: 'MACD'
+								},
+								top: yAxisArray[0].height + 90,
+								height: 100,
+								offset: 0,
+								lineWidth: 2
+							};
+							yAxisArray.push(chartItemDef);
+
+							allCountIter++;
+						}
+
+						self.generateSummary(obj, presentationTypeIndex);
+
+					}
+						break;
+
+					case 'ATR':
+					{
+						var indicatorName = "ATR";
+
+						selectChartKey = selectChartKey + "ATR";
+
+						var dataResults = dataLookUp["ATR"];
+
+						if (dataResults != null || dataResults !== undefined) {
+							var dataLength = dataResults.length;
+							var atrArray = [];
+
+							for (var ri = 0; ri < dataLength; ri++) {
+								atrArray.push([
+									dataResults[ri][0], // the date
+									dataResults[ri][1] // the close
+								])
+							}
+							var atrChart = {
+								type: 'line',
+								name: 'ATR',
+								data: atrArray,
+								yAxis: 1,
+								dataGrouping: {
+									units: groupingUnits
+								}
+							}
+							arraySeries.push(atrChart);
+
+							var chartItemDef = {
+								title: {
+									text: indicatorName
+								},
+								top: yAxisArray[0].height + 90,
+								height: 100,
+								offset: 0,
+								lineWidth: 2
+							};
+							yAxisArray.push(chartItemDef);
+
+							allCountIter++;
+						}
+
+						self.generateSummary(obj, presentationTypeIndex);
+					}
+						break;
+
+					//case "General Table":
+					//    {
+					//        var indOne = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0];
+					//        var indTwo = obj.CurrentResult.ProcessedResults.KeyFieldIndex[1];
+
+					//        var resultValue = dataLookUp["CorrelationRatio"];
+
+					//        var lineSeriesOptions = [],
+					//            symbolNames = [];
+
+
+					//        var genTabStr = '<span  style="color:#3a89ff;">Latest: </span><br/> <br/><table cellpadding="12" cellspacing="12" border="1" style="border-color:#E0E0E0;">';
+
+
+					//        for (var bb = 0; bb < obj.CurrentResult.ProcessedResults.KeyFieldIndex[0].length; bb++) {
+
+					//            var selectingIndex = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0][bb];
+
+					//            genTabStr += '<tr style="border-color:#E0E0E0;"><td>' + obj.CurrentResult.ProcessedResults.Headers[selectingIndex] + '</td><td>' + obj.CurrentResult.ProcessedResults.ComputedResults[0][selectingIndex] + '</td></tr>';
+					//        }
+
+					//        genTabStr += '</table>';
+
+					//        var final = genTabStr;
+
+					//        $('<br/>' + final).appendTo($("#celln0"));
+
+					//        bSubWidgetSet = true;
+
+					//        allCountIter++;
+
+					//    } break;
+
+					default:
+					{
+						var indOne = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0];
+						var indTwo = obj.CurrentResult.ProcessedResults.KeyFieldIndex[1];
+
+						var resultValue = dataLookUp["CorrelationRatio"];
+
+						var lineSeriesOptions = [],
+							symbolNames = [];
+
+
+						self.generateSummary(obj, presentationTypeIndex);
+
+
+						bSubWidgetSet = true;
+
+						allCountIter++;
+					}
+						break;
+				}
 			}
 
-			var dataLength = dataResultsT.length;
+			//if (bSubWidgetSet === true) {
+			//    $("#resultCanvas").append($('<br/><hr style="border: 0; color: #9E9E9E; background-color: #9E9E9E; height: 1px; width: 100%; text-align: left;" />'));
+			//}
+		},
 
-			if (dataLength > 0) {
+		generateSummary: function(obj, presentationTypeIndex) {
 
-				var dateTimeTemp = dataResultsT[1][0] - dataResultsT[0][0];
+			var genTabStr = "<table cellpadding='8' cellspacing='20'><tr><td style='border-left: 1px solid grey;'>";
+			genTabStr += "<span style='color:#3a89ff;'><strong>Price Movement Facts: </strong></span><br/> <br/>"
+			genTabStr += "<table cellpadding='8' cellspacing='8' border='1' style='border-color:#E0E0E0;'>";
 
-				var bIntradayChart = true;
+			/*var genTabStr = "<div style='width: 300px;'>";
+			 genTabStr += "<div style='float: left; width: 200px;'>";
+			 genTabStr += '<span style="color:#3a89ff;">Price Movement Facts: </span><br/> <br/><table cellpadding="12" cellspacing="12" border="1" style="border-color:#E0E0E0;">';*/
 
-				if (dateTimeTemp >= 86400000) {
-					bIntradayChart = false;
+
+			for (var bb = 0; bb < obj.CurrentResult.ProcessedResults.KeyFieldIndex[presentationTypeIndex].length; bb++) {
+
+				var selectingIndex = obj.CurrentResult.ProcessedResults.KeyFieldIndex[presentationTypeIndex][bb];
+
+				genTabStr += '<tr style="border-color:#E0E0E0;"><td>' + obj.CurrentResult.ProcessedResults.Headers[selectingIndex] + '</td><td>'
+					+ obj.CurrentResult.ProcessedResults.ComputedResults[0][selectingIndex] + '</td></tr>';
+				//+ obj.CurrentResult.ProcessedResults.ComputedResults[presentationTypeIndex][selectingIndex] + '</td></tr>';
+			}
+
+
+			genTabStr += "</table></td>";
+			genTabStr += "<td valign='top' style='border-left: 1px solid grey; border-right: 1px solid grey;'><div style='margin-left:10px;margin-right:10px;'><span style='color:#3a89ff;'><strong>Summary:</strong> </span><br/> <br/>";
+			genTabStr += obj.CurrentResult.RawDataResults[presentationTypeIndex].Summaries[0];
+			genTabStr += "</div></td></tr></table>";
+			//genTabStr += "This contains the text that explains or summaries the clients data.</div></td></tr></table>";
+
+			var final = genTabStr;
+
+
+			$('<br/>' + final).appendTo($("#celln" + presentationTypeIndex));
+		},
+
+
+		selectMiniChart: function(presentationTypeIndex, obj, highlighterArray, dataLookUp, arraySeries, overlayArray, yAxisArray) {
+
+			var chartClassName = 'chartspace dialogchart' + presentationTypeIndex;
+
+			var classOnly = '.dialogchart' + presentationTypeIndex;
+
+			var dataPrep = [];
+			var d, datePoint;
+
+
+			var dataResultsT = dataLookUp["RAW"];
+
+			var chartData;
+
+			if (dataResultsT != null || dataResultsT !== undefined) {
+
+				var lineSeriesOptions = [],
+					symbolNames = [];
+
+				var volume_CandleStick = [];
+
+				for (var bb = 0; bb < obj.CurrentResult.ResultSymbols[presentationTypeIndex].length; bb++) {
+					symbolNames.push(obj.CurrentResult.ResultSymbols[presentationTypeIndex][bb]);
 				}
 
-				var buttonSetup = { selected: 1 };
+				var dataLength = dataResultsT.length;
 
-				if (bIntradayChart) {
-					var buttonsArray = [{
-						type: 'hour',
-						count: 1,
-						text: '1h'
-					},
-						{
-							type: 'hour',
-							count: 2,
-							text: '2h'
-						},
-						{
-							type: 'hour',
-							count: 3,
-							text: '3h'
-						},
-						{
-							type: 'day',
-							count: 1,
-							text: '1D'
-						}, {
-							type: 'all',
-							count: 1,
-							text: 'All'
-						}];
+				if (dataLength > 0) {
 
-					buttonSetup = {
-						buttons: buttonsArray,
-						selected: 2,
-						inputEnabled: false
+					var dateTimeTemp = dataResultsT[1][0] - dataResultsT[0][0];
+
+					var bIntradayChart = true;
+
+					if (dateTimeTemp >= 86400000) {
+						bIntradayChart = false;
 					}
+
+					var buttonSetup = { selected: 1 };
+
+					if (bIntradayChart) {
+						var buttonsArray = [
+							{
+								type: 'hour',
+								count: 1,
+								text: '1h'
+							},
+							{
+								type: 'hour',
+								count: 2,
+								text: '2h'
+							},
+							{
+								type: 'hour',
+								count: 3,
+								text: '3h'
+							},
+							{
+								type: 'day',
+								count: 1,
+								text: '1D'
+							},
+							{
+								type: 'all',
+								count: 1,
+								text: 'All'
+							}
+						];
+
+						buttonSetup = {
+							buttons: buttonsArray,
+							selected: 2,
+							inputEnabled: false
+						}
+					}
+
+					if (yAxisArray.length == 1) {
+						yAxisArray[0].height = 400;
+					}
+
+					// create the chart
+//					$(classOnly).highcharts('StockChart', {
+//
+//						title: {
+//							text: symbolNames[0]
+//						},
+//						rangeSelector: buttonSetup,
+//
+//						yAxis: yAxisArray,
+//
+//						series: arraySeries,
+//
+//						highlighted: true,
+//						highlightRegion: highlighterArray,
+//
+//						overlay: overlayArray
+//
+//					});
+
+					var chartInfo = {
+						chartID: classOnly,
+						chartData: {
+
+							title: {
+								text: symbolNames[0]
+							},
+							rangeSelector: buttonSetup,
+
+							yAxis: yAxisArray,
+
+							series: arraySeries,
+
+							highlighted: true,
+							highlightRegion: highlighterArray,
+
+							overlay: overlayArray
+
+						}
+					}
+
+					chartData = chartInfo;
 				}
-
-				if (yAxisArray.length == 1) {
-					yAxisArray[0].height = 400;
-				}
-
-				// create the chart
-				$(classOnly).highcharts('StockChart', {
-
-					title: {
-						text: symbolNames[0]
-					},
-					rangeSelector: buttonSetup,
-
-					yAxis: yAxisArray,
-
-					series: arraySeries,
-
-					highlighted: true,
-					highlightRegion: highlighterArray,
-
-					overlay: overlayArray
-
-				});
-
-				this.$el.append()
 			}
+
+			return chartData;
+
+//
+//		for (var iterItem = 0; iterItem < Highcharts.charts.length; iterItem++) {
+//
+//			if (Highcharts.charts[iterItem] != null && Highcharts.charts[iterItem]!== undefined) {
+//				Highcharts.charts[iterItem].highlighted = true;
+//				Highcharts.charts[iterItem].redraw();
+//			}
+//		}
+
+
 		}
-
-
-		for (var iterItem = 0; iterItem < Highcharts.charts.length; iterItem++) {
-
-			if (Highcharts.charts[iterItem] != null && Highcharts.charts[iterItem]!== undefined) {
-				Highcharts.charts[iterItem].highlighted = true;
-				Highcharts.charts[iterItem].redraw();
-			}
-		}
-
-
-	}
 
 
 

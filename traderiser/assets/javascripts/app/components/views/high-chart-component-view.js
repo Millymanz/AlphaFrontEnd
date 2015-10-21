@@ -43,11 +43,14 @@ define(['../../views/abstract-view',
         }, 1000);
         },
         initializeHighCharts: function () {
+
             var highChartsOptions = $.extend(true, {
-                series: this.collection.toHighChartsData(),
+                //series: this.collection.toHighChartsData(),
                 chart: {
                     events: this.getHighChartsEvents()
                 }
+
+
             }, this.model.toJSON());
 
             if (this.stockChart) {
@@ -55,6 +58,12 @@ define(['../../views/abstract-view',
             } else {
                 this.$el.highcharts(highChartsOptions);
             }
+
+					$("#highlighted").on("change", function (evt) {
+						Highcharts.charts[0].highlighted = $('#highlighted').prop('checked');
+						Highcharts.charts[0].redraw();
+					});
+
         },
         render: function () {
             this.$el.highcharts().redraw();
@@ -72,7 +81,7 @@ define(['../../views/abstract-view',
             this.listenTo(this.collection, 'remove', this.onRemoveSerie);
             this.listenTo(this.collection, 'reset', this.render);
 
-            this.collection.each(this.bindHighChartsSerieEvents, this);
+           if(this.collection && this.collection.length > 0) this.collection.each(this.bindHighChartsSerieEvents, this);
         },
         bindHighChartsSerieEvents: function (serie) {
             this.listenTo(serie, 'change', this.onSerieChange);

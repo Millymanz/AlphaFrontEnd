@@ -65,7 +65,9 @@ define(['../core/logging', 'toastr'], function (logger, toastr) {
             var accessSessionToken = sessionModel.getCurrentAccessToken();
             if (accessSessionToken !== undefined || accessSessionToken !== null) {
                 requestOptions.beforeSend = function (request) {
-                    request.setRequestHeader('Authorization', 'Bearer ' + accessSessionToken + ' ');
+									request.setRequestHeader("Content-Type","application/json");
+									request.setRequestHeader("Accept", "application/json");
+                  request.setRequestHeader('Authorization', 'Bearer ' + accessSessionToken + ' ');
                 };
 
             }

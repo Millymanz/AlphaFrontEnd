@@ -169,7 +169,23 @@ define(['./abstract-view',
 				var self = this;
 				return this.model.getAnswer(value).then(function(data){
 					//console.log(data);
-					 self.controller.displayResults(data);
+					 var chart = self.controller.displayResults(data);
+					self.centerPane.empty();
+					_.each(chart.charts, function(chartInfo){
+						var stockChart = new HighChartComponentView({
+							stockChart: true,
+							model: new Backbone.Model(chartInfo.chartData),
+							collection: []
+						});
+						self.centerPane.append(stockChart.el);
+					});
+
+					//add other information
+
+					self.centerPane.append(chart.perfomanceloadStats);
+					self.centerPane.append(chart.copyrightStatement);
+
+
 				});
 
 			}
