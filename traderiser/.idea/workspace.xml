@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58e3854e-a2f0-426f-b707-286354753473" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/stylesheets/vendor/jquery.dynatable.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/vendor/jquery/jquery.dynatable.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/main.js" afterPath="$PROJECT_DIR$/assets/javascripts/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/stylesheets/style.scss" afterPath="$PROJECT_DIR$/assets/stylesheets/style.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/controller/traderiser-chart-controller.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/controller/traderiser-chart-controller.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -35,7 +28,7 @@
     <file path="/dossierBar.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445353844410" ignored="false" />
     <file path="D:/projects/pathfinder/reveal/production/trunk/development/analyzer/an-webservices-assets/src/main/mimosa/assets/js/analyzer/booter.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445355374955" ignored="false" />
     <file path="/booter.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445352674233" ignored="false" />
-    <file path="/traderiser-chart-controller.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445532189253" ignored="false" />
+    <file path="/traderiser-chart-controller.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445535090010" ignored="false" />
     <file path="/a.dummy" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445271653116" ignored="false" />
     <file path="/main.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445532511957" ignored="false" />
     <file path="D:/projects/pathfinder/reveal/production/trunk/development/analyzer/an-webservices-assets/src/main/mimosa/assets/js/analyzer/properties/booter.properties" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445353801830" ignored="false" />
@@ -52,6 +45,7 @@
     <file path="D:/projects/pathfinder/reveal/production/trunk/development/web/nw-base-webapp/src/main/webapp/newstyle/css/newstyle.css" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445518414956" ignored="false" />
     <file path="/newstyle.css" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445517584266" ignored="false" />
     <file path="/style.scss" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445533321728" ignored="false" />
+    <file path="$PROJECT_DIR$/public/javascripts/app/components/views/high-chart-component-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1445534980734" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,10 +124,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="high-chart-component-view.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="high-chart-component-view.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="0" selection-start="1550" selection-end="1550" vertical-scroll-proportion="0.22422062">
+            <state line="46" column="0" selection-start="1550" selection-end="1550" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1445534765257" expanded="true" signature="1605:1644" placeholder="..." />
               </folding>
@@ -141,39 +135,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="traderiser-chart-controller.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="traderiser-chart-controller.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assets/javascripts/app/controller/traderiser-chart-controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2542" column="7" selection-start="70835" selection-end="70835" vertical-scroll-proportion="-15.538462">
+            <state line="2531" column="27" selection-start="70216" selection-end="70216" vertical-scroll-proportion="0.48301888">
               <folding>
-                <marker date="1445533749295" expanded="true" signature="6439:6460" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="15974:15994" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="21691:21730" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="28280:28287" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="28440:28447" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="28579:28586" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="28711:28718" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="29410:29417" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="30643:30650" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="30825:30832" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="31386:31393" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="34786:34807" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="34820:34841" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="34923:34944" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="48575:48596" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="48609:48630" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="48711:48732" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="67462:67472" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="67489:67549" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="67583:67597" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="67725:67746" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="67996:68017" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="68667:68757" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="68792:68827" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="68842:68856" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="69112:69192" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="69225:69260" placeholder="..." />
-                <marker date="1445533749295" expanded="true" signature="69275:69289" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="6439:6460" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="15974:15994" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="27167:27174" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="27327:27334" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="27466:27473" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="27598:27605" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="28297:28304" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="29530:29537" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="29712:29719" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="30273:30280" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="33673:33694" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="33707:33728" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="33810:33831" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="47462:47483" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="47496:47517" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="47598:47619" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="66349:66359" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="66376:66436" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="66470:66484" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="66612:66633" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="66883:66904" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="67554:67644" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="67679:67714" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="67729:67743" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="67999:68079" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="68112:68147" placeholder="..." />
+                <marker date="1445535270964" expanded="true" signature="68162:68176" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -243,8 +236,8 @@
         <option value="$PROJECT_DIR$/assets/javascripts/main.js" />
         <option value="$PROJECT_DIR$/assets/stylesheets/vendor/jquery.dynatable.css" />
         <option value="$PROJECT_DIR$/assets/stylesheets/style.scss" />
-        <option value="$PROJECT_DIR$/assets/javascripts/app/controller/traderiser-chart-controller.js" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" />
+        <option value="$PROJECT_DIR$/assets/javascripts/app/controller/traderiser-chart-controller.js" />
       </list>
     </option>
   </component>
@@ -962,47 +955,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/controller/traderiser-chart-controller.js">
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2542" column="7" selection-start="70835" selection-end="70835" vertical-scroll-proportion="-15.538462">
+        <state line="46" column="0" selection-start="1550" selection-end="1550" vertical-scroll-proportion="0.0">
           <folding>
-            <marker date="1445533749295" expanded="true" signature="6439:6460" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="15974:15994" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="21691:21730" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="28280:28287" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="28440:28447" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="28579:28586" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="28711:28718" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="29410:29417" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="30643:30650" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="30825:30832" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="31386:31393" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="34786:34807" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="34820:34841" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="34923:34944" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="48575:48596" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="48609:48630" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="48711:48732" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="67462:67472" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="67489:67549" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="67583:67597" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="67725:67746" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="67996:68017" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="68667:68757" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="68792:68827" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="68842:68856" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="69112:69192" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="69225:69260" placeholder="..." />
-            <marker date="1445533749295" expanded="true" signature="69275:69289" placeholder="..." />
+            <marker date="1445534765257" expanded="true" signature="1605:1644" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js">
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/controller/traderiser-chart-controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="1550" selection-end="1550" vertical-scroll-proportion="0.22422062">
+        <state line="2531" column="27" selection-start="70216" selection-end="70216" vertical-scroll-proportion="0.48301888">
           <folding>
-            <marker date="1445534765257" expanded="true" signature="1605:1644" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="6439:6460" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="15974:15994" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="27167:27174" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="27327:27334" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="27466:27473" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="27598:27605" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="28297:28304" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="29530:29537" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="29712:29719" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="30273:30280" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="33673:33694" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="33707:33728" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="33810:33831" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="47462:47483" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="47496:47517" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="47598:47619" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="66349:66359" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="66376:66436" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="66470:66484" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="66612:66633" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="66883:66904" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="67554:67644" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="67679:67714" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="67729:67743" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="67999:68079" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="68112:68147" placeholder="..." />
+            <marker date="1445535270964" expanded="true" signature="68162:68176" placeholder="..." />
           </folding>
         </state>
       </provider>

@@ -720,40 +720,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 								var chartSelectInfo = self.selectMiniChart(presentationTypeIndex, obj, highlighterArray, dataLookUp, arraySeries, overlayArray, yAxisArray);
 								//Insert into Title area
 								if (highlighterArray.length > 0) {
-
-									var highId = Highcharts.charts[Highcharts.charts.length - 1].container.id;
-
-									$("#highlightControl" + pp).append($("<label>HighLighters : </label><input type='checkbox' checked id='highlightControlCheckBoxSplit" + highId + "'>"));
-
-									$("#highlightControlCheckBoxSplit" + highId).bind("change", function(e) {
-
-										var splitArrayTxt = e.target.id.split('Split');
-										var clikedItemId = splitArrayTxt[1];
-
-										for (var g = 0; g < Highcharts.charts.length; g++) {
-
-											if (typeof Highcharts.charts[g] !== 'undefined') {
-												if (Highcharts.charts[g].container.id == clikedItemId) {
-
-													Highcharts.charts[g].pointFormat = '<span style="color:{series.color};white-space:nowrap"> \u25CF{series.name}: <b>{point.y}</b></span>';
-
-													Highcharts.charts[g].tooltip.positioner = function() {
-														return {
-															x: 20,
-															y: 80
-														};
-													}
-
-
-													Highcharts.charts[g].highlighted = $("#highlightControlCheckBoxSplit" + clikedItemId).prop('checked');
-													Highcharts.charts[g].redraw();
-
-
-												}
-											}
-										}
-									})
-
+									chartSelectInfo.showHighLightSelection = true;
 								}
 								chartSelectInfo.chartSubWidgets = this.resultsCanvas;
 								mainWidget.charts.push(chartSelectInfo);
@@ -2629,19 +2596,14 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 					var chartInfo = {
 						chartID: classOnly,
 						chartData: {
-
 							title: {
 								text: symbolNames[0]
 							},
 							rangeSelector: buttonSetup,
-
 							yAxis: yAxisArray,
-
 							series: arraySeries,
-
 							highlighted: true,
 							highlightRegion: highlighterArray,
-
 							overlay: overlayArray
 
 						}
