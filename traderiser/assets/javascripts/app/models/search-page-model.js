@@ -89,7 +89,7 @@ define(['backbone', '../config/rest-utils'], function(Backbone, restUtils) {
 		getAnswer: function(query, callback, callbackError) {
 
 			var options = {
-				url: '/data/columnBarChart.json',
+				url: '/data/mulitipleCharts.json',
 				type: "GET",
 				dataType: "json",
 				success: function(res){

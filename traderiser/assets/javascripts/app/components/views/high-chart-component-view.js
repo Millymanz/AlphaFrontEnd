@@ -20,6 +20,9 @@ define(['../../views/abstract-view',
                 return res;
             }, {}, this);
         },
+				events:{
+					'change .highlighted': '_changeHighLight'
+				},
         initialize: function (options) {
             options = options || {};
             this.constructor.__super__.initialize.apply(this, arguments);
@@ -32,11 +35,28 @@ define(['../../views/abstract-view',
             
             PageLayout.options.center.onresize = _.bind(this._resizeChart, this);
             
-            $(this.el).attr({'width': '100%', 'height': '100%', 'margin': '0 auto'});
+          $(this.el).attr({'width': '100%', 'height': '100%', 'margin': '0 auto'});
+					var self = this;
+					$('.highlighted-'+ this.model.cid).on("change", function (evt) {
+						self.$el.highcharts().highlighted = $(this).prop('checked');
+						self.$el.highcharts().redraw();
+					});
+
         },
+				_changeHighLight: function(evt){
+					this.$el.highcharts().pointFormat = '<span style="color:{series.color};white-space:nowrap"> \u25CF{series.name}: <b>{point.y}</b></span>';
+
+					this.$el.highcharts().tooltip.positioner = function () {
+						return {
+							x: 20,
+							y: 80
+						};
+					}
+					this.$el.highcharts().highlighted = $(evt.target).prop('checked');
+					this.$el.highcharts().redraw();
+				},
         _resizeChart: function(pane, paneEL){
            var self = this;
-
         setTimeout(function () {
             // resizeEnd call function with pass context body
 					$(window).resize();
@@ -53,19 +73,19 @@ define(['../../views/abstract-view',
 
             }, this.model.toJSON());
 
+
+
             if (this.stockChart) {
                 this.$el.highcharts('StockChart', highChartsOptions);
             } else {
                 this.$el.highcharts(highChartsOptions);
             }
 
-					$("#highlighted").on("change", function (evt) {
-						Highcharts.charts[0].highlighted = $('#highlighted').prop('checked');
-						Highcharts.charts[0].redraw();
-					});
 
         },
         render: function () {
+					$('<div class="highlight-chart-'+ this.model.cid +'">Highlight:<input type="checkbox" class="highlighted"></div> ').prependTo(this.$el);
+						this.$el.highcharts().highlighted = true;
             this.$el.highcharts().redraw();
             return this;
         },

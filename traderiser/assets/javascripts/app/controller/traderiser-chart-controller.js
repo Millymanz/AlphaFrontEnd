@@ -25,19 +25,10 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 	}
 
 
-	var TradeRiserComponent = AbstractView.extend('TradeRiserComponent', {
+	var TradeRiserComponent = Backbone.Model.extend({
 		initialize: function() {
 
-			this.constructor.__super__.initialize.apply(this, arguments);
-
-			this.render();
-
 		},
-		render: function() {
-
-			return this;
-		},
-
 		/**
 		 * RenderResults
 		 * @param returnedData
@@ -45,10 +36,6 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 		renderQueryResults: function(returnedData) {
 			var self = this;
 			try {
-				var loadchart = document.getElementById("loadchartDia");
-				if (loadchart != null || loadchart != 'defined') {
-					loadchart.style.display = 'none';
-				}
 
 				var json = returnedData;
 				var obj = JSON && JSON.parse(json) || $.parseJSON(json);
@@ -121,7 +108,6 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 					displayError.style.display = 'block';
 					//$(this.el).append($('<div style='width: 200px;'">TradeRiser does not understand your input. Tip-Check your spelling, and use English</div>'));
 
-
 					//$(this.el).append($('<div id="noresults">TradeRiser does not understand your input. Tip-Check your spelling, and use English</div>'));
 					// alert('No Results');
 				}
@@ -131,6 +117,78 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 			}
 
 		},
+		/**
+		 *
+		 * @param latestResultCard
+		 */
+		upDateContinousQueryResult:function (latestResultCard) {
+
+
+		var loadchart = document.getElementById("loadchartDia");
+		if (loadchart != null || loadchart != 'defined') {
+			loadchart.style.display = 'block';
+		}
+
+
+
+		//this should be done on the server side
+		var imageArray = new Array();
+		if (latestResultCard.Source == "Forex") {
+			var symItemArr = latestResultCard.SymbolID.split('/');
+
+			for (var q = 0; q < symItemArr.length; q++) {
+				var path = '../../Images/flagcurrencies/' + symItemArr[q] + '.png';
+				imageArray.push(path);
+			}
+		}
+		//-----------------------------------------------//
+
+
+		var tings = "";
+		var extraFieldsArray = new Array();
+
+		for (var n = 0; n < latestResultCard.KeyResultField.length; n++) {
+			var str = JSON.stringify(latestResultCard.KeyResultField[n]);
+			var str = str.replace('"', ' ');
+			var resn = str.replace('"', ' ');
+			var resv = resn.replace('}', ' ');
+			var resf = resv.replace('{', ' ');
+			var ress = resf.replace(',', ' ');
+			var tempArray = latestResultCard.KeyResultField[n];
+
+			var extraFields = [{
+				keyfield: tempArray[0] + ' : ', keydata: tempArray[1]
+			}];
+			tings = extraFields;
+			extraFieldsArray.push(extraFields);
+		}
+
+		var resultItem = {
+			SymbolID: latestResultCard.SymbolID,
+			StartDateTime: latestResultCard.StartDateTime,
+			EndDateTime: latestResultCard.EndDateTime,
+			Source: latestResultCard.Source,
+			TimeFrame: latestResultCard.TimeFrame,
+			MoreStandardData: latestResultCard.MoreStandardData,
+			MoreKeyFields: latestResultCard.MoreKeyFields,
+			QueryID: latestResultCard.QueryID,
+			SymbolImages: imageArray,
+			ExtraFields: extraFieldsArray
+
+
+			/*,
+			 ExtraFields: extraFieldsArray*/
+		};
+
+	//	self.continuousResults.unshift(resultItem); create a new model for continuesResults
+
+		setTimeout(function () {
+			if (loadchart != null || loadchart != 'defined') {
+				loadchart.style.display = 'none';
+			}
+		}, 3000);
+
+	},
 
 		displayResults: function(obj) {
 			var self = this;
@@ -142,14 +200,15 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 			var highlighterArray = [];
 			var yAxisArray = []; //has to be double quotes
 			var groupingUnits = [];
+			self.resultsCanvas;
 
 			var presentationTypeCount = obj.CurrentResult.PresentationTypes.length;
 
-			if (presentationTypeCount > 0) {
-				$(this.el).append($('<br/>'
-					+ '<table id="tableCanvas" width="100%" cellpadding="15" cellspacing="1" border="1" style="border-color:#E0E0E0;"></table>'));
-
-			}
+//			if (presentationTypeCount > 0) {
+//				self.resultsCanvas = $('<div class="results-canvas"></div>').append($('<br/>'
+//					+ '<table id="tableCanvas" width="100%" cellpadding="15" cellspacing="1" border="1" style="border-color:#E0E0E0;"></table>'));
+//
+//			}
 
 			var rawDataResults = obj.CurrentResult.RawDataResults;
 
@@ -164,7 +223,11 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 			//Main widget
 			try {
 				for (var pp = 0; pp < presentationTypeCount; pp++, iterRow++) {
+					self.resultsCanvas= "";
+					self.resultsCanvas = $('<div class="results-canvas-'+pp+'"></div>').append($('<br/>'
+						+ '<table id="tableCanvas" width="100%" cellpadding="15" cellspacing="1" border="1" style="border-color:#E0E0E0;"></table>'));
 
+					//this.resultsCanvas.find('#tableCanvas').html(""); //lets empty the results canvas as we want a new one for each widget
 					var json = rawDataResults[pp].ChartReadyDataResults;
 					var dataLookUp = self.createLookUp(json);
 					var mulitipleWidgetLookUp = self.createMulitipleWidgetsLookUp(json);
@@ -283,12 +346,11 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 
 									series: tempSeries
 								}};
-
-									mainWidget.charts.push(chartInfo);
-							//$('.sideBarChart').highcharts();
-
 							self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray);
 
+							chartInfo.chartSubWidgets = this.resultsCanvas;
+							mainWidget.charts.push(chartInfo);
+							//$('.sideBarChart').highcharts();
 						}
 							break;
 						case 'ColumnChart':
@@ -331,6 +393,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 
 							//$('.columnChart').highcharts();
 							self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray);
+
 							var chartInfo = {
 								chartID: _.uniqueId(),
 								chartData: {
@@ -362,6 +425,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 									]
 								}
 							}
+							chartInfo.chartSubWidgets = this.resultsCanvas;
 							mainWidget.charts.push(chartInfo);
 						}
 							break;
@@ -461,42 +525,51 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 									}
 								}
 
-
-								$('.correlationChart').highcharts('StockChart', {
-									chart: {
-									},
-									rangeSelector: buttonSetup,
-									yAxis: {
-										labels: {
-											formatter: function() {
-												return (this.value > 0 ? '+' : '') + this.value + '%';
+								var chartInfo = {
+									chartId: _.unique(),
+									chartData: {
+										chart: {
+										},
+										rangeSelector: buttonSetup,
+										yAxis: {
+											labels: {
+												formatter: function() {
+													return (this.value > 0 ? '+' : '') + this.value + '%';
+												}
+											},
+											plotLines: [
+												{
+													value: 0,
+													width: 2,
+													color: 'silver'
+												}
+											]
+										},
+										plotOptions: {
+											series: {
+												compare: 'percent'
 											}
 										},
-										plotLines: [
-											{
-												value: 0,
-												width: 2,
-												color: 'silver'
-											}
-										]
-									},
-									plotOptions: {
-										series: {
-											compare: 'percent'
-										}
-									},
-									tooltip: {
-										pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-										valueDecimals: 2
-									},
-									series: lineSeriesOptions
-								});
+										tooltip: {
+											pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+											valueDecimals: 2
+										},
+										series: lineSeriesOptions
+									}
+								}
+//
+//								$('.correlationChart').highcharts('StockChart', {
+//
+//								});
 							}
 
 
 							// }
+							//self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, resultsData, iter);
+							self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray);
 
-							self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, resultsData, iter);
+							chartInfo.chartSubWidgets = this.resultsCanvas;
+							mainWidget.charts.push(chartInfo);
 
 						}
 							break;
@@ -640,7 +713,8 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 								yAxisArray.push(chartItemDef);
 
 								var presentationTypeIndex = pp;
-								self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter);
+								//self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter);
+								self.initalizeSubWidgets(obj.CurrentResult.PresentationTypes[pp], pp, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray);
 
 
 								var chartSelectInfo = self.selectMiniChart(presentationTypeIndex, obj, highlighterArray, dataLookUp, arraySeries, overlayArray, yAxisArray);
@@ -681,7 +755,9 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 									})
 
 								}
+								chartSelectInfo.chartSubWidgets = this.resultsCanvas;
 								mainWidget.charts.push(chartSelectInfo);
+
 							}
 
 						}
@@ -753,7 +829,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 
 					for (var tt = 0; tt < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].Headers.length; tt++) {
 
-						statsDomObject.get(0).find('#' + tableId + ' > tbody > tr').append("<td class='performanceStatsHeaderCells' id=pshcelln" + tt + " valign='top'>"
+						statsDomObject.find('#' + tableId + ' > tbody > tr').append("<td class='performanceStatsHeaderCells' id=pshcelln" + tt + " valign='top'>"
 							+ obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].Headers[tt] + "</td>");
 
 					}
@@ -765,12 +841,12 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 						var createdTemp = "rown" + tt;
 						var createdId = "id=" + createdTemp;
 
-						statsDomObject.get(0).find('#' + tableId).append("<tr " + createdId + "></tr>");
+						statsDomObject.find('#' + tableId).append("<tr " + createdId + "></tr>");
 
 
 						for (var rr = 0; rr < obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].StatsLog[tt].length; rr++) {
 							//$('#' + tableId + ' > tbody > #' + createdTemp)
-							statsDomObject.get(0).find('#' + tableId + ' > tbody > #' + createdTemp).append("<td class='performanceStatsCells' id=pscelln" + tt + " valign='top'>"
+							statsDomObject.find('#' + tableId + ' > tbody > #' + createdTemp).append("<td class='performanceStatsCells' id=pscelln" + tt + " valign='top'>"
 								+ obj.CurrentResult.RawDataResults[pp].PerformanceStatistics[mm].StatsLog[tt][rr] + "</td>");
 						}
 					}
@@ -811,22 +887,22 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 			if (remaining == 1) {
 				width = '100%';
 			}
-
+			var appendToTableChild = this.resultsCanvas.find('#tableCanvas tr:nth-child(' + nthPos + ')');
 
 			if (index == 0) {
 				if (remaining > 1) {
-					$("#tableCanvas").append($("<tr><td style='top:0px' width='50%' id=celln" + index + " >" + markup + "</td></tr>"));
+					this.resultsCanvas.find('#tableCanvas').append($("<tr><td style='top:0px' width='50%' id=celln" + index + " >" + markup + "</td></tr>"));
 				}
 				else {
-					$("#tableCanvas").append($("<tr><td style='top:0px' width='100%' id=celln" + index + " >" + markup + "</td></tr>"));
+					this.resultsCanvas.find('#tableCanvas').append($("<tr><td style='top:0px' width='100%' id=celln" + index + " >" + markup + "</td></tr>"));
 				}
 			}
 			else {
 				if (remaining > 1) {
-					$("<td style='top:0px' id=celln" + index + " width='100%'>" + markup + "</td>").appendTo($("#tableCanvas tr:nth-child(" + nthPos + ")"));
+					$("<td style='top:0px' id=celln" + index + " width='100%'>" + markup + "</td>").appendTo(appendToTableChild);
 				}
 				else {
-					$("<td style='top:0px' id=celln" + index + " width='50%'>" + markup + "</td>").appendTo($("#tableCanvas tr:nth-child(" + nthPos + ")"));
+					$("<td style='top:0px' id=celln" + index + " width='50%'>" + markup + "</td>").appendTo(appendToTableChild);
 				}
 			}
 		},
@@ -840,52 +916,72 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 		 * @param iter
 		 */
 		widgetPlacerT: function(index, total, title, height, chartClassName, iter) {
-
 			var remaining = total - index;
 			var remainder = index % 2;
-
-			// var nthPos = index;
-			//var nthPos = iter;
-
 			var nthPos = 0;
-
-			//var width = '50%';
-			//if (remaining == 1) {
-			//    width = '100%';
-			//}
-
 			var width = '100%';
-			if (remainder == 0 && remaining > 1) {
-				//width = '50%';
-				width = '700px';
-			}
+			var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/> <div id='highlightControl" + index + "'></div>" +
+				"<div class='" + chartClassName + "'></div>";
 
-			//var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/><div class='" + chartClassName + "' style='height: " + height + "'></div>";
+			this.resultsCanvas.find('#tableCanvas').append($("<tr><td colspan='2' style='top:0px' width='100%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
 
-			var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/><div class='" + chartClassName + "' style='height: " + height + "; width:" + width + "'></div>"; //*
-			// var markup = "<div class='widgetTitle'>" + title + "</div><br/><div class='" + chartClassName + "' style='height: " + height + "; width= 50% '></div>";
+		},
+		/**
+		 *
+		 * @param index
+		 * @param total
+		 * @param title
+		 * @param height
+		 * @param chartClassName
+		 * @param iter
+		 */
+		widgetPlacerTSideBySide: function (index, total, title, height, chartClassName, iter) {
+
+		var remaining = total - index;
+		var remainder = index % 2;
+
+		// var nthPos = index;
+		//var nthPos = iter;
+
+		var nthPos = 0;
+
+		//var width = '50%';
+		//if (remaining == 1) {
+		//    width = '100%';
+		//}
+
+		var width = '100%';
+		if (remainder == 0 && remaining > 1) {
+			//width = '50%';
+			width = '700px';
+		}
+
+		//var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/><div class='" + chartClassName + "' style='height: " + height + "'></div>";
+
+		var markup = "<div class='widgetTitle'>" + title + "</div><br/><br/><div class='" + chartClassName + "' style='height: " + height + "; width:" + width + "'></div>"; //*
+		// var markup = "<div class='widgetTitle'>" + title + "</div><br/><div class='" + chartClassName + "' style='height: " + height + "; width= 50% '></div>";
 
 
-			if (remainder == 0) {
-				if (remaining > 1) {
-					$("#tableCanvas").append($("<tr><td style='top:0px' width='50%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
 
-				}
-				else {
-					$("#tableCanvas").append($("<tr><td colspan='2' style='top:0px' width='100%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
-				}
+		if (remainder == 0) {
+			if (remaining > 1) {
+				this.resultsCanvas.find('#tableCanvas').append($("<tr><td style='top:0px' width='50%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
+
 			}
 			else {
-				// $("#tableCanvas  > tbody > tr > td").eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
-
-				var indset = index - 1;
-				var newId = "#celln" + indset;
-
-				$("#tableCanvas  > tbody > tr > " + newId).eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
-
-				//$("#tableCanvas  > tbody > tr > td").eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
+				this.resultsCanvas.find('#tableCanvas').append($("<tr><td colspan='2' style='top:0px' width='100%' id=celln" + index + " valign='top'>" + markup + "</td></tr>"));
 			}
-		},
+		}
+		else {
+			// $("#tableCanvas  > tbody > tr > td").eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
+
+			var indset = index - 1;
+			var newId = "#celln" + indset;
+
+			//$("#tableCanvas  > tbody > tr > " + newId).eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
+			this.resultsCanvas.find("# > tbody > tr > " + newId).eq(nthPos).after("<td style='top:0px' id=celln" + index + " width='100%' valign='top'>" + markup + "</td>");
+		}
+	},
 		/**
 		 * @TODO come comments
 		 * @param indicatorItem
@@ -951,9 +1047,11 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 
 			return dataLookUp;
 		},
-		initalizeSubWidgets: function(presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter) {
+		initalizeSubWidgets: function(presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray) {
 
-			this.prepareChartData(presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter);
+			//return this.prepareChartData(presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter);
+			return this.prepareChartData(presentationTypes, index, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray);
+
 		},
 		/**
 		 * convert numeric key
@@ -976,7 +1074,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 
 		},
 
-		prepareChartData: function(presentationTypes, presentationTypeIndex, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter) {
+		prepareChartDataLegacy: function(presentationTypes, presentationTypeIndex, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter) {
 			var self = this;
 
 			//create selectChartKey from loop
@@ -1008,8 +1106,9 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 						var tempStr = '<tr style="border-color:#E0E0E0;"><td>' + symbolNames[1] + '</td><td>' + resultValue + '</td></tr></table>';
 
 						var final = correlTabStr + tempStr;
-
-						$('<br/>' + final).appendTo($("#celln" + presentationTypeIndex));
+						//this.resultsCanvas.find('#tableCanvas > tbody > tr '+ newId)
+						//$("#celln" + presentationTypeIndex)
+						$('<br/>' + final).appendTo(this.resultsCanvas.find('#tableCanvas > tbody > tr > td#celln'+ presentationTypeIndex));
 
 
 						dataResults = obj.CurrentResult.RawDataResults[0].ChartReadyDataResults;
@@ -1106,7 +1205,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 							allCountIter++;
 						}
 
-						self.generateSummary(obj, presentationTypeIndex);
+						self.self.generateSummary(obj, presentationTypeIndex);
 					}
 						break;
 
@@ -1153,7 +1252,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 							allCountIter++;
 						}
 
-						self.generateSummary(obj, presentationTypeIndex);
+						self.self.generateSummary(obj, presentationTypeIndex);
 					}
 						break;
 
@@ -1293,7 +1392,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 							allCountIter++;
 						}
 
-						self.generateSummary(obj, presentationTypeIndex);
+						self.self.generateSummary(obj, presentationTypeIndex);
 
 					}
 						break;
@@ -1383,7 +1482,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 							allCountIter++;
 						}
 
-						self.generateSummary(obj, presentationTypeIndex);
+						self.self.generateSummary(obj, presentationTypeIndex);
 
 					}
 						break;
@@ -1431,7 +1530,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 							allCountIter++;
 						}
 
-						self.generateSummary(obj, presentationTypeIndex);
+						self.self.generateSummary(obj, presentationTypeIndex);
 					}
 						break;
 
@@ -1479,7 +1578,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 							symbolNames = [];
 
 
-						self.generateSummary(obj, presentationTypeIndex);
+						self.self.generateSummary(obj, presentationTypeIndex);
 
 
 						bSubWidgetSet = true;
@@ -1495,37 +1594,954 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 			//}
 		},
 
-		generateSummary: function(obj, presentationTypeIndex) {
 
-			var genTabStr = "<table cellpadding='8' cellspacing='20'><tr><td style='border-left: 1px solid grey;'>";
-			genTabStr += "<span style='color:#3a89ff;'><strong>Price Movement Facts: </strong></span><br/> <br/>"
-			genTabStr += "<table cellpadding='8' cellspacing='8' border='1' style='border-color:#E0E0E0;'>";
+		widgetAlreadyUsed:function (presentationItem, widgetUsedList) {
 
-			/*var genTabStr = "<div style='width: 300px;'>";
-			 genTabStr += "<div style='float: left; width: 200px;'>";
-			 genTabStr += '<span style="color:#3a89ff;">Price Movement Facts: </span><br/> <br/><table cellpadding="12" cellspacing="12" border="1" style="border-color:#E0E0E0;">';*/
+		for (var t = 0; t < widgetUsedList.length; t++) {
+			if (presentationItem == widgetUsedList[t]) {
+				return true;
+			}
+		}
+		widgetUsedList.push(presentationItem);
+		return false;
+	},
+
+		generateRandomColour: function () {
+
+		var textArray = [
+			'#5dff4f',
+			'blue',
+			'#006a72',
+			'#0055a6',
+			'#ad655f',
+			'#f3e877'
+		];
+		var randomNumber = Math.floor(Math.random() * textArray.length);
+		return textArray[randomNumber];
+	},
 
 
-			for (var bb = 0; bb < obj.CurrentResult.ProcessedResults.KeyFieldIndex[presentationTypeIndex].length; bb++) {
+		prepareChartData:function(presentationTypes, presentationTypeIndex, obj, dataLookUp, arraySeries, overlayArray, groupingUnits, yAxisArray, iter, extIndicatorLookUp, mulitipleWidgetLookUp, trendsOverlayArray) {
+		var self = this;
+		//create selectChartKey from loop
+		var allCount = 8;
+		var allCountIter = 0;
+		var selectChartKey = '';
 
-				var selectingIndex = obj.CurrentResult.ProcessedResults.KeyFieldIndex[presentationTypeIndex][bb];
+		var bSubWidgetSet = false;
 
-				genTabStr += '<tr style="border-color:#E0E0E0;"><td>' + obj.CurrentResult.ProcessedResults.Headers[selectingIndex] + '</td><td>'
-					+ obj.CurrentResult.ProcessedResults.ComputedResults[0][selectingIndex] + '</td></tr>';
-				//+ obj.CurrentResult.ProcessedResults.ComputedResults[presentationTypeIndex][selectingIndex] + '</td></tr>';
+		var widgetUsedList = [];
+
+		var indicatorPos = 0;
+		if (yAxisArray != null && typeof yAxisArray != 'undefined') {
+			if (yAxisArray.length > 0) {
+				indicatorPos = yAxisArray[0].height;
+			}
+		}
+
+		var indSpacing = 90;
+		var indicatorGap = 0; //handles gap between bottom chart indicators
+		var summariesSet = false;
+
+		for (var ss = 0; ss < presentationTypes.SubWidgets.length; ss++) {
+
+			switch (presentationTypes.SubWidgets[ss]) {
+				case 'CorrelationTable':
+				{
+					var indOne = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0];
+					var indTwo = obj.CurrentResult.ProcessedResults.KeyFieldIndex[1];
+
+
+					var resultValue = dataLookUp["CorrelationRatio"];
+
+					var lineSeriesOptions = [],
+						symbolNames = [];
+
+					for (var bb = 0; bb < obj.CurrentResult.ResultSymbols[presentationTypeIndex].length; bb++) {
+						symbolNames.push(obj.CurrentResult.ResultSymbols[presentationTypeIndex][bb]);
+					}
+
+					var correlTabStr = '<table cellpadding="12" cellspacing="12" border="1" style="border-color:#E0E0E0;"><tr style="border-color:#E0E0E0;"><td></td><td>' + symbolNames[0] + '</td></tr>';
+					var tempStr = '<tr style="border-color:#E0E0E0;"><td>' + symbolNames[1] + '</td><td>' + resultValue + '</td></tr></table>';
+
+					var final = correlTabStr + tempStr;
+
+					$('<br/>' + final).appendTo($("#celln"+ presentationTypeIndex));
+
+
+					dataResults = obj.CurrentResult.RawDataResults[0].ChartReadyDataResults;
+
+					bSubWidgetSet = true;
+
+					allCountIter++;
+				}
+					break;
+
+				case 'SMA':
+				{
+					var dataResults = {};
+					var widgetName = "";
+					var currentCount = mulitipleWidgetLookUp["SMA"];
+					if (typeof currentCount !== 'undefined') {
+						dataResults = dataLookUp["SMA" + ss];
+						widgetName = obj.CurrentResult.PresentationTypes[0].SubWidgetsAltName[ss];
+					}
+					else {
+						dataResults = dataLookUp["SMA"];
+						widgetName = "SMA";
+					}
+
+
+					if (dataResults != null || dataResults !== undefined) {
+						var dataLength = dataResults.length;
+						var smaData = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+							smaData.push([
+								dataResults[ri][0], // the date
+								dataResults[ri][1] // the close
+							])
+						}
+
+						//For handling multilple widgets of the same
+						//kind, this diversifies color
+						var selectedColor = "red";
+						if (self.widgetAlreadyUsed('SMA', widgetUsedList)) {
+							selectedColor = self.generateRandomColour();
+						}
+
+						//var smaChartItem = {
+						//    code: 'sma',
+						//    name: widgetName,
+						//    color: selectedColor,
+						//    data: [smaData],
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var smaChartItem = {
+							code: 'sma',
+							name: widgetName,
+							color: selectedColor,
+							data: [smaData]
+						}
+
+						overlayArray.push(smaChartItem);
+
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'BollingerBands':
+				{
+					var dataUpperBand = dataLookUp["UpperBand"];
+					var dataLowerBand = dataLookUp["LowerBand"];
+					var dataMiddleBand = dataLookUp["MiddleBand"];
+
+					if (dataMiddleBand != null || dataMiddleBand !== undefined) {
+						var smaOverlayArray = [];
+						var upperBollingerBandArray = [];
+						var lowerBollingerBandArray = [];
+
+						var dataLength = dataMiddleBand.length;
+
+						for (var ri = 0; ri < dataLength; ri++) {
+							smaOverlayArray.push([
+								dataMiddleBand[ri][0], // the date
+								dataMiddleBand[ri][1] // the close
+							])
+
+							upperBollingerBandArray.push([
+								dataUpperBand[ri][0], // the date
+								dataUpperBand[ri][1] // the close
+							])
+
+							lowerBollingerBandArray.push([
+								dataLowerBand[ri][0], // the date
+								dataLowerBand[ri][1] // the close
+							])
+						}
+
+						//var smaChartItem = {
+						//    code: 'sma',
+						//    name: 'SMA',
+						//    color: 'red',
+						//    data: [smaOverlayArray],
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var smaChartItem = {
+							code: 'sma',
+							name: 'SMA',
+							color: 'red',
+							data: [smaOverlayArray]
+						}
+
+						overlayArray.push(smaChartItem);
+
+						//var bollingerBandsChartItem = {
+						//    code: 'bbands',
+						//    name: 'Bollinger Bands',
+						//    color: 'blue',
+						//    data: [lowerBollingerBandArray, upperBollingerBandArray],
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var bollingerBandsChartItem = {
+							code: 'bbands',
+							name: 'Bollinger Bands',
+							color: 'blue',
+							data: [lowerBollingerBandArray, upperBollingerBandArray]
+						}
+
+						overlayArray.push(bollingerBandsChartItem);
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'Aroon Oscillator':
+				{
+					var indicatorName = "Aroon Oscillator";
+					selectChartKey = selectChartKey + indicatorName;
+					var yAxisPos = extIndicatorLookUp.indicatorLookUp[indicatorName];
+
+					var dataResults = dataLookUp["Aroon Oscillator"];
+
+					if (dataResults != null || dataResults !== undefined) {
+						var dataLength = dataResults.length;
+						var aroonOscArray = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+							aroonOscArray.push([
+								dataResults[ri][0], // the date
+								dataResults[ri][1] // the close
+							])
+						}
+
+						//var aroonOscChart = {
+						//    type: 'area',
+						//    name: 'Aroon Oscillator',
+						//    data: aroonOscArray,
+						//    yAxis: yAxisPos,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+						var aroonOscChart = {
+							type: 'area',
+							name: 'Aroon Oscillator',
+							data: aroonOscArray,
+							yAxis: yAxisPos
+						}
+
+						arraySeries.push(aroonOscChart);
+
+						indicatorPos = indicatorPos + indSpacing + indicatorGap;
+						var chartItemDef = {
+							title: {
+								text: 'Aroon Osc'
+							},
+							top: indicatorPos,
+							height: 100,
+							offset: 0,
+							lineWidth: 2
+						};
+						yAxisArray.push(chartItemDef);
+
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'Aroon Up':
+				{
+					var indicatorName = "Aroon Up";
+					var yAxisPos = extIndicatorLookUp.indicatorLookUp[indicatorName];
+
+					selectChartKey = selectChartKey + "Aroon Up";
+
+					var dataResults = dataLookUp["Aroon Up"];
+
+					if (dataResults != null || dataResults !== undefined) {
+						var dataLength = dataResults.length;
+						var aroonUpArray = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+							aroonUpArray.push([
+								dataResults[ri][0], // the date
+								dataResults[ri][1] // the close
+							])
+						}
+
+						//var aroonUpChart = {
+						//    type: 'line',
+						//    name: indicatorName,
+						//    data: aroonUpArray,
+						//    yAxis: yAxisPos,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var aroonUpChart = {
+							type: 'line',
+							name: indicatorName,
+							data: aroonUpArray,
+							yAxis: yAxisPos,
+						}
+
+						arraySeries.push(aroonUpChart);
+
+						indicatorPos = indicatorPos + indSpacing + indicatorGap;
+
+						var chartItemDef = {
+							title: {
+								text: indicatorName
+							},
+							top: indicatorPos,
+							height: 100,
+							offset: 0,
+							lineWidth: 2
+						};
+						yAxisArray.push(chartItemDef);
+
+						allCountIter++;
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'Aroon Down':
+				{
+					var indicatorName = "Aroon Down";
+					var yAxisPos = extIndicatorLookUp.indicatorLookUp[indicatorName];
+
+					selectChartKey = selectChartKey + indicatorName;
+
+					var dataResults = dataLookUp["Aroon Down"];
+
+					if (dataResults != null || dataResults !== undefined) {
+						var dataLength = dataResults.length;
+						var aroonDownArray = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+							aroonDownArray.push([
+								dataResults[ri][0], // the date
+								dataResults[ri][1] // the close
+							])
+						}
+
+						//var aroonDownChart = {
+						//    type: 'line',
+						//    name: indicatorName,
+						//    data: aroonDownArray,
+						//    yAxis: yAxisPos,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var aroonDownChart = {
+							type: 'line',
+							name: indicatorName,
+							data: aroonDownArray,
+							yAxis: yAxisPos
+						}
+
+						arraySeries.push(aroonDownChart);
+
+						indicatorPos = indicatorPos + indSpacing + indicatorGap;
+
+						var chartItemDef = {
+							title: {
+								text: indicatorName
+							},
+							top: indicatorPos,
+							height: 100,
+							offset: 0,
+							lineWidth: 2
+						};
+						yAxisArray.push(chartItemDef);
+
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'STDDEV':
+				case 'RSI':
+				{
+					var indicatorName = presentationTypes.SubWidgets[ss];
+					var yAxisPos = extIndicatorLookUp.indicatorLookUp[indicatorName];
+
+
+					selectChartKey = selectChartKey + indicatorName;
+
+					var dataResults = dataLookUp[indicatorName];
+
+					if (dataResults != null || dataResults !== undefined) {
+						var dataLength = dataResults.length;
+						var rsiArray = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+							rsiArray.push([
+								dataResults[ri][0], // the date
+								dataResults[ri][1] // the close
+							])
+						}
+
+						//var rsiChart = {
+						//    type: 'line',
+						//    name: indicatorName,
+						//    data: rsiArray,
+						//    yAxis: yAxisPos,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+
+						var rsiChart = {
+							type: 'line',
+							name: indicatorName,
+							data: rsiArray,
+							yAxis: yAxisPos
+						}
+
+						arraySeries.push(rsiChart);
+
+						indicatorPos = indicatorPos + indSpacing + indicatorGap;
+
+						var chartItemDef = {
+							title: {
+								text: indicatorName
+							},
+							top: indicatorPos,
+							height: 100,
+							offset: 0,
+							lineWidth: 2
+						};
+						yAxisArray.push(chartItemDef);
+
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'Stochastic':
+				{
+					var indicatorName = presentationTypes.SubWidgets[ss];
+
+					selectChartKey = selectChartKey + indicatorName;
+
+					var stochasticPKDataTemp = dataLookUp["OutSlowKData"];
+					var stochasticPDDataTemp = dataLookUp["OutSlowDData"];
+
+
+					if (stochasticPKDataTemp != null || stochasticPKDataTemp !== undefined) {
+						var dataLength = stochasticPKDataTemp.length;
+						var stochasticPKData = [];
+						var stochasticPDData = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+
+							stochasticPKData.push([
+								stochasticPKDataTemp[ri][0], // the date
+								stochasticPKDataTemp[ri][1] // the close
+							])
+
+							stochasticPDData.push([
+								stochasticPDDataTemp[ri][0], // the date
+								stochasticPDDataTemp[ri][1] // the close
+							])
+						}
+						var axis = 1;
+
+						//var macdChartItem ={
+						//    type: 'line',
+						//    name: 'Stochastic %K ',
+						//    data: stochasticPKData,
+						//    yAxis: axis,
+						//    dashStyle: 'ShortDash',
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var macdChartItem = {
+							type: 'line',
+							name: 'Stochastic %K ',
+							data: stochasticPKData,
+							yAxis: axis,
+							dashStyle: 'ShortDash'
+						}
+
+						arraySeries.push(macdChartItem);
+
+
+						//var signalChartItem = {
+						//    type: 'line',
+						//    name: 'Stochastic %D ',
+						//    data: stochasticPDData,
+						//    dashStyle: 'LongDash',
+						//    yAxis: axis,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+
+						var signalChartItem = {
+							type: 'line',
+							name: 'Stochastic %D ',
+							data: stochasticPDData,
+							dashStyle: 'LongDash',
+							yAxis: axis
+						}
+
+						arraySeries.push(signalChartItem);
+
+						indicatorPos = indicatorPos + indSpacing + indicatorGap;
+
+						var chartItemDef = {
+							title: {
+								text: 'Stochastic'
+							},
+							top: indicatorPos,
+							height: 100,
+							offset: 0,
+							lineWidth: 2
+						};
+						yAxisArray.push(chartItemDef);
+
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'MACD':
+				{
+					var indicatorName = "MACD";
+
+					selectChartKey = selectChartKey + "MACD";
+
+					var dataMACD = dataLookUp["MACDLine"];
+					var dataSignal = dataLookUp["SignalLine"];
+					var dataMACDHistogram = dataLookUp["MACDHistogram"];
+
+					if (dataMACD != null || dataMACD !== undefined) {
+						var dataLength = dataMACD.length;
+						var macdArray = [];
+						var macdSignalArray = [];
+						var macdHistogramArray = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+
+							macdArray.push([
+								dataMACD[ri][0], // the date
+								dataMACD[ri][1] // the close
+							])
+
+							macdSignalArray.push([
+								dataSignal[ri][0], // the date
+								dataSignal[ri][1] // the close
+							])
+
+							macdHistogramArray.push([
+								dataMACDHistogram[ri][0], // the date
+								dataMACDHistogram[ri][1] // the close
+							])
+						}
+						var axis = 1;
+
+						//var macdChartItem = {
+						//    type: 'line',
+						//    name: 'MACDline',
+						//    data: macdArray,
+						//    yAxis: axis,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var macdChartItem = {
+							type: 'line',
+							name: 'MACDline',
+							data: macdArray,
+							yAxis: axis
+						}
+
+						arraySeries.push(macdChartItem);
+
+
+						//var signalChartItem = {
+						//    type: 'line',
+						//    name: 'signalLine',
+						//    data: macdSignalArray,
+						//    yAxis: axis,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var signalChartItem = {
+							type: 'line',
+							name: 'signalLine',
+							data: macdSignalArray,
+							yAxis: axis
+						}
+						arraySeries.push(signalChartItem);
+
+
+						//var macdHistogramChartItem = {
+						//    type: 'column',
+						//    name: 'MACDHistogram',
+						//    data: macdHistogramArray,
+						//    yAxis: axis,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var macdHistogramChartItem = {
+							type: 'column',
+							name: 'MACDHistogram',
+							data: macdHistogramArray,
+							yAxis: axis
+						}
+
+						arraySeries.push(macdHistogramChartItem);
+
+						indicatorPos = indicatorPos + indSpacing + indicatorGap;
+
+						var chartItemDef = {
+							title: {
+								text: 'MACD'
+							},
+							top: indicatorPos,
+							height: 100,
+							offset: 0,
+							lineWidth: 2
+						};
+						yAxisArray.push(chartItemDef);
+
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'ATR':
+				{
+					var indicatorName = "ATR";
+					var yAxisPos = extIndicatorLookUp.indicatorLookUp[indicatorName];
+
+					selectChartKey = selectChartKey + "ATR";
+
+					var dataResults = dataLookUp["ATR"];
+
+					if (dataResults != null || dataResults !== undefined) {
+						var dataLength = dataResults.length;
+						var atrArray = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+							atrArray.push([
+								dataResults[ri][0], // the date
+								dataResults[ri][1] // the close
+							])
+						}
+						//var atrChart = {
+						//    type: 'line',
+						//    name: 'ATR',
+						//    data: atrArray,
+						//    yAxis: yAxisPos,
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var atrChart = {
+							type: 'line',
+							name: 'ATR',
+							data: atrArray,
+							yAxis: yAxisPos
+						}
+
+						arraySeries.push(atrChart);
+
+						indicatorPos = indicatorPos + indSpacing + indicatorGap;
+
+						var chartItemDef = {
+							title: {
+								text: indicatorName
+							},
+							top: indicatorPos,
+							height: 100,
+							offset: 0,
+							lineWidth: 2
+						};
+						yAxisArray.push(chartItemDef);
+
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				case 'Trends':
+				{
+					var dataResults = {};
+					var widgetName = "";
+					var currentCount = mulitipleWidgetLookUp["Trends"];
+					if (typeof currentCount !== 'undefined') {
+						dataResults = dataLookUp["Trends" + ss];
+						widgetName = obj.CurrentResult.PresentationTypes[0].SubWidgetsAltName[ss];
+					}
+					else {
+						dataResults = dataLookUp["Trends"];
+						widgetName = "Trends";
+					}
+
+
+					if (dataResults != null || dataResults !== undefined) {
+						var dataLength = dataResults.length;
+						var smaData = [];
+
+						for (var ri = 0; ri < dataLength; ri++) {
+							smaData.push([
+								dataResults[ri][0], // the date
+								dataResults[ri][1] // the close
+							])
+						}
+
+						//For handling multilple widgets of the same
+						//kind, this diversifies color
+						var selectedColor = "red";
+						if (self.widgetAlreadyUsed('Trends', widgetUsedList)) {
+							selectedColor = self.generateRandomColour();
+						}
+
+						//var smaChartItem = {
+						//    code: 'sma',
+						//    name: widgetName,
+						//    color: selectedColor,
+						//    data: [smaData],
+						//    dataGrouping: {
+						//        units: groupingUnits
+						//    }
+						//}
+
+						var smaChartItem = {
+							//code: 'sma',
+							//name: widgetName,
+							//color: selectedColor,
+							//data: [smaData],
+
+							series: arraySeries[presentationTypeIndex].data,
+							name: "Slope Line",
+							startDate: dataResults[0][0],
+							lineWidth: 3,
+							color: 'red',
+							startValue: dataResults[0][1],
+							endDate: dataResults[1][0],
+							endValue: dataResults[1][1]
+
+
+							//series : arraySeries
+							//name: "Slope Line",
+							//startDate: 1430485200000,
+							//lineWidth: 3,
+
+							//startValue: 120,
+							//endDate: 1430935200000,
+							//endValue: 150
+
+
+						}
+
+						trendsOverlayArray.push(smaChartItem);
+
+						allCountIter++;
+
+						if (summariesSet === false) {
+							self.generateSummary(obj, presentationTypeIndex);
+							summariesSet = true;
+						}
+					}
+				}
+					break;
+
+				default:
+				{
+					var indOne = obj.CurrentResult.ProcessedResults.KeyFieldIndex[0];
+					var indTwo = obj.CurrentResult.ProcessedResults.KeyFieldIndex[1];
+
+					var resultValue = dataLookUp["CorrelationRatio"];
+
+					var lineSeriesOptions = [],
+						symbolNames = [];
+
+					if (summariesSet === false) {
+						self.generateSummary(obj, presentationTypeIndex);
+						summariesSet = true;
+					}
+					bSubWidgetSet = true;
+					allCountIter++;
+				}
+					break;
+			}
+			indicatorGap = indicatorGap + 30;
+		}
+
+		//if (bSubWidgetSet === true) {
+		//    $("#resultCanvas").append($('<br/><hr style="border: 0; color: #9E9E9E; background-color: #9E9E9E; height: 1px; width: 100%; text-align: left;" />'));
+		//}
+	},
+
+		/**
+		 * @TODO comments what this does
+		 * @param obj
+		 * @param presentationTypeIndex
+		 */
+		generateSummary: function (obj, presentationTypeIndex) {
+
+		var genTabStr = "<table cellpadding='8' cellspacing='20' style='width:100%'><tr><td style='width:20%; border-left: 0px solid grey; vertical-align: top;'>";
+		genTabStr += "<span style='color:#3a89ff;'><strong>Detailed Facts: </strong></span><br/> <br/>"
+		genTabStr += "<table cellpadding='8' cellspacing='8' border='1' style='border-color:#E0E0E0;'>";
+
+
+		for (var bb = 0; bb < obj.CurrentResult.ProcessedResults.KeyFieldIndex[presentationTypeIndex].length; bb++) {
+
+			var selectingIndex = obj.CurrentResult.ProcessedResults.KeyFieldIndex[presentationTypeIndex][bb];
+
+			genTabStr += "<tr style='border-color:#E0E0E0;'><td>" + obj.CurrentResult.ProcessedResults.Headers[selectingIndex]
+				+ "</td><td>"
+				+ obj.CurrentResult.ProcessedResults.ComputedResults[0][selectingIndex] + '</td></tr>';
+		}
+		genTabStr += "</table></td>";
+
+		var firstSummary = obj.CurrentResult.RawDataResults[presentationTypeIndex].Summaries[0];
+		var summaryMore = obj.CurrentResult.RawDataResults[presentationTypeIndex].Summaries[1];
+
+		var ignoreMoreSummary = false;
+
+		if (typeof firstSummary !== 'undefined') {
+			if (!firstSummary) {
+				firstSummary = summaryMore;
+				ignoreMoreSummary = true;
 			}
 
+			if (ignoreMoreSummary === false) {
 
-			genTabStr += "</table></td>";
-			genTabStr += "<td valign='top' style='border-left: 1px solid grey; border-right: 1px solid grey;'><div style='margin-left:10px;margin-right:10px;'><span style='color:#3a89ff;'><strong>Summary:</strong> </span><br/> <br/>";
-			genTabStr += obj.CurrentResult.RawDataResults[presentationTypeIndex].Summaries[0];
-			genTabStr += "</div></td></tr></table>";
-			//genTabStr += "This contains the text that explains or summaries the clients data.</div></td></tr></table>";
+				genTabStr += "<td valign='top' style='width:40%; border-left: 1px solid grey; border-right: 1px solid grey; vertical-align: top;'>";
+				genTabStr += "<div style='margin-left:10px;margin-right:10px;'><span style='color:#3a89ff;'><strong>Tabular Summary:</strong> </span><br/> <br/>";
+				genTabStr += firstSummary;
+				genTabStr += "</div></td>";
+			}
+		}
 
-			var final = genTabStr;
+
+		if (ignoreMoreSummary === false) {
+			if (typeof summaryMore !== 'undefined') {
+
+				genTabStr += "<td valign='top' style='border-left: 0px solid grey; border-right: 0px solid grey; vertical-align: top;>";
+				genTabStr += "<div style='margin-left:10px;margin-right:10px;'><span style='color:#3a89ff;'><strong>Analysis Summary:</strong> </span><br/>" +
+					summaryMore + "</td>";
+			}
+		}
+		genTabStr += "</tr></table>";
 
 
-			$('<br/>' + final).appendTo($("#celln" + presentationTypeIndex));
+		var final = genTabStr;
+		//$('<br/>' + final).appendTo($("#celln" + presentationTypeIndex));
+		$(final).appendTo(this.resultsCanvas.find('#tableCanvas > tbody > tr > td#celln'+ presentationTypeIndex));
+
+		var allElements = this.resultsCanvas.find('.genericResultsTable'); //$('.genericResultsTable');
+
+		// Function that renders the list items from our records
+		function ulWriter(rowIndex, record, columns, cellWriter) {
+			var cssClass = "span4", li;
+			if (rowIndex % 3 === 0) { cssClass += ' first'; }
+			li = '<li class="' + cssClass + '"><div class="thumbnail"><div class="thumbnail-image">' + record.thumbnail + '</div><div class="caption">' + record.caption + '</div></div></li>';
+			return li;
+		}
+
+		// Function that creates our records from the DOM when the page is loaded
+		function ulReader(index, li, record) {
+			var $li = $(li),
+				$caption = $li.find('.caption');
+			record.thumbnail = $li.find('.thumbnail-image').html();
+			record.caption = $caption.html();
+			record.label = $caption.find('h3').text();
+			record.description = $caption.find('p').text();
+			record.color = $li.data('color');
+		}
+
+		for (var j = 0; j < allElements.length; j++) {
+			var idSelect = allElements[j].id;
+
+			$(allElements[j]).dynatable({
+				table: {
+					defaultColumnIdStyle: 'trimDash'
+				},
+				features: {
+					paginate: true,
+					search: false,
+					recordCount: true,
+					perPageSelect: false
+				}
+
+			});
+			}
+
 		},
 
 
@@ -1609,23 +2625,6 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 					}
 
 					// create the chart
-//					$(classOnly).highcharts('StockChart', {
-//
-//						title: {
-//							text: symbolNames[0]
-//						},
-//						rangeSelector: buttonSetup,
-//
-//						yAxis: yAxisArray,
-//
-//						series: arraySeries,
-//
-//						highlighted: true,
-//						highlightRegion: highlighterArray,
-//
-//						overlay: overlayArray
-//
-//					});
 
 					var chartInfo = {
 						chartID: classOnly,
@@ -1651,25 +2650,8 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
 					chartData = chartInfo;
 				}
 			}
-
 			return chartData;
-
-//
-//		for (var iterItem = 0; iterItem < Highcharts.charts.length; iterItem++) {
-//
-//			if (Highcharts.charts[iterItem] != null && Highcharts.charts[iterItem]!== undefined) {
-//				Highcharts.charts[iterItem].highlighted = true;
-//				Highcharts.charts[iterItem].redraw();
-//			}
-//		}
-
-
 		}
-
-
-
-
-
 	});
 
 	return TradeRiserComponent;

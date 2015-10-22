@@ -177,7 +177,7 @@ define(['./abstract-view',
 							model: new Backbone.Model(chartInfo.chartData),
 							collection: []
 						});
-						self.centerPane.append(stockChart.el);
+						self.centerPane.append($(stockChart.el).append(chartInfo.chartSubWidgets.get(0) || ""));
 					});
 
 					//add other information

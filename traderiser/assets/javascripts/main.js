@@ -22,7 +22,8 @@ require.config({
         'jquery-layout': 'vendor/jquery/jquery.layout-latest',
         'backbone-super': 'vendor/backbone/backbone-super',
         highstock: 'vendor/highcharts/js/highstock',
-        toastr: '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr'
+        toastr: '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr',
+				dynatable: 'vendor/jquery/jquery.dynatable'
     },
     shim: {
         underscore: {
@@ -39,6 +40,7 @@ require.config({
             exports: 'log4javascript'
         },
         'jquery-layout': {deps: ['jquery']},
+				dynatable: {deps: ['jquery']},
         'jquery.cookie': ['jquery'],
         'jquery-ui': {deps: ['jquery']},
         toastr: {deps: ['jquery']},
@@ -62,6 +64,7 @@ require([
     'app/config/settings',
     'jquery.cookie',
     'bootstrap',
+		'dynatable',
     'toastr'
 
 ], function (Backbone, underscore, AppRouter, Core, settings) {
