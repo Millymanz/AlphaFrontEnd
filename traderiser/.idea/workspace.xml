@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58e3854e-a2f0-426f-b707-286354753473" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/vendor/dust/dust-helpers.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/app/wrappers/dust.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/vendor/dust/dust.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/main.js" afterPath="$PROJECT_DIR$/assets/javascripts/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/stylesheets/style.scss" afterPath="$PROJECT_DIR$/assets/stylesheets/style.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/components/views/tabbed-component-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/components/views/tabbed-component-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\fun-apps\traderiser\assets\javascripts\vendor\highcharts\css\pin.png" afterPath="$PROJECT_DIR$/assets/stylesheets/vendor/highcharts/pin.png" />
-      <change type="MOVED" beforePath="D:\fun-apps\traderiser\assets\javascripts\vendor\highcharts\css\speech-bubble.css" afterPath="$PROJECT_DIR$/assets/stylesheets/vendor/highcharts/speech-bubble.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/app/core/templates.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/tr-view.js" />
     </list>
     <ignored path="traderiser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -150,12 +141,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="high-chart-component-view.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="high-chart-component-view.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="32" selection-start="3300" selection-end="3300" vertical-scroll-proportion="0.44844124">
+            <state line="95" column="19" selection-start="3271" selection-end="3271" vertical-scroll-proportion="0.0">
               <folding>
                 <marker date="1445618634513" expanded="false" signature="1621:1660" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="abstract-view.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/abstract-view.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.7669544">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -263,8 +265,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/assets/javascripts/app/config/tr-chart-helper.js" />
-        <option value="$PROJECT_DIR$/assets/javascripts/app/config/rest-utils.js" />
         <option value="$PROJECT_DIR$/public/javascripts/app/models/search-page-model.js" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js" />
         <option value="$PROJECT_DIR$/assets/javascripts/vendor/jquery.dynatable.js" />
@@ -279,6 +279,8 @@
         <option value="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/components/views/tabbed-component-view.js" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" />
+        <option value="$PROJECT_DIR$/assets/javascripts/app/views/tr-view.js" />
+        <option value="$PROJECT_DIR$/assets/javascripts/app/core/templates.js" />
       </list>
     </option>
   </component>
@@ -491,6 +493,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="template" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="traderiser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="traderiser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -801,35 +829,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/models/search-results-card-model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/vendor/highcharts/js/highstock-ext.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1444209385460" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1444209385460" expanded="false" signature="-1:-1" placeholder="..." />
-            <marker date="1444209385460" expanded="false" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/search-result-card-item-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="0" selection-start="863" selection-end="863" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/javascripts/app/config/rest-utils.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="22" selection-start="442" selection-end="448" vertical-scroll-proportion="0.0">
@@ -930,9 +929,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="32" selection-start="3300" selection-end="3300" vertical-scroll-proportion="0.44844124">
+        <state line="95" column="19" selection-start="3271" selection-end="3271" vertical-scroll-proportion="0.0">
           <folding>
             <marker date="1445618634513" expanded="false" signature="1621:1660" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/tr-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="2" selection-start="2" selection-end="2" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/core/templates.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/abstract-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.7669544">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
