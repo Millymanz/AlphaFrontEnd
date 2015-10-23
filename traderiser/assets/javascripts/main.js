@@ -9,6 +9,8 @@ require.config({
         // Major libraries
         underscore: 'vendor/underscore/underscore', // https://github.com/amdjs
         jquery: 'vendor/jquery/jquery',
+				dustCore: 'vendor/dust/dust',
+				dustHelpers: 'vendor/dust/dust-helpers',
         backbone: 'vendor/backbone/backbone',
         localstorage: 'vendor/backbone/backbone.localStorage-min',
         'backbone.fetch-cache': 'vendor/backbone/backbone.fetch.cache.min',
@@ -23,7 +25,11 @@ require.config({
         'backbone-super': 'vendor/backbone/backbone-super',
         highstock: 'vendor/highcharts/js/highstock',
         toastr: '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr',
-				dynatable: 'vendor/jquery/jquery.dynatable'
+				dynatable: 'vendor/jquery/jquery.dynatable',
+				'highstock-ext': 'vendor/highcharts/js/highstock-ext',
+
+			//wrappers
+				dust: './app/wrappers/dust'
     },
     shim: {
         underscore: {
@@ -47,9 +53,10 @@ require.config({
         parsley: {
             deps: ['jquery']
         },
-        bootstrap: {
+			  bootstrap: {
             deps: ['jquery']
-        }
+        },
+				'highstock-ext': {deps: ['highstock']}
 
     }
 });
@@ -62,12 +69,13 @@ require([
     'app/router',
     'app/core',
     'app/config/settings',
+		'dust',
     'jquery.cookie',
     'bootstrap',
 		'dynatable',
     'toastr'
 
-], function (Backbone, underscore, AppRouter, Core, settings) {
+], function (Backbone, underscore, AppRouter, Core, settings, dust) {
     'use strict';
 
     _.extend(window, {
@@ -75,7 +83,8 @@ require([
         _: underscore,
         core: Core,
         settings: settings.settings,
-        sessionModel: settings.session
+        sessionModel: settings.session,
+				dust: dust
     });
 
     $(document).ready(function () {

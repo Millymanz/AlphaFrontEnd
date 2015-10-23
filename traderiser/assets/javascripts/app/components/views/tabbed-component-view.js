@@ -4,7 +4,8 @@
  * plc and may be registered in certain jurisdictions.
  */
 
-define(['../../views/abstract-view', 'templates' ], function(AbstractView, templates){
+define(['../../views/abstract-view',
+	'templates' ], function(AbstractView, templates){
    'use strict';
    
    var TabsComponentView = AbstractView.extend('TabsComponentView', {
@@ -18,7 +19,8 @@ define(['../../views/abstract-view', 'templates' ], function(AbstractView, templ
            this.render();
            
            this.listenTo(this.collection, 'reset', this._redrawTabs);
-           this.listenTo(this.model, 'change:style', this._render);
+					 this.listenTo(this.collection, 'add', this._redrawTabs);
+					 this.listenTo(this.model, 'change:style', this._render);
        },
        render: function(){
             var self = this;
@@ -36,14 +38,17 @@ define(['../../views/abstract-view', 'templates' ], function(AbstractView, templ
                 });
                 
                 var tabContents = _.map(this.collection.models, function(model){
-                    
+										var contentEl = model.get('content');
                      return {
                         cid: model.cid,
-                        view: model.get('content'),
+                        view: contentEl,
                         content: function(chunk, context, bodies, params){
-                            var $viewEl = context.current().el.innerHTML;
-                             context.current().delegateEvents();
-                            return chunk.write($viewEl);
+														var viewWrapped = context.current();
+                            var $viewEl = viewWrapped.render().$el;
+
+                             chunk.write($viewEl.html());
+														viewWrapped.unwrap();
+														 viewWrapped.delegateEvents();
                         },
                         active: model.get('active')
                     }

@@ -8,7 +8,7 @@
 
 define(['../../views/abstract-view',
     'templates', 
-    'highstock'], function (AbstractView, Templates, highcharts) {
+    'highstock','highstock-ext'], function (AbstractView, Templates, highcharts) {
     'use strict';
 
     var HighChartComponentView = AbstractView.extend('HighChartComponentView', {
@@ -69,11 +69,7 @@ define(['../../views/abstract-view',
                 chart: {
                     events: this.getHighChartsEvents()
                 }
-
-
             }, this.model.toJSON());
-
-
 
             if (this.stockChart) {
                 this.$el.highcharts('StockChart', highChartsOptions);
@@ -81,12 +77,15 @@ define(['../../views/abstract-view',
                 this.$el.highcharts(highChartsOptions);
             }
 
-
         },
         render: function () {
 					$('<div class="highlight-chart-'+ this.model.cid +'">Highlight:<input type="checkbox" class="highlighted"></div> ').prependTo(this.$el);
 						this.$el.highcharts().highlighted = true;
             this.$el.highcharts().redraw();
+
+					if(this.widgets && this.widgets !== ""){
+						this.$el.append(this.widgets.get(0));
+					}
             return this;
         },
 				afterRender: function(){
@@ -95,6 +94,8 @@ define(['../../views/abstract-view',
 						$(window).resize();
 						//    self.$el.highcharts().resize();
 					}, 1000);
+
+					this.delegateEvents();
 				},
         bindHighChartsEvents: function () {
             this.listenTo(this.collection, 'add', this.onAddSerie);
