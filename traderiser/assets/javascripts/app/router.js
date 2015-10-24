@@ -64,7 +64,7 @@ define([
 			return this;
 		},
 		showLoginPage: function() {
-			if (sessionModel.get('logged_in') == true || $.cookie('logged_in') == "true") {
+			if (sessionModel.get('logged_in') === true || $.cookie('logged_in') === "true") {
 				this.navigate("/main", {trigger: true, replace: true});
 				return false;
 			}

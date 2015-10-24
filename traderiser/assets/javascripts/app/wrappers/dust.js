@@ -6,18 +6,20 @@
  * To change this template use File | Settings | File Templates.
  */
 define([
-	'underscore',
+    'underscore',
 //	'templates',
-	'dustCore',
-	'dustHelpers'
-],
-	function(_,
-	//				 templates,
-					 dust) {
-		'use strict';
+    'dustCore',
+    'dustHelpers',
+    'backbone-dust-helpers'
 
-		// stuff our templates into dust
-	//	_.extend(dust.cache, templates.cache);
-		return dust;
-	}
+],
+        function (_,
+                //				 templates,
+                dust) {
+            'use strict';
+
+            // stuff our templates into dust
+            //	_.extend(dust.cache, templates.cache);
+            return dust;
+        }
 );

@@ -105,16 +105,7 @@ define(['backbone', '../config/rest-utils'], function (Backbone, restUtils) {
                 }
             }
             return continuousResults;
-        },
-			/**
-			 * Takes
-			 * @param query
-			 */
-				makeNewSearch: function(query){
-					return this.getAnswer(query).then(function(results){
-						console.log(results);
-					});
-				}
+        }
 
     });
 

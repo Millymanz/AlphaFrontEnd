@@ -12,10 +12,10 @@ define(['../core/logging', 'toastr'], function (logger, toastr) {
             401: function () {
                 // Redirect the to the login page. Authorised user
 								toastr.error('Opps! Not Authorised');
-//								$.cookie('logged_in', 'false');
-//								setTimeout(function(){
-//									window.location.replace('/#login');
-//								}, 2000)
+								$.cookie('logged_in', 'false');
+								setTimeout(function(){
+									window.location.replace('/#login');
+								}, 2000)
 
             },
             403: function () {

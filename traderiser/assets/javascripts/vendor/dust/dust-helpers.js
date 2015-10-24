@@ -505,7 +505,7 @@ define(['dustCore'], function(dust) {
 
 		dust.helpers = helpers;
 
-	})(typeof exports !== 'undefined' ? module.exports = require('dustjs-linkedin') : dust);
+	})(typeof exports !== 'undefined' ? module.exports = require('dustCore') : dust);
 
 	return dust;
 

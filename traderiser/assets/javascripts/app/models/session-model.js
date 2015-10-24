@@ -38,7 +38,7 @@ define([
 		 * Call this function first to make sure username and token are already active
 		 */
 		checkAccessCredentials: function(){
-			if(this.get('logged_in') == true || $.cookie('logged_in') == "true" ){
+			if(this.get('logged_in') === true || $.cookie('logged_in') === "true" ){
 				this.startHeartBeat();
 				this.set('session_token', $.cookie('session_token'));
 				this.checkAuth();
@@ -98,7 +98,8 @@ define([
 					} else {
 					//	if ('error' in callback) callback.error(mod, res);
 					}
-				}, error: function(mod, res) {
+				}, error: function(e) {
+                                    console.log(e.statusCode);
 					//if ('error' in callback) callback.error(mod, res);
 				}
 			}).complete(function() {

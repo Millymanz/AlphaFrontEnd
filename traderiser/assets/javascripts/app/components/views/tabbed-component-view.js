@@ -5,50 +5,55 @@
  */
 
 define(['../../views/abstract-view',
-	'templates' ], function(AbstractView, templates){
-   'use strict';
-   
-   var TabsComponentView = AbstractView.extend('TabsComponentView', {
-       model: new Backbone.Model(),
-       collection: new Backbone.Collection(),
-       template: 'tabbed-component-template',
-       initialize: function(options){
-           options = options || {};
+    'templates'], function (AbstractView, templates) {
+    'use strict';
+
+    var TabsComponentView = AbstractView.extend('TabsComponentView', {
+        defaults: {
+            template: 'tabbed-component-template'
+        },
+        model: new Backbone.Model(),
+        collection: new Backbone.Collection(),
+        template: 'tabbed-component-template',
+        initialize: function (options) {
+            options = options || {};
             this.constructor.__super__.initialize.apply(this, arguments);
-           
-           this.render();
-           
-           this.listenTo(this.collection, 'reset', this._redrawTabs);
-					 this.listenTo(this.collection, 'add', this._redrawTabs);
-					 this.listenTo(this.model, 'change:style', this._render);
-       },
-       render: function(){
+
+            this.render();
+
+            this.listenTo(this.collection, 'reset', this._redrawTabs);
+            this.listenTo(this.collection, 'add', this._redrawTabs);
+            this.listenTo(this.model, 'change:style', this._render);
+        },
+        render: function () {
             var self = this;
             //build the tabs from collection
-            
-            if(this.collection.models.length> 0){
-               var tabsList =  _.map(this.collection.models, function(model){
-                   //tablist
-                   //tabcontent
+
+            if (this.collection.models.length > 0) {
+                var tabsList = _.map(this.collection.models, function (model) {
+                    //tablist
+                    //tabcontent
                     return {
                         cid: model.cid,
                         label: model.get('label'),
                         active: model.get('active')
                     }
                 });
-                
-                var tabContents = _.map(this.collection.models, function(model){
-										var contentEl = model.get('content');
-                     return {
+
+                var tabContents = _.map(this.collection.models, function (model) {
+                    var contentEl = model.get('content');
+                    return {
                         cid: model.cid,
-                        view: contentEl,
-                        content: function(chunk, context, bodies, params){
-														var viewWrapped = context.current();
+                        subview: contentEl,
+                        content: function (chunk, context, bodies, params) {
+                            var viewWrapped = context.current();
                             var $viewEl = viewWrapped.render().$el;
 
-                             chunk.write($viewEl.html());
-														viewWrapped.unwrap();
-														 viewWrapped.delegateEvents();
+                            //chunk.write($viewEl.html());
+                            var createdDust = dust.createElement('span', _.bind(function (el) {
+				el.parentElement.replaceChild(viewWrapped.el, el); // Replace the span by the Backbone.View
+			}));
+                            return chunk.write(createdDust);
                         },
                         active: model.get('active')
                     }
@@ -56,13 +61,13 @@ define(['../../views/abstract-view',
             }
             //lets reset active to true for any tabs with no active settings
             var ready = _.matcher({active: true});
-            var tabsToGoList = _.filter(tabsList, ready);   
-            if(tabsToGoList.length < 0){
+            var tabsToGoList = _.filter(tabsList, ready);
+            if (tabsToGoList.length < 0) {
                 tabsList[0].active = true;
             }
             //tabcontent set active to true
             var tabsContentToGoList = _.filter(tabContents, ready);
-            if(tabsContentToGoList.length < 0){
+            if (tabsContentToGoList.length < 0) {
                 tabContents[0].active = true;
             }
             templates.render(this.template, {
@@ -70,17 +75,17 @@ define(['../../views/abstract-view',
                 label: this.model.get('title'),
                 tabs: tabsList,
                 tabcontent: tabContents
-                
+
             }, function (error, output) {
                 $(self.el).html(output);
-                
+
             });
             return this;
-       },
-       afterRender: function(){
-           $(this.el).tab('show');
-       }
-   });
-   
-   return TabsComponentView;
+        },
+        afterRender: function () {
+            $(this.el).tab('show');
+        }
+    });
+
+    return TabsComponentView;
 });
