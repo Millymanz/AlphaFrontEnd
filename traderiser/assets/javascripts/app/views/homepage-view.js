@@ -27,7 +27,7 @@ define([
             options = options || {};
             this.constructor.__super__.initialize.apply(this, arguments);
             
-            this.searchBoxView = new SearchBoxView();
+            this.searchBoxView = options.searchBoxView || new SearchBoxView();
             this.applicationWrapperController = new ApplicationWrapperController();
             this.listenTo(this.model,'change:userProfileData', this._showUserData);
         },
@@ -41,14 +41,13 @@ define([
         afterRender:function(){
             var searchId = $(this.el).find('.search-box');
             $(searchId).html(this.searchBoxView.el);
-            
         },
         searchQuestion: function (evt) {
             var searchForm = $('form');
             if (searchForm.parsley().validate()) {
                 //searchForm.submit();
                 var searchText = searchForm.find('input');
-                appRouter.navigate("search/" + searchText.val(), {trigger: true, replace: true});
+                appRouter.navigate("search/" + escape(searchText.val()), {trigger: true, replace: true});
             }
 
         },
@@ -79,7 +78,7 @@ define([
             collection.add(new Backbone.Model({label: 'queriesSubscription', content: options.tab2}));
             
             var tabsComponent = new TabsComponentView({collection : collection, model: new TabsComponentModel({style: 'tabs-right'})});
-            $(this.el).append(tabsComponent.el);
+            $(this.el).append(tabsComponent.render().el);
         }
         
     });

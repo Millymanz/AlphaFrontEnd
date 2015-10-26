@@ -1,4 +1,7 @@
-define(['./abstract-view', 'templates','toastr'], function(AbstractView, templates, toastr) {
+define(['./abstract-view',
+        './search-box-view',
+        'templates',
+        'toastr'], function(AbstractView, SearchBoxView, templates, toastr) {
 	'use strict';
 
 	var HeaderView = AbstractView.extend('HeaderView', {
@@ -10,7 +13,8 @@ define(['./abstract-view', 'templates','toastr'], function(AbstractView, templat
 			options = options || {};
 			this.constructor.__super__.initialize.apply(this, arguments);
 			this.listenTo(this.model, 'change:showSearch', this._toggleSearchBar);
-
+                        
+                        this.searchBoxView = new SearchBoxView();    
 			this.render();
 
 		},
@@ -24,8 +28,10 @@ define(['./abstract-view', 'templates','toastr'], function(AbstractView, templat
 		afterRender: function() {
 			this.searchBoxEl = $(this.el).find('.search-box');
 			if(this.model.get('showSearch') && this.model.get('showSearch') === true){
-				this.searchBoxEl.show();
-				this.searchBoxEl.find('input').val(this.model.get('searchTermText'))
+				//this.searchBoxEl.show();
+				//this.searchBoxEl.find('input').val(this.model.get('searchTermText'))
+                                this.searchBoxView.model.set('searchTerm', this.model.get('searchTermText'));
+                               this.searchBoxEl.show().html(this.searchBoxView.el);
 			}
 		},
 		/**

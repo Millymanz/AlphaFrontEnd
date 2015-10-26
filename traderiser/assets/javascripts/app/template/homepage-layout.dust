@@ -4,6 +4,15 @@
                 <div class="search-box">
                   
                 </div>
+
+<div class="search-meta">
+    <div class="pull-right">
+        <ul class="search-menu-list">
+        <li><a href="javascript:;"><i class="fa fa-asterisk"></i> Example Queries</a></li>
+        <li><a href="javascript:;"><i class="fa fa-bookmark-o"></i> Bookmark Queries</a></li>
+         </ul>   
+    </div>
+</div>
 </div>
 
 </div>

@@ -1,0 +1,31 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 25-Oct-2015, 17:21:14
+    Author     : rockyasante
+*/
+.tr-component-search-box-view{
+    position:relative;
+    
+.search-pop-out {
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.24);
+    margin-top: 3px;
+    overflow-y: auto;
+    position: absolute;
+    transition: transform .2s,visibility .2s;
+    transform: translateY(0);
+    width: 100%;
+    z-index: 1;
+    padding:10px;
+}
+
+.repeat-search-type{
+ font-size:12.5px;   
+}
+
+
+}

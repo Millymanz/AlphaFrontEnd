@@ -1,4 +1,5 @@
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:400,300,600");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
 
 $blue: #5B83AD;
 $yellow: #FFFFE0;
@@ -49,8 +50,10 @@ body {
 }
 
 @import 'homepage';
+@import "header-style";
 @import "layout-default-latest.css";
 @import 'login-style';
 @import '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css';
 @import "vendor/jquery.dynatable.css";
 @import "vendor/highcharts/speech-bubble.css";
+@import "search-box-style";

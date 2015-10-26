@@ -908,11 +908,11 @@ define(
 			 */
 			renderTemplate: function() {
 				var template = this.getViewOption('template');
-				if (dust.cache[template] == null) {
-					//if template doesn't exist, unwrap the view
-					templates.unwrapView(this);
-					return;
-				}
+//				if (dust.cache[template] == null) {
+//					//if template doesn't exist, unwrap the view
+//					templates.unwrapView(this);
+//					return;
+//				}
 				// build up template context
 				var context = {_view: this};
 				if (this.model != null && (this.model instanceof Backbone.Model)) {

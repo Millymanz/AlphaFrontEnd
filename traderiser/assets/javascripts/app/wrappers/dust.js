@@ -7,19 +7,19 @@
  */
 define([
     'underscore',
-//	'templates',
+    'templates',
     'dustCore',
     'dustHelpers',
     'backbone-dust-helpers'
 
 ],
         function (_,
-                //				 templates,
+                templates,
                 dust) {
             'use strict';
 
             // stuff our templates into dust
-            //	_.extend(dust.cache, templates.cache);
+            	_.extend(dust.cache, templates.cache);
             return dust;
         }
 );

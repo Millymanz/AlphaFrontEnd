@@ -16,7 +16,7 @@ define(['../../views/abstract-view',
         collection: new Backbone.Collection(),
         template: 'tabbed-component-template',
         initialize: function (options) {
-            options = options || {};
+            //this.super(options);
             this.constructor.__super__.initialize.apply(this, arguments);
 
             this.render();
@@ -70,11 +70,12 @@ define(['../../views/abstract-view',
             if (tabsContentToGoList.length < 0) {
                 tabContents[0].active = true;
             }
+            this.tabcontent = tabContents;
             templates.render(this.template, {
                 style: this.model.get('style'),
                 label: this.model.get('title'),
                 tabs: tabsList,
-                tabcontent: tabContents
+                //tabcontent: tabContents
 
             }, function (error, output) {
                 $(self.el).html(output);
@@ -83,6 +84,9 @@ define(['../../views/abstract-view',
             return this;
         },
         afterRender: function () {
+            if(this.tabcontent){
+              
+            }
             $(this.el).tab('show');
         }
     });
