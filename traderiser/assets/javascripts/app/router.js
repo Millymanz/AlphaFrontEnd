@@ -35,14 +35,12 @@ define([
             '*actions': 'default'
         },
         initialize: function () {
-            Backbone.history.start();
-            this.options = {requiresAuth: true};
-            sessionModel.checkAccessCredentials();
-            this.searchBoxView = new SearchBoxView();
+
         },
         homepage: function () {
             this.showSearchBox = false;
-            var homepage = new HomePageView({model: new Backbone.Model, searchBoxView: this.searchBoxView});
+						var searchPageView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm})});
+            var homepage = new HomePageView({model: new Backbone.Model, searchBoxView: searchPageView});
             var options = {requiresAuth: true};
             this.show(homepage, options);
             return this;
@@ -88,13 +86,13 @@ define([
                 if (view)
                     var headerViewModel = new Backbone.Model({showSearch: this.showSearchBox, searchTermText: this.searchTerm});
                 var searchBoxView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm})})
-
-                this.headerView = new HeaderView({model: headerViewModel, searchBoxView: this.searchBoxView});
+                this.headerView = new HeaderView({model: headerViewModel, searchBoxView: searchBoxView});
                 
                 $('#header').html(this.headerView.el);
             } else {
+								this.headerView.model.set('searchTermText', this.searchTerm);
                 this.headerView.model.set('showSearch', this.showSearchBox);
-                this.headerView.model.set('searchTermText', this.searchTerm);
+            		this.headerView.searchBoxView.model.set('searchTerm', this.searchTerm);
             }
             // Close and unbind any existing page view
             if (this.currentView && _.isFunction(this.currentView.close))
@@ -120,7 +118,7 @@ define([
 
         },
         default: function (actions) {
-            $(this.el).html("This route is not hanled.. you tried to access: " + actions);
+            $(this.el).html("This route is not handled.. you tried to access: " + actions);
 
         },
         index: function () {
@@ -133,7 +131,29 @@ define([
                 return false;
             }
             this.show(new LoginPageView({}));
-        }
+        },
+				booter: function(){
+					Backbone.history.start();
+					this.options = {requiresAuth: true};
+					sessionModel.checkAccessCredentials();
+					this.searchBoxView = new SearchBoxView();
+
+					$('body').append($('<div id="h_v"></div>').hide());
+// Enable pusher logging - don't include this in production
+					Pusher.log = function (message) {
+						if (window.console && window.console.log) {
+							window.console.log(message);
+						}
+					};
+					var pusher = new Pusher('0c52bffe086a83952d16');
+					var hvnme = $('#h_v').val();
+					var channel = pusher.subscribe(hvnme);
+
+					channel.bind('my_event', function (data) {
+						alert(data.message);
+						//UpdateContinousQueryResultCard(data);
+					});
+				}
 
     });
 

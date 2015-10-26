@@ -53,10 +53,10 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
                 //searchForm.submit();
                 var searchText = searchForm.find('input');
                 this.model.set('searchTerm' , searchText.val());
-                appRouter.navigate("search/" + escape(searchText.val()), {trigger: true, replace: true});
+                window.traderiser.router.navigate("search/" + escape(searchText.val()), {trigger: true, replace: true});
             }
 
-        },
+        }
         
     });
     

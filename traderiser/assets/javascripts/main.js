@@ -59,62 +59,54 @@ require.config({
         bootstrap: {
             deps: ['jquery']
         },
-        'highstock-ext': {deps: ['highstock']},
+        'highstock-ext': {deps: ['highstock']}
        //'dust-dom': {deps: ['dustCore'] }
-
     }
 });
 
 // Let's kick off the application
 
-require([
+define([
     'backbone',
     'underscore',
+		'jquery',
     'app/router',
     'app/core',
     'app/config/settings',
     'dust',
+		'app/components',
     'jquery.cookie',
     'bootstrap',
     'dynatable',
     'toastr',
     'dust-dom'
 
-], function (Backbone, underscore, AppRouter, Core, settings, dust) {
+], function (Backbone, underscore, jquery, AppRouter, Core, settings, dust, Components) {
     'use strict';
+		window.traderiser = window.traderiser || {};
+		traderiser.core = Core;
+		traderiser.components = Components;
 
     _.extend(window, {
+
         Backbone: Backbone,
         _: underscore,
+				$: jquery,
         core: Core,
         settings: settings.settings,
         sessionModel: settings.session,
         dust: dust
     });
-
-    $(document).ready(function () {
-        var appRouter = new AppRouter();
-        _.extend(window, {
-            appRouter: appRouter
-        });
-    });
-
-    $('body').append($('<div id="h_v"></div>').hide());
-// Enable pusher logging - don't include this in production
-    Pusher.log = function (message) {
-        if (window.console && window.console.log) {
-            window.console.log(message);
-        }
-    };
-    var pusher = new Pusher('0c52bffe086a83952d16');
-    var hvnme = $('#h_v').val();
-    var channel = pusher.subscribe(hvnme);
-
-    channel.bind('my_event', function (data) {
-        alert(data.message);
-        //UpdateContinousQueryResultCard(data);
-    });
-
+//
+//    $(document).ready(function () {
+//        var appRouter = new AppRouter();
+//        _.extend(window, {
+//            appRouter: appRouter
+//        });
+//
+//    });
+	traderiser.router = new AppRouter;
+	return traderiser;
 
 });
 

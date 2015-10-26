@@ -13,8 +13,7 @@ define(['./abstract-view',
 			options = options || {};
 			this.constructor.__super__.initialize.apply(this, arguments);
 			this.listenTo(this.model, 'change:showSearch', this._toggleSearchBar);
-                        
-                        this.searchBoxView = new SearchBoxView();    
+      this.searchBoxView = new SearchBoxView();
 			this.render();
 
 		},
@@ -27,11 +26,11 @@ define(['./abstract-view',
 		},
 		afterRender: function() {
 			this.searchBoxEl = $(this.el).find('.search-box');
+			this.searchBoxEl.html(this.searchBoxView.render().el);
 			if(this.model.get('showSearch') && this.model.get('showSearch') === true){
-				//this.searchBoxEl.show();
-				//this.searchBoxEl.find('input').val(this.model.get('searchTermText'))
+
                                 this.searchBoxView.model.set('searchTerm', this.model.get('searchTermText'));
-                               this.searchBoxEl.show().html(this.searchBoxView.el);
+
 			}
 		},
 		/**
@@ -41,6 +40,7 @@ define(['./abstract-view',
 		 */
 		_toggleSearchBar: function(model, status) {
 			if (status === true) {
+				this.searchBoxView.model.set('searchTerm', this.model.get('searchTermText'));
 				this.searchBoxEl.show();
 			} else {
 				this.searchBoxEl.hide();

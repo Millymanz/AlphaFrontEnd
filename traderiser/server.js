@@ -152,13 +152,7 @@ exports.startServer = function (config, callback) {
         return serveTemplate(viewName, config);
     };
 
-
-
     //components page testing
-    app.get('/component-high-charts', serveView('components/component-high-charts', config));
-
-
-
-
+    app.get('/components', serveView('components/tr-components', config));
     callback(server);
 };

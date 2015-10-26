@@ -70,10 +70,7 @@ define(['./abstract-view',
                            passInput.val('');
                            userInput.focus();
                            return;
-                        }else{
-                            appRouter.navigate('/main', {trigger: true, replace: true});
                         }
-
                     },
                     error: function(err){
                         if(DEBUG) console.log("ERROR", err);
