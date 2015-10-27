@@ -4,7 +4,7 @@
  * plc and may be registered in certain jurisdictions.
  */
 
-define([], function(){
+define(['backbone'], function(Backbone){
     'use strict';
     
     var SearchResultsCardModel = Backbone.Model.extend({

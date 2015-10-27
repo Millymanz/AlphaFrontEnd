@@ -1,0 +1,19 @@
+<div class="historicQuery" data-bind="attr: {id: QueryID }">
+            <div class="blobhead">
+                <div class="blobuser">
+                    <div class="sideBarViewQuery" data-bind="click: function(Query) {
+                       $root.updateMainQuery(Query); }">View</div>
+
+                    <div class="btnFollow" data-bind="click: function(QueryID) {
+                        $root.saveQuery(QueryID); }">Save</div>
+
+                    <div class="btnFollow" data-bind="click: function(QueryID) {
+                       $root.followQuery(QueryID); }">
+                        Follow+
+                    </div>
+                </div>
+            </div>
+            <div class="blobcontent">
+               <div style="font-size: 14px; color: #494747; margin: 0px; padding: 0px; text-shadow:1px 1px 0px rgba(255,255,255,0.55);" data-bind="text: Query"></div>
+            </div>
+        </div>

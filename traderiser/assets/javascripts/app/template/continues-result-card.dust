@@ -1,7 +1,11 @@
-<a id={QueryID} {?selected}class="active"{/selected} href="javscript:;" >
+<div id={QueryID} {?selected}class="active"{/selected} >
+					<div class="pull-right"><a href="javascript:;">view</a></div>
             <div class="blobhead">
                 <div class="list-group-item-heading">
                     <table class="resultHeaderTable">
+                    		<tr>
+                    			<td colspan="4"><h4>{Query}</h4></td>
+                    		</tr>
                         <tr>
                             <td>
                                 <div class="resultIcon">

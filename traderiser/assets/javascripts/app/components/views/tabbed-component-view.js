@@ -21,9 +21,9 @@ define(['../../views/abstract-view',
 			$(this.el).tabs();
 			//this.render();
 
-			this.listenTo(this.collection, 'reset', this._redrawTabs);
-			this.listenTo(this.collection, 'add', this._redrawTabs);
-			this.listenTo(this.model, 'change:style', this._render);
+			this.listenTo(this.collection, 'reset', this.render);
+			this.listenTo(this.collection, 'add', this.render);
+			this.listenTo(this.model, 'change:style', this.render);
 		},
 		render: function() {
 			var self = this;

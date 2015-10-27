@@ -154,5 +154,14 @@ exports.startServer = function (config, callback) {
 
     //components page testing
     app.get('/components', serveView('components/tr-components', config));
-    callback(server);
+		app.get('/components/accordion', serveView('components/component-accordion', config));
+		app.get('/components/tabs', serveView('components/component-tabs', config));
+		app.get('/components/search-results', serveView('components/component-results-card', config));
+		app.get('/components/search-bar', serveView('components/component-search-bar', config));
+		app.get('/components/continues-results', serveView('components/component-continues-results', config));
+		app.get('/components/favourites-results', serveView('components/component-favourite-results', config));
+		app.get('/components/charts', serveView('components/component-charts', config));
+		app.get('/components/slide-menu', serveView('components/component-slide-menu', config));
+
+	callback(server);
 };

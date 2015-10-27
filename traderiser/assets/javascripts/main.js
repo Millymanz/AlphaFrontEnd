@@ -75,20 +75,21 @@ define([
     'app/config/settings',
     'dust',
 		'app/components',
+		'app/views',
     'jquery.cookie',
     'bootstrap',
     'dynatable',
     'toastr',
     'dust-dom'
 
-], function (Backbone, underscore, jquery, AppRouter, Core, settings, dust, Components) {
+], function (Backbone, underscore, jquery, AppRouter, Core, settings, dust, Components, Views) {
     'use strict';
 		window.traderiser = window.traderiser || {};
 		traderiser.core = Core;
 		traderiser.components = Components;
+		traderiser.views = Views;
 
     _.extend(window, {
-
         Backbone: Backbone,
         _: underscore,
 				$: jquery,

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Trade riser: Search Bar Components</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<meta name="csrf-token" content="{{csrfToken}}">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link href="/stylesheets/style.css" rel="stylesheet">
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/javascripts/reload-client.js"></script>
+	<script src="/javascripts/vendor/requirejs/require.js" data-main="/javascripts/tr-require.js"></script>
+
+</head>
+<body>
+<div id="components-page">Search component</div>
+<hr>
+<div id="app-container">
+</div>
+<div id="footer"></div>
+
+
+<script type="text/javascript">
+	var startTradeRiserApp = function(traderiser){
+
+		var TradeRiserComponents = traderiser.app.components;
+		var TabsComponent = TradeRiserComponents.TabsComponent;
+		var AccordionComponent = TradeRiserComponents.AccordionComponent;
+
+
+		var collection = new Backbone.Collection();
+		collection.add(new Backbone.Model({label: 'tabs 1', content: '<p>asasasa</p>', active: true}));
+
+		var backboneViewTab =  Backbone.View.extend({
+			events: {
+				"click .clickMeButton": _.bind(function(e){
+					alert('clicked');
+				})
+			},
+			className: 'backboneView',
+			initialize:function(options){
+				this.$el.html('<p>tabs information</p>');
+				//this.render();
+			},
+			render: function(){
+				this.$el.append('<p class="text text-primary"><button class="clickMeButton">even more information</button></p>');
+				return this;
+			}
+		});
+
+
+		$('#app-container').append($('<div>Search bar</div>'));
+	}
+</script>
+</body>
+</html>
