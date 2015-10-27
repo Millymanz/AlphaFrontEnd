@@ -28,7 +28,7 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
         },
         render: function(){
             var self = this;
-            templates.render(this.template, {searchText: this.model.toJSON()}, function(error, output){
+            templates.render(this.template, {searchText: this.model.get('searchTermText')}, function(error, output){
                $(self.el).html(output); 
             });
         },
@@ -42,7 +42,7 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
          */
         insertTypingText: function(evt){
             //console.log('asas =>' + this.searchTermBox.val());
-            var term = $('.search-text-box').val();
+            var term = this.$el.find('.search-text-box').val();
             
             $('.repeat-search-type').html($('<p></p>').html(term));
             //return false;

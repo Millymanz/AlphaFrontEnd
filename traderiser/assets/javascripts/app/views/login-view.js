@@ -70,6 +70,8 @@ define(['./abstract-view',
                            passInput.val('');
                            userInput.focus();
                            return;
+                        }else{
+                            window.traderiser.router.navigate("main", {trigger: true, replace: true});
                         }
                     },
                     error: function(err){

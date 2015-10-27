@@ -8,7 +8,6 @@ define(['../models/search-results-card-model'], function(SearchResultsCardModel)
     'use strict';
     
     var SearchResultsCollection = Backbone.Collection.extend({
-        url: 'collection',
         model: SearchResultsCardModel,
         initialize: function(){
             

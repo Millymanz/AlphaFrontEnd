@@ -27,6 +27,7 @@
 
 		var TradeRiserComponents = traderiser.app.components;
 		var TabsComponent = TradeRiserComponents.TabsComponent;
+                var AccordionComponent = TradeRiserComponents.AccordionComponent;
 
 
 		var collection = new Backbone.Collection();
@@ -51,8 +52,17 @@
 
 		collection.add(new Backbone.Model({label: 'Backbone view', content: new backboneViewTab}));
 		var tabsComponentView = new TabsComponent.view({collection: collection, model: new Backbone.Model({})});
-		$('#app-container').html(tabsComponentView.render().el);
-	}
+		$('#app-container').append(tabsComponentView.render().el);
+                
+                
+                var accordionCollection = new Backbone.Collection();
+            accordionCollection.add(new Backbone.Model({label: 'accordion one', view: '<p>1. a some more content<p>'}));
+            accordionCollection.add(new Backbone.Model({label: 'accordion two', view: '<p>2. some more content<p>'}));
+            accordionCollection.add(new Backbone.Model({label: 'accordion three', view: '<p>3. some more content<p>'}));
+            var accordionComponentView = new AccordionComponent.view({model: new Backbone.Model({style: 'simple', title: 'latest information'}), collection: accordionCollection});
+
+            $('#app-container').append(accordionComponentView.render().el);
+    }
 </script>
 </body>
 </html>
