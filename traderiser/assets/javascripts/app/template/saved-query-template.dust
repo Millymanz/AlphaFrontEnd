@@ -1,8 +1,10 @@
-<div class="followingQuery" data-bind="attr: {id: QueryID }">
+<div class="savedQuery" data-id="{QueryID}">
             <div class="blobhead">
                 <div class="blobuser">
-                    <div class="sideBarViewQuery" data-bind="click: function(Query) {
-                       $root.updateMainQuery(Query); }">View</div>
+                    <div class="sideBarViewQuery pull-right">
+                    <a href="javascript:;" data-query="data-query="{Query}" class="action-view">View</a>
+                    
+                    </div>
 
                     <div class="btnUnfollow" data-bind="click: function(QueryID) {
                        $root.unSaveQuery(QueryID); }">

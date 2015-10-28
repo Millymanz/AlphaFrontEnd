@@ -1,6 +1,11 @@
-<a id={QueryID} {?selected}class="active"{/selected} href="javscript:;" >
+<div id={QueryID} {?selected}class="active"{/selected}>
             <div class="blobhead">
                 <div class="list-group-item-heading">
+                <div class="pull-right">
+            <a class="btn btn-xs btn-info" href="javascript:;">view</a>
+            </button>
+          
+</div>
                     <table class="resultHeaderTable">
                         <tr>
                             <td>
@@ -35,8 +40,8 @@
                     </table>
                 </div>
             </div>
-            <div class="list-group-item-text">
-            <table class="resultFieldsTable  table">
+            <div class="list-group-item-text resultFieldsTable" style="display:none">
+            <table class="table table-condensed">
             <tbody>
 								{#KeyResultField}
                                         <tr>

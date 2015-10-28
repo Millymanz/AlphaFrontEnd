@@ -18,6 +18,12 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
            
          this.constructor.__super__.initialize.apply(this, arguments);
 					this.listenTo(this.model,'change:selected',this.render);
+                                        
+                                        $(this.$el).on('click', _.bind(function(e){
+                                            $(this.el).find('.resultFieldsTable').slideToggle();
+                                            
+                                            return false;
+                                        },this));
          	this.render();
        },
        render: function(){
