@@ -162,6 +162,8 @@ exports.startServer = function (config, callback) {
 		app.get('/components/favourites-results', serveView('components/component-favourite-results', config));
 		app.get('/components/charts', serveView('components/component-charts', config));
 		app.get('/components/slide-menu', serveView('components/component-slide-menu', config));
+		app.get('/components/following-results', serveView('components/component-following-results', config));
+
 
 	callback(server);
 };

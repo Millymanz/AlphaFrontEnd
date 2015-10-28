@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Trade riser: Favourite results Component</title>
+	<title>Trade riser: Following Query results Component</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<meta name="csrf-token" content="{{csrfToken}}">
 
@@ -19,11 +19,12 @@
 
 </head>
 <body>
-<div id="components-page">Favourite Card Component</div>
+<div id="components-page">Following Query Component</div>
 <hr>
 <div id="app-container">
 	<div class="loading-text text-muted"> <p><i class="fa fa-cog fa-x3 fa-spin"></i>...Loading </p></div>
 </div>
+<div class="clear-fix"></div>
 <div id="qunit"></div>
 <div id="qunit-fixture"></div>
 
@@ -34,13 +35,11 @@
 		var TradeRiserComponents = traderiser.app.components;
 		var TradeRiserViews = traderiser.app.views;
 		var TabsComponent = TradeRiserComponents.TabsComponent;
-		var FavouritesListView = TradeRiserViews.FavouritesListView;
+		var FollowingResultsListView = TradeRiserViews.FollowingResultsListView;
 
 		//create a new Results card view
-                var favouritesCollection;
+		var followingCollection;
 		var collection = new Backbone.Collection();
-
-
 
 		var request = $.ajax({
 			url: '/data/GetUserProfile3.json',
@@ -48,16 +47,16 @@
 			dataType:'json',
 			success: function(data){
 				return data;
-				}
-			});
+			}
+		});
 
 		request.then(function(data){
 			if(data.UserProfileConfig.Following.length > 0){
 				console.log(data.UserProfileConfig.Following);
-        var favouritesData  = data.UserProfileConfig.SavedQueries;
-				favouritesCollection = new Backbone.Collection(favouritesData);
-				var favouriteListView = new FavouritesListView({collection: favouritesCollection});
-				collection.add(new Backbone.Model({label: 'Favourite Results', content: favouriteListView, active: true}));
+				var followingData  = data.UserProfileConfig.Following;
+				followingCollection = new Backbone.Collection(followingData);
+				var followingListView = new FollowingResultsListView({collection: followingCollection});
+				collection.add(new Backbone.Model({label: 'Following Queries Results', content: followingListView, active: true}));
 			}
 		});
 

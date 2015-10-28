@@ -26,7 +26,12 @@ body {
     }
     #app-container, .search-page-view{
         height: 100%;
+				position: relative;
     }
+
+	#app-container {
+		margin-top: 12.5px;
+	}
     .fill{
         min-height: 100%;
     height: 100%;
@@ -36,17 +41,108 @@ body {
     height: 100%;
     
     }
+	.ui-layout-container{
+
+	}
     
     .ui-layout-container, .ui-layout-pane {
   -webkit-box-sizing: content-box;
      -moz-box-sizing: content-box;
           box-sizing: content-box;
-    } 
-    
-    
-    .tr-component-high-chart-component-view{
-      
+			border:none;
     }
+
+	.ui-layout-pane{
+		padding:5px;
+	}
+
+	.ui-layout-resizer {
+		background: #DDD;
+		border: 1px solid #DDD;
+		border-width: 0;
+		width:3px!important;
+	}
+
+	.ui-layout-toggler {
+		border: 1px solid #BBB;
+		background-color: #BBB;
+		width:3px;
+	}
+    .tr-component{
+
+    }
+
+	.loading-text {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+		height: 20px;
+		text-align: center;
+	}
+
+	/*<ol class="rounded-list">
+    <li><a href="">List item</a></li>
+    <li><a href="">List item</a></li>
+    <li><a href="">List item</a>
+        <ol>
+            <li><a href="">List sub item</a></li>
+            <li><a href="">List sub item</a></li>
+            <li><a href="">List sub item</a></li>
+        </ol>
+    </li>
+    <li><a href="">List item</a></li>
+    <li><a href="">List item</a></li>
+</ol>*/
+
+	.rectangle-list a{
+		position: relative;
+		display: block;
+		padding: .4em .4em .4em .8em;
+		*padding: .4em;
+		margin: .5em 0 .5em 2.5em;
+		background: #ddd;
+		color: #444;
+		text-decoration: none;
+		transition: all .3s ease-out;
+	}
+
+	.rectangle-list a:hover{
+		background: #eee;
+	}
+
+	.rectangle-list a:before{
+		content: counter(li);
+		counter-increment: li;
+		position: absolute;
+		left: -2.5em;
+		top: 50%;
+		margin-top: -1em;
+		background: #fa8072;
+		height: 2em;
+		width: 2em;
+		line-height: 2em;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	.rectangle-list a:after{
+		position: absolute;
+		content: '';
+		border: .5em solid transparent;
+		left: -1em;
+		top: 50%;
+		margin-top: -.5em;
+		transition: all .3s ease-out;
+	}
+
+	.rectangle-list a:hover:after{
+		left: -.5em;
+		border-left-color: #fa8072;
+	}
+
 }
 
 @import 'homepage';

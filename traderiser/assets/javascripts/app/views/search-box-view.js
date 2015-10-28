@@ -14,7 +14,7 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
         events: {
             'click .search-question-btn': 'searchQuestion',
             'click .search-text-box' : 'showSearchTerm',
-            'keydown .search-text-box': 'insertTypingText'
+            'keyup .search-text-box': 'insertTypingText'
         },
         initialize: function(options){
             //this._super(options);
@@ -25,10 +25,12 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
             $('html').on('click', function(evt){
                 $('.search-term-holder').slideUp('medium');
             });
+
+					this.listenTo(this.viewOptions, 'change:searchHistoryView', this.render);
         },
         render: function(){
             var self = this;
-            templates.render(this.template, {searchText: this.model.get('searchTermText')}, function(error, output){
+            templates.render(this.template, {searchText: this.model.get('searchTermText') || ""}, function(error, output){
                $(self.el).html(output); 
             });
         },
@@ -43,14 +45,21 @@ define(['./abstract-view','templates'], function(AbstractView, templates){
         insertTypingText: function(evt){
             //console.log('asas =>' + this.searchTermBox.val());
             var term = this.$el.find('.search-text-box').val();
-            
             $('.repeat-search-type').html($('<p></p>').html(term));
             //return false;
         },
+				afterRender:function(){
+					var viewSearchHistory = $(this.el).find('.search-history');
+					if(viewSearchHistory){
+						var searchHistoryView = this.getViewOption('searchHistoryView');
+						if(searchHistoryView && searchHistoryView instanceof Backbone.View){
+							viewSearchHistory.append(this.getViewOption('searchHistoryView'));
+						}
+					}
+				},
         searchQuestion: function (evt) {
             var searchForm = this.$el.find('form');
             if (searchForm.parsley().validate()) {
-                //searchForm.submit();
                 var searchText = searchForm.find('input');
                 this.model.set('searchTerm' , searchText.val());
                 window.traderiser.router.navigate("search/" + escape(searchText.val()), {trigger: true, replace: true});

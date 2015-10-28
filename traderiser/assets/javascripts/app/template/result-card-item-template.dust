@@ -1,11 +1,5 @@
 <div id={QueryID} {?selected}class="active"{/selected}>
-            <div class="blobhead">
-                <div class="list-group-item-heading">
-                <div class="pull-right">
-            <a class="btn btn-xs btn-info" href="javascript:;">view</a>
-            </button>
-          
-</div>
+
                     <table class="resultHeaderTable">
                         <tr>
                             <td>
@@ -54,5 +48,12 @@
 								{/KeyResultField}
 								 </tbody>
 								  </table>
+								   <div class="blobhead">
+
+                                  <div class="pull-right">
+                              <a class="btn btn-xs btn-info" href="javascript:;">view</a>
+                              </button>
+
+                  			</div>
             </div>
         </div>

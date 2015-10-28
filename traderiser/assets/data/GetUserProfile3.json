@@ -1,0 +1,104 @@
+{
+	"JSONData": null,
+	"ClientRenderFunction": null,
+	"ResultSummaries": [],
+	"UserProfileConfig": {
+		"Following": [{
+			"QueryID": "C00978D7-0053-4638-8538-965E39CC6B6F",
+			"Query": "which is the most bullish of the major currency pairs on the 1 min timeframe"
+		},
+		{
+			"QueryID": "2E025EAB-6793-4BFD-A73E-399F12D4A461",
+			"Query": "NZD/CAD price change at least 0.1 pips on 1min timeframe realtime"
+		},
+		{
+			"QueryID": "E8B3B0DE-2FC5-4F19-AFDC-0673F0B751D7",
+			"Query": "eurusd price change at most 0.4 pips on 1min timeframe realtime"
+		}],
+		"HistoricQueries": [{
+			"QueryID": "B3C0C154-9726-4387-BA5E-4E9540CB35D7",
+			"Query": "\"Identify pairs that are trading above 20 simple moving average on 1H timeframe for the first time between 1/2/2015 to 20/05/2015"
+		},
+		{
+			"QueryID": "1C0FC2A6-183A-4C7A-9C35-3A97622F60F9",
+			"Query": "Identify pairs that are trading above 20 simple moving average on 1H timeframe for the first time between 1/2/2015 to 20/05/2015"
+		},
+		{
+			"QueryID": "E96227C6-FC31-4941-8999-22C30EF3E55A",
+			"Query": "Identify pairs that are trading above 20 simple moving average on 1H timeframe for the first time between 1/2/2015 to 20/05/2015"
+		},
+		{
+			"QueryID": "5CBD3705-30B2-4039-AB42-140653053B67",
+			"Query": "Which was the most bullish major currency pair on the 1min timeframe realtime?"
+		},
+		{
+			"QueryID": "EA3CF47D-5B3F-4C74-8466-5B464957A6F7",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "82D4A4BE-CAD0-45B7-8F1A-B7A44607DCA1",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "3E86350B-7E69-4D0C-BF28-A4A3F6F111CD",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "33ABFC97-5240-4313-93DA-9C2CB3577588",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "CF717A91-E8C6-4066-801F-E8F5759FAA09",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "3D8D06E1-D477-41E5-A0FE-CB7FD4336972",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "F7265292-82E8-41B7-9D71-B1C11A50E757",
+			"Query": "Which was the most bullish major currency pair between 05/02/2015 to 14/02/2015?"
+		},
+		{
+			"QueryID": "A71B5486-7D6E-445D-ABA2-A48E66D2102F",
+			"Query": "sasas"
+		},
+		{
+			"QueryID": "D763C1E4-283C-4B40-A9CD-FB953B66C8DE",
+			"Query": "Which was the most bullish major currency pair between 05/02/2015 to 14/02/2015?"
+		},
+		{
+			"QueryID": "D754CB5D-BAEB-47CD-B10D-B28059B220D6",
+			"Query": "asasasasasa as asa"
+		},
+		{
+			"QueryID": "E77571B8-B6A1-4794-AAF0-18EBCFB62003",
+			"Query": "asas s"
+		}],
+		"SavedQueries": [{
+			"QueryID": "82D4A4BE-CAD0-45B7-8F1A-B7A44607DCA1",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "3E86350B-7E69-4D0C-BF28-A4A3F6F111CD",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "33ABFC97-5240-4313-93DA-9C2CB3577588",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "CF717A91-E8C6-4066-801F-E8F5759FAA09",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "3D8D06E1-D477-41E5-A0FE-CB7FD4336972",
+			"Query": "How many times did the chfjpy touch the upper Bollinger band in the 1hour timeframe, the last time that the RSI, in the daily timeframe was overbought"
+		},
+		{
+			"QueryID": "F7265292-82E8-41B7-9D71-B1C11A50E757",
+			"Query": "Which was the most bullish major currency pair between 05/02/2015 to 14/02/2015?"
+		}]
+	},
+	"CurrentResult": null
+}

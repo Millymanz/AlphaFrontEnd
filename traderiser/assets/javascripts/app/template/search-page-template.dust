@@ -1,10 +1,10 @@
 
     <div class="ui-layout-west">
-        <div id="west-content">West</div>
+        <div id="west-content"><div class="loading-text text-muted"> <p><i class="fa fa-cog fa-x2 fa-spin"></i>...Loading </p></div></div>
     </div>
     <div class="ui-layout-center">
-        <div id="center-content">Center</div>
+        <div id="center-content"><div class="loading-text text-muted"> <p><i class="fa fa-cog fa-x2 fa-spin"></i>...Loading </p></div></div>
     </div>
     <div class="ui-layout-east">
-     <div id="east-content">East</div>
+     <div id="east-content"><div class="loading-text text-muted"> <p><i class="fa fa-cog fa-x2 fa-spin"></i>...Loading </p></div></div>
     </div>

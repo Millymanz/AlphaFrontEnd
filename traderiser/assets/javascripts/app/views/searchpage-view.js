@@ -12,6 +12,7 @@ define(['./abstract-view',
     '../components/models/highcharts-model',
     '../controller/traderiser-chart-controller',
     '../components/views/tabbed-component-view',
+		'./search-results-view',
     'jquery-layout',
     'jquery-ui'], function (AbstractView,
         AccordionComponentView,
@@ -21,7 +22,7 @@ define(['./abstract-view',
         SearchPageModel,
         HighChartsModel,
         TradeRiserComponent,
-        TabbedComponentView) {
+        TabbedComponentView, SearchResultsView) {
     'use strict';
 
     var SearchPageView = AbstractView.extend('SearchPageView', {
@@ -36,8 +37,8 @@ define(['./abstract-view',
             if (options.q !== "") {
                 this.question = options.q;
             }
-            this.render();
-            this.showGraph();
+            //this.render();
+            //this.showGraph();
             this._makeNewSearch(this.question);
             this.listenTo(sessionModel.getApplicationWrapperModel(), 'change:searchTermText', this._makeNewSearch);
         },
@@ -51,19 +52,19 @@ define(['./abstract-view',
         },
         afterRender: function () {
 
-            var accordionCollection = new Backbone.Collection();
-            accordionCollection.add(new Backbone.Model({label: 'accordion one', view: '<p>1. a some more content<p>'}));
-            accordionCollection.add(new Backbone.Model({label: 'accordion two', view: '<p>2. some more content<p>'}));
-            accordionCollection.add(new Backbone.Model({label: 'accordion three', view: '<p>3. some more content<p>'}));
-            var accordionComponentView = new AccordionComponentView({model: new Backbone.Model({style: 'simple', title: 'latest information'}), collection: accordionCollection});
+//            var accordionCollection = new Backbone.Collection();
+//            accordionCollection.add(new Backbone.Model({label: 'accordion one', view: '<p>1. a some more content<p>'}));
+//            accordionCollection.add(new Backbone.Model({label: 'accordion two', view: '<p>2. some more content<p>'}));
+//            accordionCollection.add(new Backbone.Model({label: 'accordion three', view: '<p>3. some more content<p>'}));
+//            var accordionComponentView = new AccordionComponentView({model: new Backbone.Model({style: 'simple', title: 'latest information'}), collection: accordionCollection});
 
 
             this.eastSide = $(this.el).find('#west-content');
             this.centerPane = $(this.el).find('#center-content');
             this.westPane = $(this.el).find('#east-content');
 
-            $(this.eastSide).html(accordionComponentView.el);
-            accordionComponentView.refresh();
+//            $(this.eastSide).html(accordionComponentView.el);
+//            accordionComponentView.refresh();
 
         },
         getSearchAnswer: function () {
@@ -94,6 +95,15 @@ define(['./abstract-view',
             var self = this;
             return this.model.getAnswer(this.question).then(function (data) {
                 //console.log(data);
+								var resultsCollection = '';
+							if(data.ResultSummaries.length > 0){
+								console.log(data.ResultSummaries);
+								var searchResultsCollection = new Backbone.Collection(data.ResultSummaries);
+								var resultsCardList = new SearchResultsView({collection: searchResultsCollection});
+								//collection.add(new Backbone.Model({label: 'Search Results', content: resultsCardList, active: true}));
+								self.eastSide.html(resultsCardList.render().el);
+							}
+
                 var chart = self.controller.displayResults(data);
                 if (chart && chart.charts.length > 0) {
                     self.centerPane.empty();

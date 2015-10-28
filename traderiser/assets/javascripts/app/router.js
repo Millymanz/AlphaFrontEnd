@@ -56,11 +56,11 @@ define([
                 east: {
                 },
                 west: {
-                    size: 250,
+                    size: 350,
                     pin: true,
                     closable: true,
                     resizeable: true,
-                    slidable: false
+                    slidable: true
                 }
             });
             $(this.el).addClass('fill');

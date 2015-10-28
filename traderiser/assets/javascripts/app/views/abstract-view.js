@@ -46,46 +46,10 @@ define(['jquery',
 		}, beforeRender: function() {
 			//console.log('beforeRender');
 		},
-		/**
-		 * Renders the view by calling _preRender, _templateRender, and finally _postRender in a nested fashion.
-		 *
-		 * <p>Note: This method should not be overridden; views wanting to do custom rendering should instead override renderTemplate.
-		 * This method is non-blocking and returns this i.e. the view being rendered</p>
-		 *
-		 * @param {boolean} [async] Set to true to make this render call non-blocking
-		 * @returns {PiView} this The view being rendered
-		 */
-		renderPapillon: function(async) {
-			if (typeof async !== 'boolean') {
-				async = false;
+		toggleLoading: function(status){
+			if(status){
+				$(this.el).html($('<div class="loading-text"><i class="fa fa-cog fa-spin"></i></div>'));
 			}
-			var _renderLogic = $.proxy(function(async) {
-				logging.debug(this + ' render() ' + (async ? 'async' : ''));
-				var time1 = (new Date().getTime() / 1000), self = this;
-				var prePromises = this.callNestedFunction('_preRender', async);
-				var templatePromises = this.callNestedFunction('_templateRender', async);
-				var postPromises = this.callNestedFunction('_postRender', async);
-				if (!async) {
-					// rendering done by the above calls, time it
-					var time2 = (new Date().getTime() / 1000);
-					logging.debug(this + ' render took ' + (time2 - time1) + ' seconds');
-				} else {
-					// the above calls returned promises, resolve them and stick a timing promise on at the end
-					utils.resolvePromises(prePromises, templatePromises, postPromises, utils.promiseMe(function() {
-						var time2 = (new Date().getTime() / 1000);
-						logging.debug(self + ' async render ' + (time2 - time1) + ' seconds');
-					}, {async: true}));
-				}
-			}, this);
-			if (async) {
-				setImmediate(function() {
-					_renderLogic(async);
-				});
-			} else {
-				_renderLogic(async);
-			}
-
-			return this;
 		},
 		render: function() {
 			return this;

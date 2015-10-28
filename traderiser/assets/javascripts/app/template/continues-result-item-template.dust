@@ -1,5 +1,5 @@
 <div id={QueryID} {?selected}class="active"{/selected} >
-					<div class="pull-right"><a href="javascript:;">view</a></div>
+					<div class="pull-right"><a href="javascript:;" class="btn btn-xs btn-info">view</a></div>
             <div class="blobhead">
                 <div class="list-group-item-heading">
                     <table class="resultHeaderTable">
@@ -39,8 +39,8 @@
                     </table>
                 </div>
             </div>
-            <div class="list-group-item-text">
-            <table class="resultFieldsTable  table">
+            <div class="list-group-item-text resultFieldsTable" style="display:none">
+            <table class="table">
             <tbody>
 								{#KeyResultField}
                                         <tr>

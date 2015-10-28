@@ -12,24 +12,34 @@ and open the template in the editor.
 }
 
 .tr-component-search-result-card-item-view {
+	width: 100%;
+	padding: 5px;
+	border-right: none;
+	border-left: none;
+	margin: 0px;
+
     table.resultHeaderTable td {
-    padding:0px 10px;
+    padding:0px 3px;
     font-size:12.5px;
     }
     
-    .active:after {
-	left: 100%;
-	top: 0%;
-	border: solid transparent;
-	content: " ";  
-	position: absolute;
-	border-left-color: #2b669a;
-	border-width: 34px;
-	background-image: linear-gradient(to bottom,#337ab7 0,#2b669a 100%);
-    }
+   //.active:after {
+	//left: 100%;
+	//top: 0%;
+	//border: solid transparent;
+	//content: " ";
+	//position: absolute;
+	//border-left-color: #2b669a;
+	//border-width: 34px;
+	//background-image: linear-gradient(to bottom,#337ab7 0,#2b669a 100%);
+   //}
+
+	.resultIcon {
+		width: 40px;
+	}
+
+
+
 }
 
-.tr-component-search-result-card-item-view{
-    width:97%;
-}
 

@@ -1,9 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Trade riser: Continues Results Components</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<meta name="csrf-token" content="{{csrfToken}}">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.19.0.css">
+
+	<link href="/stylesheets/style.css" rel="stylesheet">
+	<script src="//code.jquery.com/qunit/qunit-1.19.0.js"></script>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/javascripts/reload-client.js"></script>
+
+	<script src="/javascripts/vendor/requirejs/require.js" data-main="/javascripts/tr-require.js"></script>
+
 </head>
 <body>
+<div id="components-page">Continues Results component</div>
+<hr>
+<div id="app-container">
+	<div class="loading-text text-muted"> <p><i class="fa fa-cog fa-x3 fa-spin"></i>...Loading </p></div>
+</div>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
 
+
+<script type="text/javascript">
+	QUnit.config.autostart = true;
+	QUnit.config.testTimeout = 30000;
+	var startTradeRiserApp = function(traderiser){
+
+		var TradeRiserComponents = traderiser.app.components;
+		var TradeRiserViews = traderiser.app.views;
+		var ContinuesResultsListView = TradeRiserViews.ContinuesResultsListView;
+
+		var continuesCollection = new Backbone.Collection();
+		var continuesResultsListView = new ContinuesResultsListView({collection: continuesCollection});
+		$('#app-container').html(continuesResultsListView.render().el);
+
+		var sampleContinueResult = {
+			"SymbolID": "USDCAD",
+			"StartDateTime": "01/02/2015 00:00:00",
+			"EndDateTime": "20/05/2015 00:00:00",
+			"Source": "Forex",
+			"TimeFrame": "1hour",
+			"MoreStandardData": null,
+			"MoreKeyFields": null,
+			"QueryID": "USDCAD*eb62a310-fbed-4011-a85d-20f89797e37ecmc12",
+			"Query": "\"Identify pairs that are trading above 20 simple moving average on 1H timeframe for the first time between 1/2/2015 to 20/05/2015",
+			"ImageCollection": ["../../Images/flagcurrencies/usd.png",
+				"../../Images/flagcurrencies/cad.png"],
+			"KeyResultField": [["SMA Period",
+				"20"],
+				["Time Frame",
+					"1hour"],
+				["Start Date Time",
+					"01/02/2015 00:00:00"],
+				["End Date Time",
+					"20/05/2015 00:00:00"]]
+		}
+
+		var createNewResult = function(){
+			continuesCollection.add(new Backbone.Model(sampleContinueResult));
+		}
+
+
+		for(var i=0; i < 10; i++){
+			//createNewResult();
+			//_.delay(createNewResult,10000);
+			window.setTimeout(function(){
+				createNewResult();
+			}, 5000*i)
+		}
+
+
+		QUnit.test('Search Bar view test',function(assert){
+				equal(1 + 1, '2', 'ok');
+			}
+
+		);
+	}
+</script>
 </body>
 </html>
