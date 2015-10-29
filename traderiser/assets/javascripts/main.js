@@ -21,7 +21,8 @@ require.config({
         parsley: 'vendor/jquery/parsley',
         moment: 'vendor/moment',
         numeral: 'vendor/numeral.min',
-        bootstrap: 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min',
+        bootstrap: 'vendor/bootstrap/bootstrap.min',
+				drawer: 'vendor/bootstrap/drawer',
         'jquery-layout': 'vendor/jquery/jquery.layout-latest',
         highstock: 'vendor/highcharts/js/highstock',
         toastr: '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr',
@@ -56,11 +57,13 @@ require.config({
         parsley: {
             deps: ['jquery']
         },
+				drawer: {
+						deps: ['bootstrap']
+				},
         bootstrap: {
             deps: ['jquery']
         },
         'highstock-ext': {deps: ['highstock']}
-       //'dust-dom': {deps: ['dustCore'] }
     }
 });
 

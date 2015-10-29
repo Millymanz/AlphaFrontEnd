@@ -1,5 +1,7 @@
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:400,300,600");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+@import "vendor/bootstrap/bootstrap.min.css";
+@import "vendor/bootstrap/bootstrap-drawer.css";
 
 $blue: #5B83AD;
 $yellow: #FFFFE0;
@@ -21,7 +23,12 @@ body {
   .template {
     background-color: $yellow;
   }
-  
+	.navbar-default {
+		background-color: #337ab7;
+		border-color: #3562AF;
+		color: white;
+		font-weight: bolder;
+	}
   .navbar-static-top {
   margin-bottom: 19px;
     }
@@ -85,18 +92,32 @@ body {
 		height: 20px;
 		text-align: center;
 	}
-        
-        .center-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
 
- .highcharts-container{
-         width:99%!important;
-        height:100%!important;
-    
-    }
+	/* Glasspane */
+	.glasspane {
+		display: none;
+		zoom: 1;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		background: #ccc;
+		opacity: 0.6;
+		z-index: 100;
+		-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+		filter: alpha(opacity=60);
+	}
+
+
+	#center-content {
+    width: 100%;
+   	height: 100%;
+		overflow: auto;
+	}
+
+
+
 
 	/*<ol class="rounded-list">
     <li><a href="">List item</a></li>
@@ -165,7 +186,9 @@ body {
 @import "layout-default-latest.css";
 @import 'login-style';
 @import '//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css';
+@import "//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css";
 @import "vendor/jquery.dynatable.css";
 @import "vendor/highcharts/speech-bubble.css";
 @import "search-box-style";
 @import "components/result-card-item";
+@import "components/high-chart-component-style";

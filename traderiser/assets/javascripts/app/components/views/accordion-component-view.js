@@ -53,7 +53,15 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 		},
 		afterRender: function() {
 			this.accordianEl = this.$el.find('#accordion');
-			$(this.accordianEl).accordion();
+			var icons = {
+				header: "ui-icon-circle-arrow-e",
+				activeHeader: "ui-icon-circle-arrow-s"
+			};
+			$(this.accordianEl).accordion({
+				heightStyle: this.getViewOption("heightStyle") ||  "content", //content or fill
+				icons: icons
+
+			});
 
 			return this;
 		},

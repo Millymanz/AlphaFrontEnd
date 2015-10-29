@@ -1,9 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Trade riser: Chart Visualisation Components</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<meta name="csrf-token" content="{{csrfToken}}">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.19.0.css">
+
+	<link href="/stylesheets/style.css" rel="stylesheet">
+	<script src="//code.jquery.com/qunit/qunit-1.19.0.js"></script>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/javascripts/reload-client.js"></script>
+
+	<script src="/javascripts/vendor/requirejs/require.js" data-main="/javascripts/tr-require.js"></script>
+
 </head>
 <body>
+<div id="components-page">Chart Visualisation component</div>
+<hr>
+<div id="app-container">
+	<div class="loading-text text-muted"> <p><i class="fa fa-cog fa-x3 fa-spin"></i>...Loading </p></div>
+</div>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
 
+
+<script type="text/javascript">
+	QUnit.config.autostart = true;
+	QUnit.config.testTimeout = 30000;
+	var startTradeRiserApp = function(traderiser){
+
+		var TradeRiserComponents = traderiser.app.components;
+		var HighChartComponentView = TradeRiserComponents.HighChartComponent.view;
+		var HighChartComponentModel = TradeRiserComponents.HighChartComponent.model;
+		var TradeRiserViews = traderiser.app.views;
+		var SearchBoxView = TradeRiserViews.SearchBoxView;
+
+		var searchBarView = new SearchBoxView();
+		$('#app-container').html(searchBarView.el);
+
+		var series = [{
+			name: 'Tokyo',
+			data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+		}, {
+			name: 'New York',
+			data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+		}, {
+			name: 'Berlin',
+			data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+		}, {
+			name: 'London',
+			data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+		}];
+
+		var highchartsOptions = new HighChartComponentModel({
+			title: {
+				text: 'Monthly Average Temperature',
+				x: -20 //center
+			},
+			subtitle: {
+				text: 'Source: WorldClimate.com',
+				x: -20
+			},
+			xAxis: {
+				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+					'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+			},
+			yAxis: {
+				title: {
+					text: 'Temperature (°C)'
+				},
+				plotLines: [{
+					value: 0,
+					width: 1,
+					color: '#808080'
+				}]
+			},
+			tooltip: {
+				valueSuffix: '°C'
+			},
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'middle',
+				borderWidth: 0
+			}
+		});
+
+		var widgetTable  = $("<div></div>").html("It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)		");
+		var highChartComponentView = 	new HighChartComponentView({
+			stockChart: true,
+			collection: series,
+			model: highchartsOptions,
+			showHighLighted:true,
+			widgets: widgetTable
+		});
+
+
+		$('#app-container').html(highChartComponentView.render().el);
+
+		QUnit.test('Search Bar view test',function(assert){
+				equal(1 + 1, '2', 'ok');
+			}
+
+		);
+	}
+</script>
 </body>
 </html>

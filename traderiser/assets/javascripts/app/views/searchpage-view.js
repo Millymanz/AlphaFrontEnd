@@ -72,7 +72,7 @@ define(['./abstract-view',
 
         },
         /**
-         * Show Chart visulaisation
+         * Show Chart visualisation
          * @returns {*}
          */
         showGraph: function () {

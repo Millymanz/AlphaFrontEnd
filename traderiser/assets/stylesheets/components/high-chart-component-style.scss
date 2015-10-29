@@ -1,0 +1,16 @@
+
+/*chart itself*/
+
+.tr-component-high-chart-component-view{
+	/* Tool bar stuff*/
+	.tr-component-chart-tool-bar.has-items{
+		background-color: #ddd;
+		border-bottom: solid 1px #ccc;
+		padding: 5px;
+		font-weight: bold;
+	}
+
+	max-width:100%;
+	max-height:100%;
+	overflow: auto;
+}

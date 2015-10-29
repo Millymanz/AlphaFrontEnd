@@ -2,50 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="58e3854e-a2f0-426f-b707-286354753473" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/data/GetUserProfile3.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/components/component-following-results.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/continues-result-item-view.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/continues-results-list-view.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/following-item-view.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/following-results-list-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/views/abstract-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/abstract-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/components/component-continues-results.html" afterPath="$PROJECT_DIR$/views/components/component-continues-results.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/components/component-favourite-results.html" afterPath="$PROJECT_DIR$/views/components/component-favourite-results.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/components/component-search-bar.html" afterPath="$PROJECT_DIR$/views/components/component-search-bar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/views/favourite-item-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/favourite-item-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/views/favourites-list-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/favourites-list-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/template/following-query-template.dust" afterPath="$PROJECT_DIR$/assets/javascripts/app/template/following-query-template.dust" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/assets/stylesheets/components/high-chart-component-style.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/components/views/accordion-component-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/components/views/accordion-component-view.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/components/component-charts.html" afterPath="$PROJECT_DIR$/views/components/component-charts.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.html" afterPath="$PROJECT_DIR$/views/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/template/result-card-item-template.dust" afterPath="$PROJECT_DIR$/assets/javascripts/app/template/result-card-item-template.dust" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/stylesheets/components/result-card-item.scss" afterPath="$PROJECT_DIR$/assets/stylesheets/components/result-card-item.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/router.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/router.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/template/saved-query-template.dust" afterPath="$PROJECT_DIR$/assets/javascripts/app/template/saved-query-template.dust" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/template/search-box-template.dust" afterPath="$PROJECT_DIR$/assets/javascripts/app/template/search-box-template.dust" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/views/search-box-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/search-box-view.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/main.js" afterPath="$PROJECT_DIR$/assets/javascripts/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/template/search-page-template.dust" afterPath="$PROJECT_DIR$/assets/javascripts/app/template/search-page-template.dust" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/stylesheets/style.scss" afterPath="$PROJECT_DIR$/assets/stylesheets/style.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/components/tr-components.html" afterPath="$PROJECT_DIR$/views/components/tr-components.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/javascripts/app/views.js" afterPath="$PROJECT_DIR$/assets/javascripts/app/views.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\fun-apps\traderiser\assets\javascripts\app\template\continues-result-card.dust" afterPath="$PROJECT_DIR$/assets/javascripts/app/template/continues-result-item-template.dust" />
     </list>
     <ignored path="traderiser.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
-    <file path="/Dummy.txt" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446025349069" ignored="false" />
+    <file path="/Dummy.txt" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446111714136" ignored="false" />
     <file path="/saved-query-template.dust" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446032625826" ignored="false" />
-    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/components/dossier-visualisations/network/network-visualisation.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446026494281" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/components/dossier-visualisations/network/network-visualisation.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446113979703" ignored="false" />
     <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/controllers/item-set-cache.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446026494281" ignored="false" />
     <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/controllers/dossier-controller.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446026494281" ignored="false" />
-    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/components/dossier-visualisations/network/network-visualisation-model.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446028042913" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/components/dossier-visualisations/network/network-visualisation-model.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446113979703" ignored="false" />
     <file path="/abstract-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446028156696" ignored="false" />
     <file path="/favourites-list-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446035524761" ignored="false" />
     <file path="/favourite-item-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446032785739" ignored="false" />
-    <file path="/style.scss" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446055779850" ignored="false" />
+    <file path="/style.scss" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446140901757" ignored="false" />
     <file path="/index.html" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446039050966" ignored="false" />
     <file path="/component-following-results.html" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446040147732" ignored="false" />
     <file path="/tr-components.html" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446039226043" ignored="false" />
@@ -62,6 +42,20 @@
     <file path="/component-continues-results.html" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446051784870" ignored="false" />
     <file path="/searchpage-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446053744478" ignored="false" />
     <file path="/router.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446054382112" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/views/components/component-bar-chart-visualisation.html" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446113979703" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/assets/js/azure-ui/components/views-tab/views/visualisation-wrapper.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446113979703" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/pom.xml" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446113979703" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/search/se-search-presentation-webapp/src/main/webapp/WEB-INF/shiroContext.xml" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446114409668" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/search/se-search-presentation-webapp/src/main/webapp/WEB-INF/web.xml" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446114409668" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/search/pom.xml" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446114409668" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/search/se-search-presentation-webapp/pom.xml" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446114409668" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/search/se-search-presentation-webapp/src/main/webapp/WEB-INF/search/views/results/staticsummary.jsp" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446114409668" ignored="false" />
+    <file path="/component-charts.html" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446133832059" ignored="false" />
+    <file path="/high-chart-component-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446141941159" ignored="false" />
+    <file path="/high-chart-component-style.scss" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446131987597" ignored="false" />
+    <file path="D:/projects/pathfinder/reveal/production/trunk/development/azure/az-webapp-ui/src/main/mimosa/views/components/component-super-layer-menu.html" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446137281090" ignored="false" />
+    <file path="/accordion-component-view.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446132940182" ignored="false" />
+    <file path="/main.js" changelist="58e3854e-a2f0-426f-b707-286354753473" time="1446136845850" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,64 +116,58 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="component-search-bar.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/components/component-search-bar.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="35" selection-start="842" selection-end="945" vertical-scroll-proportion="-10.807693">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="component-results-card.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/components/component-results-card.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="7" selection-start="1638" selection-end="1991" vertical-scroll-proportion="-17.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="search-page-model.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="23" selection-start="2123" selection-end="2123" vertical-scroll-proportion="0.0">
+            <state line="91" column="44" selection-start="1812" selection-end="1812" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="router.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/javascripts/app/router.js">
+      <file leaf-file-name="high-chart-component-style.scss" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/stylesheets/components/high-chart-component-style.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="34" selection-start="2248" selection-end="2248" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="result-card-item-template.dust" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/javascripts/app/template/result-card-item-template.dust">
+      <file leaf-file-name="component-charts.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/components/component-charts.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="58" selection-start="1201" selection-end="1201" vertical-scroll-proportion="0.0">
+            <state line="97" column="13" selection-start="3468" selection-end="3475" vertical-scroll-proportion="-27.961538">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="result-card-item.scss" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/stylesheets/components/result-card-item.scss">
+      <file leaf-file-name="high-chart-component-view.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="32" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0">
+            <state line="212" column="14" selection-start="6156" selection-end="6156" vertical-scroll-proportion="0.6798561">
+              <folding>
+                <marker date="1446142202610" expanded="true" signature="3595:3634" placeholder="..." />
+                <marker date="1446142202610" expanded="true" signature="3595:3614" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="31" selection-start="511" selection-end="511" vertical-scroll-proportion="-7.1923075">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.scss" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="style.scss" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/stylesheets/style.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="5" selection-start="1932" selection-end="1932" vertical-scroll-proportion="0.62268806">
+            <state line="29" column="24" selection-start="858" selection-end="858" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -188,32 +176,8 @@
       <file leaf-file-name="searchpage-view.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="2" selection-start="2677" selection-end="2677" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="continues-results-list-view.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/continues-results-list-view.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="37" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="continues-result-item-view.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/continues-result-item-view.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="547" selection-end="547" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="78" column="28" selection-start="3075" selection-end="3075" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -241,22 +205,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/views/components/component-favourite-results.html" />
-        <option value="$PROJECT_DIR$/views/components/component-search-bar.html" />
-        <option value="$PROJECT_DIR$/assets/javascripts/app/template/search-box-template.dust" />
-        <option value="$PROJECT_DIR$/assets/javascripts/app/views/search-box-view.js" />
-        <option value="$PROJECT_DIR$/assets/javascripts/app/views/continues-result-item-view.js" />
-        <option value="$PROJECT_DIR$/assets/javascripts/app/views.js" />
         <option value="$PROJECT_DIR$/views/components/component-continues-results.html" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/views/continues-results-list-view.js" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/template/continues-result-item-template.dust" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/template/search-page-template.dust" />
-        <option value="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" />
-        <option value="$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/router.js" />
         <option value="$PROJECT_DIR$/assets/javascripts/app/template/result-card-item-template.dust" />
         <option value="$PROJECT_DIR$/assets/stylesheets/components/result-card-item.scss" />
+        <option value="$PROJECT_DIR$/assets/stylesheets/components/high-chart-component-style.scss" />
+        <option value="$PROJECT_DIR$/assets/javascripts/app/components/views/accordion-component-view.js" />
+        <option value="$PROJECT_DIR$/views/components/component-charts.html" />
+        <option value="$PROJECT_DIR$/assets/javascripts/main.js" />
+        <option value="$PROJECT_DIR$/views/index.html" />
         <option value="$PROJECT_DIR$/assets/stylesheets/style.scss" />
+        <option value="$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js" />
+        <option value="$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js" />
+        <option value="$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js" />
       </list>
     </option>
   </component>
@@ -299,6 +263,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -477,7 +443,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="template" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -503,7 +469,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="traderiser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="traderiser" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -573,8 +569,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -583,14 +577,14 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
-    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
+    <property name="GoToClass.includeLibraries" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -611,6 +605,19 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -641,19 +648,6 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -667,13 +661,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -697,6 +684,13 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -715,7 +709,6 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946634" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -736,8 +729,9 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2498642" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32946634" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -816,103 +810,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/search-box-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="0" selection-start="2390" selection-end="2390" vertical-scroll-proportion="0.6534772">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="52" selection-start="1552" selection-end="1552" vertical-scroll-proportion="0.7961631">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/continues-result-item-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="547" selection-end="547" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/template/continues-result-item-template.dust">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="33" selection-start="1050" selection-end="1050" vertical-scroll-proportion="0.42805755">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/components/component-continues-results.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="27" selection-start="1758" selection-end="1758" vertical-scroll-proportion="0.17945544">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/search-results-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="16" selection-start="233" selection-end="233" vertical-scroll-proportion="0.041966427">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/components/component-search-bar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="35" selection-start="842" selection-end="945" vertical-scroll-proportion="-10.807693">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/continues-results-list-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="37" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/template/search-page-template.dust">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="129" selection-start="533" selection-end="533" vertical-scroll-proportion="0.16306955">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/components/component-results-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="7" selection-start="1638" selection-end="1991" vertical-scroll-proportion="-17.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="2" selection-start="2677" selection-end="2677" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="23" selection-start="2123" selection-end="2123" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="34" selection-start="2248" selection-end="2248" vertical-scroll-proportion="0.0">
+        <state line="59" column="7" selection-start="1638" selection-end="1991" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -924,17 +824,106 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/components/component-search-bar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="48" selection-start="0" selection-end="1524" vertical-scroll-proportion="-7.3076925">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="93" selection-start="2546" selection-end="2546" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/assets/stylesheets/components/result-card-item.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="32" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0">
+        <state line="20" column="32" selection-start="490" selection-end="490" vertical-scroll-proportion="0.3681055">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components/views/accordion-component-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="18" selection-start="1361" selection-end="1361" vertical-scroll-proportion="0.55155873">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/components/component-charts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="13" selection-start="3468" selection-end="3475" vertical-scroll-proportion="-27.961538">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="31" selection-start="511" selection-end="511" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="31" selection-start="722" selection-end="722" vertical-scroll-proportion="0.44844124">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="0" selection-start="2307" selection-end="2307" vertical-scroll-proportion="0.77458036">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/stylesheets/style.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="5" selection-start="1932" selection-end="1932" vertical-scroll-proportion="0.62268806">
+        <state line="29" column="24" selection-start="858" selection-end="858" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/models/search-page-model.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="44" selection-start="1812" selection-end="1812" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/stylesheets/components/high-chart-component-style.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/continues-results-list-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="37" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.1438849">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/views/searchpage-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="28" selection-start="3075" selection-end="3075" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/javascripts/app/components/views/high-chart-component-view.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="212" column="14" selection-start="6156" selection-end="6156" vertical-scroll-proportion="0.6798561">
+          <folding>
+            <marker date="1446142202610" expanded="true" signature="3595:3634" placeholder="..." />
+            <marker date="1446142202610" expanded="true" signature="3595:3614" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
