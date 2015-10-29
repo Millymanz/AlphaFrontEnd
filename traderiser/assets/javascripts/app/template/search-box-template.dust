@@ -1,6 +1,6 @@
 
 <form method="get" action="#search/">
-                        <div class="input-group input-group-lg">
+                        <div class="input-group">
                             <input type="text" autocomplete="off" class="form-control  search-text-box" name="q" value='{searchText}' placeholder="Enter your question" aria-describedby="sizing-addon1" required>
                             <span class="input-group-btn">
                                 <button class="btn btn-default search-question-btn"  type="button"><span class="glyphicon glyphicon-search"></span></button>

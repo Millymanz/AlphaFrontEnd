@@ -114,8 +114,8 @@ define(['./abstract-view',
                         self.displaySingleChart(chart.charts[0]);
                     }
                     //add other information
-                    self.centerPane.append(chart.perfomanceloadStats);
-                    self.centerPane.append(chart.copyrightStatement);
+                    //self.centerPane.append(chart.perfomanceloadStats);
+                    //self.centerPane.append(chart.copyrightStatement);
                 } else {
                     toastr.error("Nothing found");
                 }
@@ -133,7 +133,7 @@ define(['./abstract-view',
                 model: new Backbone.Model(chartInfo.chartData),
                 collection: []
             });
-            self.centerPane.append($(stockChart.el).append(chartInfo.chartSubWidgets.get(0) || ""));
+            self.centerPane.html($(stockChart.el));
         },
         /**
          * Display tabs with Chart
