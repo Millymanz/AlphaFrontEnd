@@ -54,13 +54,15 @@ define([
             this.show(searchPageView, options);
             var PageLayout = $(searchPageView.el).layout({
                 east: {
+									initClosed:true
                 },
                 west: {
-                    size: 350,
-                    pin: true,
+                    size: 200,
+                    pin: false,
                     closable: true,
                     resizeable: true,
-                    slidable: true
+                    slidable: true,
+										initClosed:false
                 }
             });
             $(this.el).addClass('fill');

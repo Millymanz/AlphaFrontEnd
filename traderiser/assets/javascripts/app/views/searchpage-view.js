@@ -133,7 +133,7 @@ define(['./abstract-view',
                 model: new Backbone.Model(chartInfo.chartData),
                 collection: []
             });
-            self.centerPane.html($(stockChart.el));
+            self.centerPane.html($(stockChart.render().el));
         },
         /**
          * Display tabs with Chart
@@ -143,26 +143,23 @@ define(['./abstract-view',
 
             var collection = new Backbone.Collection();
             //create new tabs
-
             this.tabsComponent = new TabbedComponentView({collection: collection, model: new Backbone.Model({style: 'tabs-right'})});
+            this.centerPane.html(this.tabsComponent.render().el);
+					_.each(charts, function (chartInfo, i) {
+						var first = false;
+						if (i == 0) {
+							first = true;
+						}
+						var chartvalue = i + 1;
+						var stockChartView = new HighChartComponentView({
+							stockChart: true,
+							model: new Backbone.Model(chartInfo.chartData),
+							collection: [],
+							widgets: chartInfo.chartSubWidgets
+						});
+						collection.add(new Backbone.Model({label: '<i class="fa fa-line-chart"></i> ' + ' Chart' + chartvalue , content: stockChartView, active: first}));
 
-            _.each(charts, function (chartInfo, i) {
-                var first = false;
-                if (i == 0) {
-                    first = true;
-                }
-                var stockChart = new HighChartComponentView({
-                    stockChart: true,
-                    model: new Backbone.Model(chartInfo.chartData),
-                    collection: [],
-                    widgets: chartInfo.chartSubWidgets
-                });
-                //var highStockComponentEl = $(stockChart.el).append(chartInfo.chartSubWidgets.get(0) || "");
-                collection.add(new Backbone.Model({label: 'Tab ' + i, content: stockChart, active: first}));
-                stockChart.delegateEvents();
-            });
-
-            this.centerPane.append(this.tabsComponent.render().el);
+					});
         }
     });
 

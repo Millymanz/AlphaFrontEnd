@@ -4,10 +4,23 @@
 .tr-component-high-chart-component-view{
 	/* Tool bar stuff*/
 	.tr-component-chart-tool-bar.has-items{
-		background-color: #ddd;
 		border-bottom: solid 1px #ccc;
-		padding: 5px;
+		padding:5px;
 		font-weight: bold;
+		float: left;
+		width: 100%;
+	}
+
+	ul.toolbar-menu-ul {
+
+		width:100%;
+	}
+
+	ul.toolbar-menu-ul li{
+		list-style:none;
+		display: initial;
+		float: left;
+		padding: 0px 5px;
 	}
 
 	max-width:100%;

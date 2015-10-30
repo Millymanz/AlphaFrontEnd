@@ -1,0 +1,45 @@
+/*
+		 *	WEST-PANE TABS
+		 *
+		 *	These tabs 'fill' the pane,
+		 *	so the pane-border acts as the tab-border
+		 */
+.ui-layout-pane-west {
+	padding:	0;
+	overflow:	hidden;
+}
+.ui-layout-pane-west .ui-tabs-nav {
+	/* don't need border or rounded corners - tabs 'fill' the pane */
+	border-top:		0;
+	border-left:	0;
+	border-right:	0;
+	padding-bottom:	0 !important;
+	-moz-border-radius:		0;
+	-webkit-border-radius:	0;
+}
+
+/*
+ *	CENTER-PANE TABS
+ *
+ *	These tabs have white-space around them,
+ *	so the content-div provides the border for the tabs
+ */
+.ui-layout-pane-center {
+	background:	#FFF; /* to make pane background stand-out */
+	padding:	5px;
+	overflow:	hidden;
+}
+.ui-layout-pane-center .ui-tabs-nav {
+	/* remove rounded corners from bottom of 'tabs'*/
+	-moz-border-radius-bottomleft:		0;
+	-moz-border-radius-bottomright:		0;
+	-webkit-border-bottom-left-radius:	0;
+	-webkit-border-bottom-right-radius:	0;
+}
+
+.tr-component-tabs-component-view {
+	.ui-tabs-panel{
+		padding:5px
+	}
+}
+

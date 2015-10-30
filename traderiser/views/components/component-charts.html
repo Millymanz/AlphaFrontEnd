@@ -33,6 +33,7 @@
 	var startTradeRiserApp = function(traderiser){
 
 		var TradeRiserComponents = traderiser.app.components;
+		var TabsComponent = TradeRiserComponents.TabsComponent;
 		var HighChartComponentView = TradeRiserComponents.HighChartComponent.view;
 		var HighChartComponentModel = TradeRiserComponents.HighChartComponent.model;
 		var TradeRiserViews = traderiser.app.views;
@@ -97,9 +98,42 @@
 			showHighLighted:true,
 			widgets: widgetTable
 		});
+		var highChartComponentView2 = 	new HighChartComponentView({
+			stockChart: true,
+			collection: series,
+			model: highchartsOptions,
+			showHighLighted:true,
+			widgets: widgetTable
+		});
+
+		var BackboneViewTab =  Backbone.View.extend({
+			events: {
+				"click .clickMeButton": _.bind(function(e){
+					alert('clicked');
+				})
+			},
+			className: 'backboneView',
+			initialize:function(options){
+				this.$el.html('<p>tabs information</p>');
+				//this.render();
+			},
+			render: function(){
+				this.$el.html('<p class="text text-primary"><button class="clickMeButton">even more information</button></p>');
+				return this;
+			}
+		});
 
 
-		$('#app-container').html(highChartComponentView.render().el);
+		var collection = new Backbone.Collection();
+
+		var tabsComponentView = new TabsComponent.view({collection: collection, model: new Backbone.Model({})});
+		//$('#app-container').append(tabsComponentView.render().el);
+
+		$('#app-container').html(tabsComponentView.render().el);
+
+		collection.add(new Backbone.Model({label: 'Backbone view', content:  new BackboneViewTab() }));
+		collection.add(new Backbone.Model({label: 'Chart View', content:  highChartComponentView, active: true }));
+		collection.add(new Backbone.Model({label: 'Chart View', content:  highChartComponentView2, active: false }));
 
 		QUnit.test('Search Bar view test',function(assert){
 				equal(1 + 1, '2', 'ok');

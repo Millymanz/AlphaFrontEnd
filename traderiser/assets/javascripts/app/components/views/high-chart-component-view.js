@@ -99,27 +99,18 @@ define(['../../views/abstract-view',
 
 		$(document).on('click', '.toggleShowWidget-'+this.model.cid, _.bind(function(evt){
 			console.log("show and hide");
-			self.$el.addClass("has-inner-drawer");
-		var drawerHeader = $('<div class="drawer-heading"><h2 class="drawer-title">Menu</h2></div>');
-		var drawerFooter = $('<div class="drawer-footer">Close X </div>');
-		var drawerBody = $('<div class="drawer-body"></div>').html(self.widgetContent.show());
-
-		var drawer = 	$('<div class="drawer drawer-inside dw-xs-5 fold"></div>')
-							.html(drawerHeader).append(drawerBody).append(drawerFooter);
-		drawer.prependTo(self.$el);
-		$(drawer).drawer("show");
+//			self.$el.addClass("has-inner-drawer");
+//		var drawerHeader = $('<div class="drawer-heading"><h2 class="drawer-title">Menu</h2></div>');
+//		var drawerFooter = $('<div class="drawer-footer">Close X </div>');
+//		var drawerBody = $('<div class="drawer-body"></div>').html(self.widgetContent.show());
+//
+//		var drawer = 	$('<div class="drawer drawer-inside dw-xs-5 fold"></div>')
+//							.html(drawerHeader).append(drawerBody).append(drawerFooter);
+//		drawer.prependTo(self.$el);
+//		$(drawer).drawer("show");
 			return false;
 		}));
 
-//			$(window).resize(function()
-//			{
-//				self.$el.highcharts().setSize(
-//					$(self.$el.parent()).width(),
-//					$(self.$el.parent()).height(),
-//					false
-//				);
-//			});
-			
 			//create a toolbar 
 			this.toolBarCollection = new Backbone.Collection();
 			this.chartToolBar = new ChartToolBar({collection: this.toolBarCollection});
@@ -199,7 +190,7 @@ define(['../../views/abstract-view',
 			//show widgets
 			 if (this.getViewOption('widgets') && this.getViewOption('widgets') !== "") {
 				 //build the tool-bar to show widgets
-				 var widgetMenuView = $('<button>').addClass("toggleShowWidget-"+this.model.cid).html('<span class="showHideIcon"><i class="fa fa-cog"></i></span>');
+				 var widgetMenuView = $('<button>').addClass("btn btn-xs toggleShowWidget-"+this.model.cid).html('<span class="showHideIcon"><i class="fa fa-cog"></i> Technical Analysis</span>');
 				 this.toolBarCollection.add(new Backbone.Model({view: widgetMenuView}));
 				this.widgetContent = $(this.getViewOption('widgets').get(0)).hide();
        	$('body').append(this.widgetContent);
@@ -210,7 +201,7 @@ define(['../../views/abstract-view',
 			setTimeout(function() {
 				// resizeEnd call function with pass context body
 				$(window).resize();
-			}, 10000);
+			}, 5000);
 
 			//this._resizeChart();
 

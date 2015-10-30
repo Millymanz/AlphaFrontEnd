@@ -243,46 +243,6 @@ define(['jquery',
 
 				return templates.createEl(this, template, context);
 			}
-		}, /**
-		 * Execute a given callback on this view and recursively on all nested children. Function context is
-		 * set to the view it's being called on.
-		 *
-		 * @param {function} callback the function to call on self and all nested children
-		 * @param {boolean} [async] whether to render nested children asynchronously.
-		 * @param {String} [asyncevent] If using async the event to trigger on parent if all pre-renders are called
-		 * @return {void}
-		 */
-		nestedCallback: function(callback) {
-			var args = Array.prototype.slice.call(arguments, 1);
-
-			var onSelf = callback.apply(this, args);
-
-			var onChildren = _.map(this.getNested(), function(view) {
-				return view.nestedCallback(callback, args);
-			});
-
-			return _.filter(_.compact(_.flatten([onSelf, onChildren])), function(result) {
-				return deferred.isPromise(result);
-			});
-		},
-
-
-		/**
-		 * Calls the given function on self and all nested children, if it exists.
-		 * Non-blocking.
-		 *
-		 * @param {String} fnName the name of the function
-		 * @param {boolean} [async] whether to render nested children asynchronously.
-		 * @param {String} [asyncevent] If using async the event to trigger on parent if all pre-renders are called
-		 * @return {void}
-		 */
-		callNestedFunction: function(fnName) {
-			var args = Array.prototype.slice.call(arguments, 1);
-			return this.nestedCallback(function() {
-				if ($.isFunction(this[fnName])) {
-					return this[fnName].apply(this, args);
-				}
-			});
 		},
 
 		/**
@@ -297,75 +257,19 @@ define(['jquery',
 			}
 			return (async === true) ? utils.promiseMe(this.preRender, {async: true}) : this.preRender();
 		},
+		destroyView: function() {
 
-		/**
-		 * Call 'renderTemplate' on self and any nested views.
-		 *
-		 * @param {boolean} [async] whether to render nested children asynchronously
-		 * @returns {*}
-		 * @private
-		 */
-		_templateRender: function(async) {
-			var self = this;
-			var promises = [];
+			// COMPLETELY UNBIND THE VIEW
+			this.undelegateEvents();
 
-			if (async === true) {
+			this.$el.removeData().unbind();
 
-				//wrap the rendertemplate call in a promise
-				promises.push(utils.promiseMe(function() {
-					self.renderTemplate();
-					if (!self.getViewOption('wrapTag')) {
-						self._addViewAttributes();
-					}
+			// Remove view from DOM
+			this.remove();
+			Backbone.View.prototype.remove.call(this);
 
-				}, {async: true}));
+		}
 
-				//wrap the event trigger in a promise
-				promises.push(utils.promiseMe(function() {
-					self.trigger(Events.RENDER_TEMPLATE);
-				}, {async: true}));
-				return promises;
-			} else {
-				//synchronous render
-				this.renderTemplate();
-
-				// If we don't have a wrapper div then our outer element is replaced on a render, and any attributes we set on
-				// it are lost, re-add them here.
-				if (!this.getViewOption('wrapTag')) {
-					this._addViewAttributes();
-				}
-
-				this.trigger(PiView.Events.RENDER_TEMPLATE);
-			}
-		},
-
-		/**
-		 * Call <code>postRender</code> function on self and any nested views, all the way down.
-		 * Binds keyboard events.
-		 *
-		 * @param {boolean} [async] whether to render nested children asynchronously.
-		 */
-		_postRender: function(async) {
-			// Tasks we need to do for every view after render
-			this._isRendered = true;
-			this._bindKeyboardEvents();
-
-			var postRenderAndTrigger = _.bind(function() {
-				if (this.postRender) {
-					this.postRender();
-				}
-				this.trigger(Events.RENDER);
-				this.$el.i18n();
-			}, this);
-
-			if (async) {
-				var promises = [];
-				promises.push(utils.promiseMe(postRenderAndTrigger, {async: true}));
-				return promises;
-			} else {
-				postRenderAndTrigger();
-			}
-		},
 
 
 	});
