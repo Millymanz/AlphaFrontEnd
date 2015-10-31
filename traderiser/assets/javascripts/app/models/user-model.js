@@ -27,28 +27,48 @@ define([
         },
         getUserProfile: function (callback) {
             {
-//           return $.ajax({
-//                url: "data/GetUserProfile.json",
-//                type: "GET",
-//                dataType: "text",
-//                success: function (returnedData) {
-//                    if(callback)
-//                            callback(returnedData);
-//                        else
-//                            return returnedData;
-//                }
-//                });
 
+//                var options = {
+//                    				
+//                    url: 'Query/GetUserProfile',
+//                    method: 'POST',
+//                    dataType: 'json',
+//                   // contentType: 'application/x-www-form-urlencoded',
+//                    processData: { "UserName": this.getUserName()}
+//                }
+//
+//                return restUtils.makeServerRequest(options);
+
+                var self = this;
+                var accessSessionToken = sessionModel.getCurrentAccessToken();
 
                 var options = {
-                    url: 'Query/GetUserProfile',
-                    method: 'POST',
-                    dataType: 'text',
-                    contentType: 'application/x-www-form-urlencoded',
-                    requestData: {username: this.getUserName()}
+                    url: settings.apiBase + '/Query/GetUserProfile',
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded",
+                    dataType: 'json',
+                    asyc: false,
+                    data: JSON.stringify({Username: sessionModel.getUser().getUserName()}),
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Content-Type", "application/json");
+                        request.setRequestHeader("Accept", "application/json");
+                        request.setRequestHeader('Authorization', 'Bearer ' + accessSessionToken + ' ');
+                        request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        var userInfo = res.UserProfileConfig;
+                        self.set('following', userInfo.Following);
+                        self.set('historicQueries', userInfo.HistoricQueries);
+                        self.set('savedQueries', userInfo.SavedQueries);
+                    },
+                    error: function (e) {
+                        console.log(e);
+                    }
                 }
 
-                return restUtils.makeServerRequest(options);
+                return $.ajax(options);
+
             }
         },
         getUserName: function () {

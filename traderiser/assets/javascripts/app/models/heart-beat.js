@@ -44,7 +44,7 @@ define(['../config/rest-utils','backbone'], function(restUtils, Backbone){
 			}).done(function(){
 					self._setTimeOutFunction = setTimeout(function(){
 						self._makeHeartProcess();
-					}, 5000);
+					}, 50000);
 				});
 		},
 		/**

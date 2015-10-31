@@ -10,7 +10,8 @@
 <div class="search-term-holder search-pop-out" style="display:none">
     <div class="repeat-search-type"></div>
     <hr>
+    <h5><i class="fa fa-life-ring"></i> Search history</h5>
     <div class="search-history">
-        <p>Search history</p>
+         <ul class="history-list"></ul>
     </div>
 </div>

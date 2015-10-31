@@ -25,9 +25,14 @@ define(['./abstract-view',
             if(this.collection.models.length > 0){
                 _.each(this.collection.models, function(model){
                    var queryItemView = new QueryItemView({model: model});
+                   queryItemView.on('query-item-clicked', self.itemClicked);
                    $(self.el).append(queryItemView.el);
                 });
             }
+        },
+        itemClicked: function(model){
+            this.trigger('query-clicked', model);
+            return false;
         }
     });
     

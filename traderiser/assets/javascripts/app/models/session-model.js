@@ -67,6 +67,7 @@ define([
 		// Fxn to update user attributes after recieving API response
 		updateSessionUser: function(userData) {
 			this.user.set(_.pick(userData, _.keys(this.user.defaults)));
+                        
 		},
 
 		startHeartBeat: function(){
@@ -88,12 +89,14 @@ define([
 		 */
 		checkAuth: function(callback, args) {
 			var self = this;
-			this.fetch({
+                        var userProfilePromise = self.getUser().getUserProfile();
+			var userInfoPromise =  this.fetch({
 				url: this.url() + '/UserAuth/GetUserInfoUsername?username=' + this.getUser().getUserName(),
 				method: 'POST',
 				success: function(mod, res) {
 					if (res.Email && res.Email !== "") {
 						self.updateSessionUser(res);
+                                                
 						//if ('success' in callback) callback.success(mod, res);
 					} else {
 					//	if ('error' in callback) callback.error(mod, res);
@@ -102,9 +105,13 @@ define([
                                     console.log(e.statusCode);
 					//if ('error' in callback) callback.error(mod, res);
 				}
-			}).complete(function() {
+                                }).complete(function() {
 					//if ('complete' in callback) callback.complete();
 				});
+                                
+                                return $.when(userInfoPromise, userProfilePromise).done(function(data1, data2){
+                                  DEBUG : console.log('done'); 
+                                });
 		},
 
 		requestLoginToken: function(opts, callback) {
@@ -172,6 +179,7 @@ define([
 						self.set({ userName: res.Username, userFirstName: res.FirstName, userLastName: res.LastName,userEmail: res.Email , logged_in: true });
 						$.cookie('logged_in', true);
 						$.cookie('username', res.Email);
+                                                
 						if (callback && 'success' in callback) callback.success(res);
 					}else{
 						self.set({ user_id: 0, logged_in: false, session_token: null });

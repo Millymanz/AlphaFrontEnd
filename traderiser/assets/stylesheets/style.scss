@@ -1,6 +1,6 @@
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:400,300,600");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
-@import "vendor/bootstrap/bootstrap.min.css";
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css");
 @import "vendor/bootstrap/bootstrap-drawer.css";
 
 $blue: #5B83AD;
@@ -11,7 +11,7 @@ height:100%; position:relative; width:100%;}
 
 body {
   padding-top: 51px;
-  font: 14px "Open sans", sans-serif;
+  font: 12.5px "Open sans", sans-serif;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */

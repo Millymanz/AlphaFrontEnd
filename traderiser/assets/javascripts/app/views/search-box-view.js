@@ -4,70 +4,80 @@
  * and open the template in the editor.
  */
 
-define(['./abstract-view','templates'], function(AbstractView, templates){
-    
+define(['./abstract-view', 'templates'], function (AbstractView, templates) {
+
     'use strict';
-    
+
     var SearchBoxView = AbstractView.extend('SearchBoxView', {
         model: new Backbone.Model(),
         template: 'search-box-template',
         events: {
             'click .search-question-btn': 'searchQuestion',
-            'click .search-text-box' : 'showSearchTerm',
+            'click .search-text-box': 'showSearchTerm',
             'keyup .search-text-box': 'insertTypingText'
         },
-        initialize: function(options){
+        initialize: function (options) {
             //this._super(options);
             this.constructor.__super__.initialize.apply(this, arguments);
             this.listenTo(this.model, 'change:searchTermText', this.render);
             this.render();
             this.searchTermBox = $('.search-text-box');
-            $('html').on('click', function(evt){
+            $('html').on('click', function (evt) {
                 $('.search-term-holder').slideUp('medium');
             });
-
-					this.listenTo(this.viewOptions, 'change:searchHistoryView', this.render);
-        },
-        render: function(){
             var self = this;
-            templates.render(this.template, {searchText: this.model.get('searchTermText') || ""}, function(error, output){
-               $(self.el).html(output); 
+            this.on('insert-input-value', _.bind(function(val){
+                var inputForm = self.$el.find('form').find('input');
+               inputForm.val(); //empty input
+               inputForm.val(val); //input query
+               inputForm.focus().trigger('keyup');
+            }));
+
+            this.listenTo(this.viewOptions, 'change:searchHistoryView', this.render);
+        },
+        render: function () {
+            var self = this;
+            templates.render(this.template, {searchText: this.model.get('searchTermText') || ""}, function (error, output) {
+                $(self.el).html(output);
             });
         },
-        showSearchTerm: function(evt){
-          $('.search-term-holder').slideDown();
-          evt.stopPropagation();
+        showSearchTerm: function (evt) {
+            $('.search-term-holder').slideDown();
+            evt.stopPropagation();
         },
         /**
          * 
          * @returns {undefined}
          */
-        insertTypingText: function(evt){
+        insertTypingText: function (evt) {
             //console.log('asas =>' + this.searchTermBox.val());
             var term = this.$el.find('.search-text-box').val();
             $('.repeat-search-type').html($('<p></p>').html(term));
             //return false;
         },
-				afterRender:function(){
-					var viewSearchHistory = $(this.el).find('.search-history');
-					if(viewSearchHistory){
-						var searchHistoryView = this.getViewOption('searchHistoryView');
-						if(searchHistoryView && searchHistoryView instanceof Backbone.View){
-							viewSearchHistory.append(this.getViewOption('searchHistoryView'));
-						}
-					}
-				},
+        afterRender: function () {
+            var viewSearchHistory = $(this.el).find('.search-history');
+            if (viewSearchHistory) {
+                var searchHistoryView = this.getViewOption('searchHistoryView');
+                if (searchHistoryView && searchHistoryView instanceof Backbone.View) {
+                    viewSearchHistory.append(this.getViewOption('searchHistoryView'));
+                }
+            }
+        },
         searchQuestion: function (evt) {
             var searchForm = this.$el.find('form');
             if (searchForm.parsley().validate()) {
                 var searchText = searchForm.find('input');
-                this.model.set('searchTerm' , searchText.val());
+                this.model.set('searchTerm', searchText.val());
                 window.traderiser.router.navigate("search/" + escape(searchText.val()), {trigger: true, replace: true});
             }
 
+        },
+        getSearchHistoryEL: function(){
+            return $(this.el).find('.search-history');
         }
-        
+
     });
-    
+
     return SearchBoxView;
 });

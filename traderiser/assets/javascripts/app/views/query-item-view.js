@@ -30,7 +30,8 @@ define(['./abstract-view',
             return this;
         },
         _clickedLink: function(){
-           alert('clicked');
+           this.trigger('query-item-clicked', this.model);
+           return false;
         }
         
     });

@@ -91,7 +91,7 @@ define(['../views/abstract-view', 'backbone', '../config/tr-chart-helper', 'high
                                 ExtraFields: extraFieldsArray
                             };
 
-                            self.onDemandResults.push(resultItem);
+                            //self.onDemandResults.push(resultItem);
 
                             if (i == 0) {
                                 self.selectHighlightItem(resultItem.QueryID);

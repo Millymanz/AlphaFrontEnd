@@ -6,6 +6,7 @@ define([
     '../components/views/tabbed-component-view',
     '../components/models/tabs-component-model',
     './queries-list-view',
+    './following-results-list-view',
     'parsley'], function (
             ApplicationWrapperController, 
             AbtractView, 
@@ -13,7 +14,8 @@ define([
             SearchBoxView, 
             TabsComponentView, 
             TabsComponentModel,
-            QueriesListView) {
+            QueriesListView,
+                    FollowingResultsListView) {
     'use strict';
     var ENTER_KEY = 13;
     var HomepageView = AbtractView.extend('HomepageView', {
@@ -57,28 +59,41 @@ define([
             }
         },
         _showUserData: function(rawdata){
+            var self = this;
+            var searchHistoryEl =  this.searchBoxView.getSearchHistoryEL();
+            var userInfo = sessionModel.getUser();
             
-            var data = rawdata.get('userProfileData');
-           var userProfileConfigCards = this.applicationWrapperController.getUserProfileConfigCards(data);
-           var queriesSubscriptionCollection = new Backbone.Collection(userProfileConfigCards.queriesSubscription);
-           var historicQueriesCollection = new Backbone.Collection(userProfileConfigCards.historicQueries);
+            //first 5 results , maybe put this in config file
+            var historicQueries = _.first(_.uniq(userInfo.get('historicQueries')), 5);
+            var followingQueries = _.first(_.uniq(userInfo.get('following')), 5);
+                        
+           var queriesSubscriptionCollection = new Backbone.Collection(followingQueries);
+           var historicQueriesCollection = new Backbone.Collection(historicQueries);
            //create queriesListView to take a collection of queryModels
-           var historicQueryListView = new QueriesListView({collection: historicQueriesCollection});
-           var queriesSubscriptionListView = new QueriesListView({collection: queriesSubscriptionCollection});
            
-           var options = {
-               tab1: historicQueryListView,
-               tab2: queriesSubscriptionListView
-           }
-           this.showUserQueriesTab(options);
+           //show unique queries
+            
+            var historicQueryListView = new QueriesListView({collection: historicQueriesCollection});
+           var queriesSubscriptionListView = new QueriesListView({collection: queriesSubscriptionCollection});
+           historicQueryListView.on('query-clicked', _.bind(function(model){
+//update searchbox view with value              
+               
+               self.searchBoxView.trigger('insert-input-value', model.get('Query'));
+               return false;
+           }));
+           $(searchHistoryEl).html(historicQueryListView.render().el);
+           
+           
         },
         showUserQueriesTab: function(options){
-            var collection = new Backbone.Collection();
-            collection.add(new Backbone.Model({label: 'historicQuery', content: options.tab1, active: true}));
-            collection.add(new Backbone.Model({label: 'queriesSubscription', content: options.tab2}));
+//            var collection = new Backbone.Collection();
+//            
+//            var tabsComponent = new TabsComponentView({collection : collection, model: new TabsComponentModel({style: 'tabs-right'})});
+//            $(this.el).append(tabsComponent.render().el);
+//            
+//            collection.add(new Backbone.Model({label: 'historicQuery', content: options.tab1, active: true}));
+//            collection.add(new Backbone.Model({label: 'Following', content: options.tab2}));
             
-            var tabsComponent = new TabsComponentView({collection : collection, model: new TabsComponentModel({style: 'tabs-right'})});
-            $(this.el).append(tabsComponent.render().el);
         }
         
     });

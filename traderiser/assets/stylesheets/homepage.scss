@@ -19,3 +19,12 @@ plc and may be registered in certain jurisdictions.
 .search-container{
     margin-top: 100px;
 }
+
+ul.search-menu-list li{
+   float: left; 
+}
+
+.search-history{
+    max-height: 150px;
+    overflow: auto;
+}

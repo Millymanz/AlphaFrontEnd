@@ -12,7 +12,7 @@ define(['./abstract-view',
     '../components/models/highcharts-model',
     '../controller/traderiser-chart-controller',
     '../components/views/tabbed-component-view',
-		'./search-results-view',
+    './search-results-view',
     'jquery-layout',
     'jquery-ui'], function (AbstractView,
         AccordionComponentView,
@@ -95,14 +95,14 @@ define(['./abstract-view',
             var self = this;
             return this.model.getAnswer(this.question).then(function (data) {
                 //console.log(data);
-								var resultsCollection = '';
-							if(data.ResultSummaries.length > 0){
-								console.log(data.ResultSummaries);
-								var searchResultsCollection = new Backbone.Collection(data.ResultSummaries);
-								var resultsCardList = new SearchResultsView({collection: searchResultsCollection});
-								//collection.add(new Backbone.Model({label: 'Search Results', content: resultsCardList, active: true}));
-								self.eastSide.html(resultsCardList.render().el);
-							}
+                var resultsCollection = '';
+                if (data.ResultSummaries.length > 0) {
+                    console.log(data.ResultSummaries);
+                    var searchResultsCollection = new Backbone.Collection(data.ResultSummaries);
+                    var resultsCardList = new SearchResultsView({collection: searchResultsCollection});
+                    //collection.add(new Backbone.Model({label: 'Search Results', content: resultsCardList, active: true}));
+                    self.eastSide.html(resultsCardList.render().el);
+                }
 
                 var chart = self.controller.displayResults(data);
                 if (chart && chart.charts.length > 0) {
@@ -131,7 +131,9 @@ define(['./abstract-view',
             var stockChart = new HighChartComponentView({
                 stockChart: true,
                 model: new Backbone.Model(chartInfo.chartData),
-                collection: []
+                collection: [],
+                widgets: chartInfo.chartSubWidgets,
+                showHighLighted: chartInfo.showHighLightSelection
             });
             self.centerPane.html($(stockChart.render().el));
         },
@@ -145,21 +147,22 @@ define(['./abstract-view',
             //create new tabs
             this.tabsComponent = new TabbedComponentView({collection: collection, model: new Backbone.Model({style: 'tabs-right'})});
             this.centerPane.html(this.tabsComponent.render().el);
-					_.each(charts, function (chartInfo, i) {
-						var first = false;
-						if (i == 0) {
-							first = true;
-						}
-						var chartvalue = i + 1;
-						var stockChartView = new HighChartComponentView({
-							stockChart: true,
-							model: new Backbone.Model(chartInfo.chartData),
-							collection: [],
-							widgets: chartInfo.chartSubWidgets
-						});
-						collection.add(new Backbone.Model({label: '<i class="fa fa-line-chart"></i> ' + ' Chart' + chartvalue , content: stockChartView, active: first}));
+            _.each(charts, function (chartInfo, i) {
+                var first = false;
+                if (i === 0) {
+                    first = true;
+                }
+                var chartvalue = i + 1;
+                var stockChartView = new HighChartComponentView({
+                    stockChart: true,
+                    model: new Backbone.Model(chartInfo.chartData),
+                    collection: [],
+                    widgets: chartInfo.chartSubWidgets,
+                    showHighLighted: chartInfo.showHighLightSelection
+                });
+                collection.add(new Backbone.Model({label: '<i class="fa fa-line-chart"></i> ' + ' Chart' + chartvalue, content: stockChartView, active: first}));
 
-					});
+            });
         }
     });
 

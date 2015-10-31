@@ -39,7 +39,7 @@ define([
         },
         homepage: function () {
             this.showSearchBox = false;
-						var searchPageView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm})});
+            var searchPageView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm})});
             var homepage = new HomePageView({model: new Backbone.Model, searchBoxView: searchPageView});
             var options = {requiresAuth: true};
             this.show(homepage, options);
@@ -54,15 +54,15 @@ define([
             this.show(searchPageView, options);
             var PageLayout = $(searchPageView.el).layout({
                 east: {
-									initClosed:true
+                    initClosed: true
                 },
                 west: {
-                    size: 200,
+                    size: 250,
                     pin: false,
                     closable: true,
                     resizeable: true,
                     slidable: true,
-										initClosed:false
+                    initClosed: false
                 }
             });
             $(this.el).addClass('fill');
@@ -89,12 +89,12 @@ define([
                     var headerViewModel = new Backbone.Model({showSearch: this.showSearchBox, searchTermText: this.searchTerm});
                 var searchBoxView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm})})
                 this.headerView = new HeaderView({model: headerViewModel, searchBoxView: searchBoxView});
-                
+
                 $('#header').html(this.headerView.el);
             } else {
-								this.headerView.model.set('searchTermText', this.searchTerm);
+                this.headerView.model.set('searchTermText', this.searchTerm);
                 this.headerView.model.set('showSearch', this.showSearchBox);
-            		this.headerView.searchBoxView.model.set('searchTerm', this.searchTerm);
+                this.headerView.searchBoxView.model.set('searchTerm', this.searchTerm);
             }
             // Close and unbind any existing page view
             if (this.currentView && _.isFunction(this.currentView.close))
@@ -106,7 +106,7 @@ define([
             // For cases like a user's settings page where we need to double check against the server.
             if (typeof options !== 'undefined' && options.requiresAuth) {
                 var self = this;
-                var userProfilePromise = sessionModel.getUser().getUserProfile();
+                var userProfilePromise = sessionModel.checkAuth();
                 userProfilePromise.then(function (data) {
                     //send the user data to the view to be used.
                     self.currentView.model.set('userProfileData', data);
@@ -134,28 +134,28 @@ define([
             }
             this.show(new LoginPageView({}));
         },
-				booter: function(){
-					Backbone.history.start();
-					this.options = {requiresAuth: true};
-					sessionModel.checkAccessCredentials();
-					this.searchBoxView = new SearchBoxView();
+        booter: function () {
+            Backbone.history.start();
+            this.options = {requiresAuth: true};
+            sessionModel.checkAccessCredentials();
+            this.searchBoxView = new SearchBoxView();
 
-					$('body').append($('<div id="h_v"></div>').hide());
+            $('body').append($('<div id="h_v"></div>').hide());
 // Enable pusher logging - don't include this in production
-					Pusher.log = function (message) {
-						if (window.console && window.console.log) {
-							window.console.log(message);
-						}
-					};
-					var pusher = new Pusher('0c52bffe086a83952d16');
-					var hvnme = $('#h_v').val();
-					var channel = pusher.subscribe(hvnme);
+            Pusher.log = function (message) {
+                if (window.console && window.console.log) {
+                    window.console.log(message);
+                }
+            };
+            var pusher = new Pusher('0c52bffe086a83952d16');
+            var hvnme = $('#h_v').val();
+            var channel = pusher.subscribe(hvnme);
 
-					channel.bind('my_event', function (data) {
-						alert(data.message);
-						//UpdateContinousQueryResultCard(data);
-					});
-				}
+            channel.bind('my_event', function (data) {
+                alert(data.message);
+                //UpdateContinousQueryResultCard(data);
+            });
+        }
 
     });
 
