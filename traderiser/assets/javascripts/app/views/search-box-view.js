@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-define(['./abstract-view', 'templates'], function (AbstractView, templates) {
+define(['./abstract-view', 'templates', 'parsley'], function (AbstractView, templates) {
 
     'use strict';
 
