@@ -26,34 +26,20 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 		},
 		render: function() {
 			var self = this;
-			var accordionModels = this.collection.models;
-			var accordionList = [];
-			if (accordionModels.length > 0) {
-				accordionList = _.map(accordionModels, function(model) {
-					var content = model.get('view');
-					if (content instanceof Backbone.View) {
-						content = content.render().el;
-						
-					}
-					return {
-						cid: model.get('cid'),
-						label: model.get('label'),
-						view: content
-					}
-				});
-			}
-
 			templates.render(this.template, {
 				style: this.model.get('style'),
 				label: '', //this.model.get('title'),
-				panels: accordionList
+				panels: ''
 			}, function(error, output) {
 				$(self.el).html(output);
 
 			});
+
+
 			return this;
 		},
 		afterRender: function() {
+			var self = this;
 			this.accordianEl = this.$el.find('#accordion');
 			var icons = {
 				header: "ui-icon-circle-arrow-e",
@@ -65,7 +51,16 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 
 			});
 
+			var accordionModels = this.collection.models;
+			var accordionList = [];
+			if (accordionModels.length > 0) {
+				_.each(accordionModels, function(model){
+					self._addNewAccordion(model);
+				});
+			}
 			return this;
+
+
 		},
 		refresh: function() {
 			$(this.accordianEl).accordion("refresh");
@@ -86,9 +81,12 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
                     }
                     var accordionContent = $('<div class="accordion-content"></div>').html(content);
                     
-                    $(this.el).append(accordionHeader.append(accordionContent));
+                    $(this.accordianEl).append(accordionHeader).append(accordionContent);
                     this.refresh();
-                }
+                },
+		createAccordion: function(model){
+
+		}
 
 
 	});

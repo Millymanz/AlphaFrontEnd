@@ -199,8 +199,10 @@ define(['./abstract-view',
            //create queriesListView to take a collection of queryModels
            
            var savedQueriesView = new FavouritesListView({collection: savedQueriesCollection});
+						var followingQueries = new FollowingResultsListView({collection: queriesSubscriptionCollection});
            //show unique queries
            this.leftSideTabsCollection.add(new Backbone.Model({content: savedQueriesView, label: 'Saved Queries', active: false}));
+					this.accordionWestSideCollection.add(new Backbone.Model({view: followingQueries}))
                           
         }
     });

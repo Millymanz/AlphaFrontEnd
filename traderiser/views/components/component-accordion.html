@@ -26,9 +26,38 @@
 	var startTradeRiserApp = function(traderiser){
 
 		var TradeRiserComponents = traderiser.app.components;
+		var TradeRiserViews = traderiser.app.views;
+
 		var AccordionComponent = TradeRiserComponents.AccordionComponent;
 
 		var collection = new Backbone.Collection();
+		var accordionCollection = new Backbone.Collection();
+
+		var FollowingResultsListView = TradeRiserViews.FollowingResultsListView;
+
+		//create a new Results card view
+		var followingCollection;
+
+		var request = $.ajax({
+			url: '/data/GetUserProfile3.json',
+			method:'GET',
+			dataType:'json',
+			success: function(data){
+				return data;
+			}
+		});
+
+		request.then(function(data){
+			if(data.UserProfileConfig.Following.length > 0){
+				console.log(data.UserProfileConfig.Following);
+				var followingData  = data.UserProfileConfig.Following;
+				followingCollection = new Backbone.Collection(followingData);
+				var followingListView = new FollowingResultsListView({collection: followingCollection});
+				accordionCollection.add(new Backbone.Model({label: 'Following Queries Results', view: followingListView, active: true}));
+			}
+		});
+
+
 		collection.add(new Backbone.Model({label: 'tabs 1', content: '<p>asasasa</p>', active: true}));
 
 		var backboneViewTab =  Backbone.View.extend({
@@ -49,13 +78,13 @@
 		});
 
 
-		var accordionCollection = new Backbone.Collection();
 		accordionCollection.add(new Backbone.Model({label: 'accordion two', view: '<p>2. some more content<p>'}));
 		accordionCollection.add(new Backbone.Model({label: 'accordion three', view: '<p>3. some more content<p>'}));
 		var accordionComponentView = new AccordionComponent.view({model: new Backbone.Model({style: 'simple', title: 'latest information'}), collection: accordionCollection});
-		accordionCollection.add(new Backbone.Model({label: 'accordion one', view: new backboneViewTab}));
 
 		$('#app-container').append(accordionComponentView.render().el);
+		accordionCollection.add(new Backbone.Model({label: 'accordion one', view: new backboneViewTab}));
+
 	}
 </script>
 </body>

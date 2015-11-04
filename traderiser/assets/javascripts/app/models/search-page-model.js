@@ -88,40 +88,40 @@ define(['backbone', '../config/rest-utils'], function(Backbone, restUtils) {
 		 */
 		getAnswer: function(query, callback, callbackError) {
 
-//			var options = {
-//				url: '/data/mulitipleCharts.json',// mulitipleCharts //GetAnswer //GetAnswerWithMoreResults
-//				type: "GET",
-//				dataType: "json",
-//				success: function(res){
-//					return res;
-//				},
-//				error: function(e){
-//					console.log(e);
-//				}
-//
-//			}
+			var options = {
+				url: '/data/mulitipleCharts.json',// mulitipleCharts //GetAnswer //GetAnswerWithMoreResults
+				type: "GET",
+				dataType: "json",
+				success: function(res){
+					return res;
+				},
+				error: function(e){
+					console.log(e);
+				}
+
+			}
 //			return restUtils.makeServerRequest(options);
 			var accessSessionToken = sessionModel.getCurrentAccessToken();
 
-			var options = {
-				url: settings.apiBase + '/Query/GetAnswer',
-				type: "POST",
-				contentType: "application/x-www-form-urlencoded",
-				dataType: 'json',
-				data: JSON.stringify({ Query: query, Username: sessionModel.getUser().getUserName() }),
-				beforeSend: function(request){
-					request.setRequestHeader("Content-Type","application/json");
-					request.setRequestHeader("Accept", "application/json");
-					request.setRequestHeader('Authorization', 'Bearer ' + accessSessionToken + ' ');
-					request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-				},
-				success:function(res){
-					console.log(res);
-				},
-				error:function(e){
-					console.log(e);
-				}
-			}
+//			var options = {
+//				url: settings.apiBase + '/Query/GetAnswer',
+//				type: "POST",
+//				contentType: "application/x-www-form-urlencoded",
+//				dataType: 'json',
+//				data: JSON.stringify({ Query: query, Username: sessionModel.getUser().getUserName() }),
+//				beforeSend: function(request){
+//					request.setRequestHeader("Content-Type","application/json");
+//					request.setRequestHeader("Accept", "application/json");
+//					request.setRequestHeader('Authorization', 'Bearer ' + accessSessionToken + ' ');
+//					request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+//				},
+//				success:function(res){
+//					console.log(res);
+//				},
+//				error:function(e){
+//					console.log(e);
+//				}
+//			}
 
 			return $.ajax(options);
 		},
