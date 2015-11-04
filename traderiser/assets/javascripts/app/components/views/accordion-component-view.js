@@ -20,7 +20,9 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 		initialize: function(options) {
 			options = options || {};
 			this.constructor.__super__.initialize.apply(this, arguments);
-			this.render();
+			///this.render();
+                        
+                        this.listenTo(this.collection , 'add', this._addNewAccordion);
 		},
 		render: function() {
 			var self = this;
@@ -31,7 +33,7 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 					var content = model.get('view');
 					if (content instanceof Backbone.View) {
 						content = content.render().el;
-						content = content[0];
+						
 					}
 					return {
 						cid: model.get('cid'),
@@ -67,7 +69,26 @@ define(['../../views/abstract-view', 'templates'], function(AbstractView, templa
 		},
 		refresh: function() {
 			$(this.accordianEl).accordion("refresh");
-		}
+		},
+                _addNewAccordion: function(model){
+                    
+                    if(!model instanceof Backbone.Model){
+                        throw new error('new content must be a model');
+                    }
+                    
+                    var accordionHeader = $('<h3></h3>').html(model.get('label'));
+                    var content = model.get('view');
+                    
+                    if(content instanceof Backbone.View){
+                        var contentView = content;
+                        content = content.render().el;
+                        contentView.delegateEvents();
+                    }
+                    var accordionContent = $('<div class="accordion-content"></div>').html(content);
+                    
+                    $(this.el).append(accordionHeader.append(accordionContent));
+                    this.refresh();
+                }
 
 
 	});

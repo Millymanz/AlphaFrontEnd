@@ -50,10 +50,10 @@
 
 
 		var accordionCollection = new Backbone.Collection();
-		accordionCollection.add(new Backbone.Model({label: 'accordion one', view: '<p>1. a some more content<p>'}));
 		accordionCollection.add(new Backbone.Model({label: 'accordion two', view: '<p>2. some more content<p>'}));
 		accordionCollection.add(new Backbone.Model({label: 'accordion three', view: '<p>3. some more content<p>'}));
 		var accordionComponentView = new AccordionComponent.view({model: new Backbone.Model({style: 'simple', title: 'latest information'}), collection: accordionCollection});
+		accordionCollection.add(new Backbone.Model({label: 'accordion one', view: new backboneViewTab}));
 
 		$('#app-container').append(accordionComponentView.render().el);
 	}

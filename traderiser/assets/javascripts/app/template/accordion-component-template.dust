@@ -1,8 +1,8 @@
 {?label}<h4>{label}</h4> {/label}
 <div  id="accordion">
 {#panels}
-<h3><a href="javascript:;"> {label}</a></h3>
- <div>
+<h3><a href="javascript:;">{label}</a></h3>
+ <div class="accordion-content">
       {view|s}
 </div>
 {/panels}

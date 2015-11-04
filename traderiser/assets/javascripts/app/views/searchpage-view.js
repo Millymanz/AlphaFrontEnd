@@ -13,6 +13,9 @@ define(['./abstract-view',
     '../controller/traderiser-chart-controller',
     '../components/views/tabbed-component-view',
     './search-results-view',
+    './following-results-list-view',
+    './favourites-list-view',
+    './continues-results-list-view',
     'jquery-layout',
     'jquery-ui'], function (AbstractView,
         AccordionComponentView,
@@ -22,7 +25,8 @@ define(['./abstract-view',
         SearchPageModel,
         HighChartsModel,
         TradeRiserComponent,
-        TabbedComponentView, SearchResultsView) {
+        TabbedComponentView, 
+        SearchResultsView, FollowingResultsListView, FavouritesListView, ContinuesResultsListView) {
     'use strict';
 
     var SearchPageView = AbstractView.extend('SearchPageView', {
@@ -52,18 +56,21 @@ define(['./abstract-view',
         },
         afterRender: function () {
 
-//            var accordionCollection = new Backbone.Collection();
-//            accordionCollection.add(new Backbone.Model({label: 'accordion one', view: '<p>1. a some more content<p>'}));
+            this.accordionWestSideCollection = new Backbone.Collection();
+            this.accordionWestSideCollection.add(new Backbone.Model({label: 'accordion one', view: '<p>1. a some more content<p>'}));
 //            accordionCollection.add(new Backbone.Model({label: 'accordion two', view: '<p>2. some more content<p>'}));
 //            accordionCollection.add(new Backbone.Model({label: 'accordion three', view: '<p>3. some more content<p>'}));
-//            var accordionComponentView = new AccordionComponentView({model: new Backbone.Model({style: 'simple', title: 'latest information'}), collection: accordionCollection});
+            var accordionComponentView = new AccordionComponentView({model: new Backbone.Model({style: 'simple', title: 'latest information'}), collection: this.accordionWestSideCollection});
 
 
-            this.eastSide = $(this.el).find('#west-content');
+            this.westPane = $(this.el).find('#west-content');
             this.centerPane = $(this.el).find('#center-content');
-            this.westPane = $(this.el).find('#east-content');
-
-//            $(this.eastSide).html(accordionComponentView.el);
+            this.eastPane = $(this.el).find('#east-content');
+            
+            this.leftSideTabsCollection = new Backbone.Collection();
+            var leftSideTabsView = new TabbedComponentView({collection: this.leftSideTabsCollection, model: new Backbone.Model()});
+            $(this.westPane).html(leftSideTabsView.render().el);
+            $(this.eastPane).html(accordionComponentView.render().el);
 //            accordionComponentView.refresh();
 
         },
@@ -95,14 +102,28 @@ define(['./abstract-view',
             var self = this;
             return this.model.getAnswer(this.question).then(function (data) {
                 //console.log(data);
+                
+                if(_.isNull(data)){
+                    self.centerPane.html('<div class="empty-results"><span class="glyphicon glyphicon-asterisk"></span> No results found...try another query</div>');
+                    self.eastPane.empty();
+                    self.westPane.empty();
+                    PageLayout.hide('west');
+                    PageLayout.hide('east');
+                    
+                    return;
+                }
+                
+                
                 var resultsCollection = '';
                 if (data.ResultSummaries.length > 0) {
                     console.log(data.ResultSummaries);
                     var searchResultsCollection = new Backbone.Collection(data.ResultSummaries);
                     var resultsCardList = new SearchResultsView({collection: searchResultsCollection});
                     //collection.add(new Backbone.Model({label: 'Search Results', content: resultsCardList, active: true}));
-                    self.eastSide.html(resultsCardList.render().el);
-                }
+                    //self.eastSide.html(resultsCardList.render().el);
+                    self.leftSideTabsCollection.add(new Backbone.Model({content: resultsCardList, label: 'Results', active: true}));
+                    self.updateOtherResults();
+                 }
 
                 var chart = self.controller.displayResults(data);
                 if (chart && chart.charts.length > 0) {
@@ -163,6 +184,24 @@ define(['./abstract-view',
                 collection.add(new Backbone.Model({label: '<i class="fa fa-line-chart"></i> ' + ' Chart' + chartvalue, content: stockChartView, active: first}));
 
             });
+        },
+        updateOtherResults: function(){
+            var userInfo = sessionModel.getUser();
+            
+            //first 5 results , maybe put this in config file
+            var historicQueries = _.first(_.uniq(userInfo.get('historicQueries')), 5);
+            var followingQueries = _.first(_.uniq(userInfo.get('following')), 5);
+            var savedQueries = _.first(_.uniq(userInfo.get('savedQueries')), 20);
+                        
+           var queriesSubscriptionCollection = new Backbone.Collection(followingQueries);
+           var historicQueriesCollection = new Backbone.Collection(historicQueries);
+           var savedQueriesCollection = new Backbone.Collection(savedQueries);
+           //create queriesListView to take a collection of queryModels
+           
+           var savedQueriesView = new FavouritesListView({collection: savedQueriesCollection});
+           //show unique queries
+           this.leftSideTabsCollection.add(new Backbone.Model({content: savedQueriesView, label: 'Saved Queries', active: false}));
+                          
         }
     });
 

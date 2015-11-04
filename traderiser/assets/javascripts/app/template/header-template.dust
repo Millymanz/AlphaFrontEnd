@@ -11,7 +11,7 @@
         </div>
          <div class="header-search col-sm-10 col-md-10">
         	<div class="navbar-form" role="search">
-                <div class="search-box"  style="display:none">
+                <div class="search-box">
                   <div class="input-group ">
                       <input type="text" class="form-control searchTextBox" placeholder="Search" name="q">
                       <div class="input-group-btn">

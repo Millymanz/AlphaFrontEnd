@@ -132,8 +132,8 @@
 		$('#app-container').html(tabsComponentView.render().el);
 
 		collection.add(new Backbone.Model({label: 'Backbone view', content:  new BackboneViewTab() }));
-		collection.add(new Backbone.Model({label: 'Chart View', content:  highChartComponentView, active: true }));
-		collection.add(new Backbone.Model({label: 'Chart View', content:  highChartComponentView2, active: false }));
+		collection.add(new Backbone.Model({label: 'Chart View', content:  highChartComponentView }));
+		collection.add(new Backbone.Model({label: 'Chart View', content:  highChartComponentView2, active: true }));
 
 		QUnit.test('Search Bar view test',function(assert){
 				equal(1 + 1, '2', 'ok');

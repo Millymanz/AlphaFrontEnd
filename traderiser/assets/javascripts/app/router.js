@@ -39,8 +39,8 @@ define([
         },
         homepage: function () {
             this.showSearchBox = false;
-            var searchPageView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm})});
-            var homepage = new HomePageView({model: new Backbone.Model, searchBoxView: searchPageView});
+            var searchBoxView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm,showSearchBox: true})});
+            var homepage = new HomePageView({model: new Backbone.Model, searchBoxView: searchBoxView});
             var options = {requiresAuth: true};
             this.show(homepage, options);
             return this;
@@ -87,14 +87,17 @@ define([
             if (!this.headerView) {
                 if (view)
                     var headerViewModel = new Backbone.Model({showSearch: this.showSearchBox, searchTermText: this.searchTerm});
-                var searchBoxView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm})})
+                var searchBoxView = new SearchBoxView({model: new Backbone.Model({searchText: this.searchTerm, showSearchBox:this.showSearchBox })})
                 this.headerView = new HeaderView({model: headerViewModel, searchBoxView: searchBoxView});
 
                 $('#header').html(this.headerView.el);
             } else {
                 this.headerView.model.set('searchTermText', this.searchTerm);
-                this.headerView.model.set('showSearch', this.showSearchBox);
-                this.headerView.searchBoxView.model.set('searchTerm', this.searchTerm);
+                this.headerView.model.set('showSearchBox', this.showSearchBox);
+                if(!this.showSearchBox ){
+                   this.headerView.searchBoxView._toggleShowHideSearch(false);
+                }
+                
             }
             // Close and unbind any existing page view
             if (this.currentView && _.isFunction(this.currentView.close))

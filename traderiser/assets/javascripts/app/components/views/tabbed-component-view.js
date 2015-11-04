@@ -8,30 +8,6 @@ define(['../../views/abstract-view',
 	'templates'], function(AbstractView, templates) {
 	'use strict';
 
-	var TabExTabView = Backbone.View.extend({
-
-		initialize: function() {
-			_.bindAll(this, 'render');
-			this.model.bind('change', this.render);
-		},
-
-		render: function() {
-			// add the actual content
-			var content = this.model.get('content');
-			var ulEl = '<li role="presentation"><a href="#tab-content-'+this.model.cid+'" aria-controls="{cid}" role="tab" data-toggle="tab">'+this.model.label+'</a></li>'
-			if(this.model.get('content') instanceof Backbone.View){
-				content  = this.model.get('content').render().el;
-			}
-			$(this.el).html('<div id="tab_' + this.model.cid + '">'
-				+ content
-				+ '<br /><br /><br />'
-				+ '<a href="#" class="deleter" id="' + this.model.cid
-				+ '">Delete this tab</a></div>');
-
-
-			return this;
-		}
-	});
 
 	var TabsComponentView = AbstractView.extend('TabsComponentView', {
 		defaults: {
@@ -141,7 +117,7 @@ define(['../../views/abstract-view',
 
 			var tabsUL = $(this.el).find('.nav-tabs');
 			var active = '';
-			var activeID = 1;
+			var activeID = 0;
 			if(model.get('active')){
 				active = 'active';
 				activeID = '#tab-content-'+model.cid;
@@ -161,8 +137,8 @@ define(['../../views/abstract-view',
 			//this.refresh();
 			var activeTab = $(this.el).tabs("option", "active");
 			if(activeTab == false){
-				$(this.el).tabs( {active: activeID } );
 				$(this.el).tabs("refresh");
+                                $(this.el).tabs( {active: activeID } );
 			}
 
 		},

@@ -14,12 +14,13 @@ define(['./abstract-view', 'templates', 'parsley'], function (AbstractView, temp
         events: {
             'click .search-question-btn': 'searchQuestion',
             'click .search-text-box': 'showSearchTerm',
+            'focus .search-text-box': 'insertTypingText',
             'keyup .search-text-box': 'insertTypingText'
         },
         initialize: function (options) {
             //this._super(options);
             this.constructor.__super__.initialize.apply(this, arguments);
-            this.listenTo(this.model, 'change:searchTermText', this.render);
+            this.listenTo(this.model, 'change:searchTerm', this.render);
             this.render();
             this.searchTermBox = $('.search-text-box');
             $('html').on('click', function (evt) {
@@ -34,13 +35,16 @@ define(['./abstract-view', 'templates', 'parsley'], function (AbstractView, temp
             }));
 
             this.listenTo(this.viewOptions, 'change:searchHistoryView', this.render);
+            this.listenTo(this.model, 'change:showSearchBox', this._toggleShowHideSearch);
         },
         render: function () {
             var self = this;
-            templates.render(this.template, {searchText: this.model.get('searchTermText') || ""}, function (error, output) {
+            templates.render(this.template, {searchText: this.model.get('searchText') || ""}, function (error, output) {
                 $(self.el).html(output);
             });
         },
+        
+        
         showSearchTerm: function (evt) {
             $('.search-term-holder').slideDown();
             evt.stopPropagation();
@@ -63,8 +67,14 @@ define(['./abstract-view', 'templates', 'parsley'], function (AbstractView, temp
                     viewSearchHistory.append(this.getViewOption('searchHistoryView'));
                 }
             }
+             
+             this._toggleShowHideSearch(this.model.get('showSearchBox'));
+            
         },
-        searchQuestion: function (evt) {
+        insertSearchText: function(){
+            
+        },
+         searchQuestion: function (evt) {
             var searchForm = this.$el.find('form');
             if (searchForm.parsley().validate()) {
                 var searchText = searchForm.find('input');
@@ -75,7 +85,22 @@ define(['./abstract-view', 'templates', 'parsley'], function (AbstractView, temp
         },
         getSearchHistoryEL: function(){
             return $(this.el).find('.search-history');
+        },
+        /**
+         * Show and hide searchbox 
+         * @param {type} state
+         * @returns {undefined}
+         */
+        _toggleShowHideSearch: function(state){
+           
+            if(state){
+                $(this.el).show();
+                
+            }else{
+                 $(this.el).hide();
+            }
         }
+        
 
     });
 
