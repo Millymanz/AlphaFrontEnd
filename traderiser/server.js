@@ -163,6 +163,8 @@ exports.startServer = function (config, callback) {
 		app.get('/components/charts', serveView('components/component-charts', config));
 		app.get('/components/slide-menu', serveView('components/component-slide-menu', config));
 		app.get('/components/following-results', serveView('components/component-following-results', config));
+		app.get('/components/page-layout', serveView('components/component-page-layout', config));
+
 
 
 	callback(server);

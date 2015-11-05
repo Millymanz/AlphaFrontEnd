@@ -16,7 +16,10 @@ define(['./views/header-view',
     './views/searchpage-view',
 	'./views/favourites-list-view' ,
 	'./views/favourite-item-view',
-	'./views/following-results-list-view', './views/continues-results-list-view', './views/continues-result-item-view'],
+	'./views/following-results-list-view',
+	'./views/continues-results-list-view',
+	'./views/continues-result-item-view',
+	'./views/page-layout-view'],
         function (HeaderView,
                 HomePageView,
                 SearchResultsView,
@@ -27,7 +30,10 @@ define(['./views/header-view',
                 SearchPageView,
                 FavouritesListView,
                 FavouriteItemView,
-								FollowingResultsListView, ContinuesResultsListView, ContinuesResultItemView) {
+								FollowingResultsListView,
+								ContinuesResultsListView,
+								ContinuesResultItemView,
+								PageLayoutView) {
 
             var views = {
                 HeaderView: HeaderView,
@@ -42,7 +48,8 @@ define(['./views/header-view',
                 FavouriteItemView:FavouriteItemView,
 								FollowingResultsListView:FollowingResultsListView,
 								ContinuesResultsListView:ContinuesResultsListView,
-								ContinuesResultItemView: ContinuesResultItemView
+								ContinuesResultItemView: ContinuesResultItemView,
+								PageLayoutView: PageLayoutView
             }
 
             return views;

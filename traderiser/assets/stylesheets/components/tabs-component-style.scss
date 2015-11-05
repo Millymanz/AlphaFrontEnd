@@ -37,9 +37,32 @@
 	-webkit-border-bottom-right-radius:	0;
 }
 
+.ui-widget-content{
+	border: none;
+}
 .tr-component-tabs-component-view {
 	.ui-tabs-panel{
 		padding:5px
 	}
+
+
+
+	.tr-component.tr-component-tabs-component-view.ui-tabs.ui-widget.ui-widget-content.ui-corner-all {
+		border:none;
+	}
+	.ui-widget-header{
+		background:transparent;
+		border-top:none;
+		border-right:none;
+		border-left:none;
+	}
+
+	.ui-corner-all {
+		border-top-left-radius: 0px !important;
+		border-top-right-radius: 0px !important;
+		border-bottom-left-radius: 0px !important;
+		border-bottom-right-radius: 0px !important;
+	}
+
 }
 

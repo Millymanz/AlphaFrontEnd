@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Trade riser: Search Bar Components</title>
+	<title>Trade riser: Page Layout Components</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<meta name="csrf-token" content="{{csrfToken}}">
 
@@ -18,7 +18,7 @@
 
 </head>
 <body>
-<div id="components-page">Search component</div>
+<div id="components-page">PageLayout component</div>
 <hr>
 <div id="app-container">
 	<div class="loading-text text-muted"> <p><i class="fa fa-cog fa-x3 fa-spin"></i>...Loading </p></div>
@@ -34,11 +34,32 @@
 
 		var TradeRiserComponents = traderiser.app.components;
 		var TradeRiserViews = traderiser.app.views;
-		var SearchBoxView = TradeRiserViews.SearchBoxView;
+		var PageLayoutView = TradeRiserViews.PageLayoutView;
 
-		var
-		var searchBarView = new SearchBoxView();
-		$('#app-container').html(searchBarView.render().el);
+		var backboneViewTab =  Backbone.View.extend({
+			events: {
+				"click .clickMeButton": _.bind(function(e){
+					alert('clicked');
+				})
+			},
+			className: 'backboneView',
+			initialize:function(options){
+				this.$el.html('<p>tabs information</p>');
+				//this.render();
+			},
+			render: function(){
+				this.$el.append('<p class="text text-primary"><button class="clickMeButton">even more information</button></p>');
+				return this;
+			}
+		});
+		var centerPane = new Backbone.Model({
+			view: new backboneViewTab(),
+			settings: {
+
+			}
+		});
+		var pageLayoutView = new PageLayoutView({centerPane:centerPane});
+		$('#app-container').html(pageLayoutView.render().el);
 
 		QUnit.test('Search Bar view test',function(assert){
 				equal(1 + 1, '2', 'ok');
