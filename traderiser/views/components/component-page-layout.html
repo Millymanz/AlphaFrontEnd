@@ -6,10 +6,10 @@
 	<meta name="csrf-token" content="{{csrfToken}}">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.19.0.css">
+	<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.19.0.css">
 
 	<link href="/stylesheets/style.css" rel="stylesheet">
-	<script src="//code.jquery.com/qunit/qunit-1.19.0.js"></script>
+	<script src="https://code.jquery.com/qunit/qunit-1.19.0.js"></script>
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/javascripts/reload-client.js"></script>
@@ -36,6 +36,17 @@
 		var TradeRiserViews = traderiser.app.views;
 		var PageLayoutView = TradeRiserViews.PageLayoutView;
 
+		var BackboneView = Backbone.View.extend({
+			initialize: function(){
+
+
+			},
+			render: function(){
+				$(this.el).html("Hello");
+				return this;
+			}
+		})
+
 		var backboneViewTab =  Backbone.View.extend({
 			events: {
 				"click .clickMeButton": _.bind(function(e){
@@ -46,19 +57,30 @@
 			initialize:function(options){
 				this.$el.html('<p>tabs information</p>');
 				//this.render();
+				var view = new BackboneView();
+				var centerPaneModel = new Backbone.Model({
+					view: view,
+					settings: {
+
+					}
+				});
+
+					this.splitCenter = new PageLayoutView({ centerPane: centerPaneModel });
 			},
 			render: function(){
 				this.$el.append('<p class="text text-primary"><button class="clickMeButton">even more information</button></p>');
+				this.$el.html(this.splitCenter.render().el);
 				return this;
 			}
 		});
+
 		var centerPane = new Backbone.Model({
 			view: new backboneViewTab(),
 			settings: {
 
 			}
 		});
-		var pageLayoutView = new PageLayoutView({centerPane:centerPane});
+		var pageLayoutView = new PageLayoutView({centerPane: centerPane});
 		$('#app-container').html(pageLayoutView.render().el);
 
 		QUnit.test('Search Bar view test',function(assert){

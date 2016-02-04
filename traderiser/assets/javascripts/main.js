@@ -101,14 +101,6 @@ define([
         sessionModel: settings.session,
         dust: dust
     });
-//
-//    $(document).ready(function () {
-//        var appRouter = new AppRouter();
-//        _.extend(window, {
-//            appRouter: appRouter
-//        });
-//
-//    });
 	traderiser.router = new AppRouter;
 	return traderiser;
 

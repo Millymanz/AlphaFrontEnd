@@ -28,6 +28,10 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
 		initialize: function(options){
 			options = options || {};
 			this.constructor.__super__.initialize.apply(this, arguments);
+
+			this.$el.empty();
+
+			//this.pageLayout = this.$el.layout();
 		},
 		render: function(){
 			var self = this;
@@ -51,7 +55,6 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
 				}
 
 
-			this.pageLayout = $(this.el).layout({ applyDefaultStyles: true });
 			//check what has been set
 			//centerPane must be a model
 			if(this.getViewOption('centerPane') && this.getViewOption('centerPane') instanceof Backbone.Model){
@@ -61,10 +64,10 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
 				if(centerPaneView instanceof Backbone.View){
 					var centerPane = $(this.el).find('.ui-layout-center');
 					centerPane.html(centerPaneView.render().el);
-					centerPane.show();
-					//this.getPageLayout().panes.center.layout(_.extend(this.defaults.centerPaneSettings, centerPaneSetting ));
 				}
 			}
+
+			$(this.el).appendTo('body').layout(tabLayoutSettings);
 
 		},
 		getPageLayout: function(){

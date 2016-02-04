@@ -58,8 +58,6 @@ define(['./abstract-view',
 
             this.accordionWestSideCollection = new Backbone.Collection();
             this.accordionWestSideCollection.add(new Backbone.Model({label: 'accordion one', view: '<p>1. a some more content<p>'}));
-//            accordionCollection.add(new Backbone.Model({label: 'accordion two', view: '<p>2. some more content<p>'}));
-//            accordionCollection.add(new Backbone.Model({label: 'accordion three', view: '<p>3. some more content<p>'}));
             var accordionComponentView = new AccordionComponentView({model: new Backbone.Model({style: 'simple', title: 'latest information'}), collection: this.accordionWestSideCollection});
 
 
