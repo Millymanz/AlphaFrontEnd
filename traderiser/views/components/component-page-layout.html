@@ -53,23 +53,22 @@
 					alert('clicked');
 				})
 			},
-			className: 'backboneView',
 			initialize:function(options){
 				this.$el.html('<p>tabs information</p>');
 				//this.render();
 				var view = new BackboneView();
-				var centerPaneModel = new Backbone.Model({
+				var CenterPaneModel =  Backbone.Model.extend({
 					view: view,
 					settings: {
 
 					}
 				});
 
-					this.splitCenter = new PageLayoutView({ centerPane: centerPaneModel });
+					this.splitCenter = new PageLayoutView({ centerPane: new CenterPaneModel(), southPane: new CenterPaneModel() });
 			},
 			render: function(){
 				this.$el.append('<p class="text text-primary"><button class="clickMeButton">even more information</button></p>');
-				this.$el.html(this.splitCenter.render().el);
+				this.$el.append(this.splitCenter.render().el);
 				return this;
 			}
 		});

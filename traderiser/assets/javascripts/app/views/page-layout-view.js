@@ -12,7 +12,13 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
 
 	var PageLayoutView = AbstractView.extend('PageLayoutView',{
 		defaults: {
-			centerPaneSettings: {
+
+			fxName:               "slide"
+			,  fxSpeed:               "fast"
+			,  spacing_closed:        14
+			,  initClosed:            false,
+			initHidden: true,
+			center: {
 						autoResize:				true	// try to maintain pane-percentages
 					,	closable:				true
 					,	togglerLength_open:		0	// hide toggler-buttons
@@ -21,16 +27,25 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
 					,	autoBindCustomButtons:	true
 					,	minSize:				75
 					,	center__minWidth:		75
-					}
+			},
+			north: {
+				fxName:                "none"
+				,  spacing_closed:        8
+				,  togglerLength_closed:  "100%"
+			}
+			,  south: {
+				fxName:                "none"
+				,  spacing_closed:        8
+				,  togglerLength_closed:  "100%"
+			}
+
 		},
 		events: {},
 		template: 'page-layout-template',
 		initialize: function(options){
 			options = options || {};
 			this.constructor.__super__.initialize.apply(this, arguments);
-
 			this.$el.empty();
-
 			//this.pageLayout = this.$el.layout();
 		},
 		render: function(){
@@ -42,6 +57,7 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
 			return this;
 		},
 		afterRender: function(){
+
 			var tabLayoutSettings = {
 					spacing_open:				4
 					,	spacing_closed:				4
@@ -52,8 +68,8 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
 					,	north__spacing_open:		2
 					,	north__togglerLength_open:	50
 					,	north__togglerLength_close:	-1
-				}
 
+				}
 
 			//check what has been set
 			//centerPane must be a model
@@ -64,17 +80,47 @@ define(['./abstract-view', 'templates'], function(AbstractView, templates){
 				if(centerPaneView instanceof Backbone.View){
 					var centerPane = $(this.el).find('.ui-layout-center');
 					centerPane.html(centerPaneView.render().el);
+					this.defaults.center.initHidden = false;
+				}
+			}
+			//south pane
+			if(this.getViewOption('southPane') && this.getViewOption('southPane') instanceof Backbone.Model){
+				//set center info and show it. get the settings
+				var southPaneView = this.getViewOption('southPane').get('view');
+				var southPaneSetting  = this.getViewOption('southPane').get('settings');
+				if(southPaneView instanceof Backbone.View){
+					var southPane = $(this.el).find('.ui-layout-south');
+					southPane.html(southPaneView.render().el);
+					this.defaults.south.initHidden = false;
 				}
 			}
 
-			$(this.el).appendTo('body').layout(tabLayoutSettings);
+			$(this.el).appendTo('body').layout(this.defaults);
+			this.checkNestedLayout();
 
 		},
 		getPageLayout: function(){
 			return this.pageLayout;
+		},
+		checkNestedLayout: function(){
+
+			var findChildren = $(this.el).children();
+			findChildren.each(function(index,pane){
+					//get nested ui-layout-container
+					var nestedLayoutContainer = 	$(pane).children().find(".ui-layout-container");
+					if(nestedLayoutContainer.length > 0){
+						$(pane).addClass("nested-layout");
+//						$(pane).layout(
+//									{
+//								defaults: {
+//									applyDefaultStyles: true
+//								}}
+//						)
+
+						$(pane).show();
+					}
+			});
 		}
-
-
 	});
 
 	return PageLayoutView;
